@@ -1,0 +1,239 @@
+\documentclass[12pt, oneside]{report}
+%\documentclass[12pt, twoside, openany]{report}
+%% -------- packages and configuration --------
+
+\usepackage{a4wide}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{verbatim}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[MeX]{polski}
+\usepackage{amssymb, latexsym}
+\usepackage{amsthm}
+\usepackage{palatino}
+\usepackage{array}
+\usepackage{pstricks}
+\usepackage{textcomp}
+\theoremstyle{definition}
+\newtheorem{theorem}{Twierdzenie}[section]
+\newtheorem{remark}{Uwaga}[section]
+\newtheorem{definition}{Definicja}[section]
+\newtheorem{alg}{Algorytm}[chapter]
+\newtheorem{prz}{Przypadek}[section]
+\newtheorem{np}{Przykład}[section]
+\newtheorem{lemma}[theorem]{Lemat}
+\newcommand*{\norm}[1]{\left\Vert{#1}\right\Vert}
+\newcommand*{\abs}[1]{\left\vert{#1}\right\vert}
+\newcommand*{\om}{\omega}
+\usepackage{geometry}
+\geometry{left=25mm, right=25mm, bindingoffset=10mm, top=25mm, bottom=25mm}
+\usepackage{graphicx}
+\graphicspath{ {Images/} }
+\usepackage[english, polish]{babel}
+\usepackage{lmodern}
+\usepackage{float}
+\usepackage{verbatim}
+\usepackage{setspace} 
+%\onehalfspacing
+
+
+\author{Jakub Abelski}
+\title{Opracowanie symulatora transportera wahadła odwróconego na wózku}
+
+\begin{document}
+
+%% -------- title page --------
+\begin{titlepage}
+\pagestyle{empty}
+\noindent
+\begin{Large}
+%\begin{table}[t]
+%\centering
+%\begin{tabular}[t]{lcr}
+% \includegraphics[width=70pt,height=70pt]{PW} & POLITECHNIKA WARSZAWSKA & \includegraphics[width=70pt,height=70pt]{MiNI}\\
+%& WYDZIAŁ MATEMATYKI & \\
+%& I NAUK INFORMACYJNYCH &
+%\end{tabular}
+%\end{table}
+
+\begin{center}
+\begin{tabular}{lcr}
+	\centering
+	\begin{tabular}{c}
+		\includegraphics[width=70pt,height=70pt]{PW}
+	\end{tabular} &
+	\begin{tabular}{c}
+		\small 
+		POLITECHNIKA WARSZAWSKA 
+		\vspace*{5mm} \\
+		\small
+		WYDZIAŁ MATEMATYKI \\
+		\small
+		I NAUK INFORMACYJNYCH 
+	\end{tabular} &
+	\begin{tabular}{c}
+		\includegraphics[width=70pt,height=70pt]{MiNI}
+	\end{tabular}
+\end{tabular}
+\end{center}
+
+\vfill
+\begin{center}PRACA DYPLOMOWA MAGISTERSKA\end{center}
+\begin{center}INFORMATYKA\end{center}
+\end{Large}
+
+\linespread{1.5}
+\begin{center}
+\Huge
+\textbf{Opracowanie symulatora transportera wahadła odwróconego na wózku}
+\end{center}
+
+%\begin{center}
+%\Large
+%\textbf{Opracowanie symulatora transportera wahadła odwróconego na wózku}
+%\end{center}
+
+\vfill
+\begin{center}
+\Large
+Autor:\\
+\LARGE Jakub Abelski
+\end{center}
+\vfill
+\begin{center}
+\Large
+Promotor: prof. dr hab. Krzysztof Marciniak
+\end{center}
+\vfill
+\begin{center}
+\large
+Warszawa, Czerwiec 2016
+\end{center}
+
+%% -------- title page reverse --------
+\newpage
+\hfill
+\begin{table}[b]
+\centering
+\begin{tabular}[t]{ccc}
+............................................. & \hspace*{100pt} & .............................................\\
+podpis promotora & \hspace*{100pt} & podpis autora
+\end{tabular}
+\end{table}
+\end{titlepage}
+
+%% -------- abstract --------
+\setlength{\parindent}{5ex}
+\selectlanguage{polish}
+
+\begin{abstract}
+\end{abstract}
+
+\newpage
+\pagestyle{empty}
+\vspace*{\fill}
+\begin{center}
+\LARGE\textbf{Podziękowania}\\
+\end{center}
+
+\vspace{\fill}
+
+%% -------- table of contents --------
+\newpage
+\pagestyle{plain}
+\setcounter{page}{3}
+\tableofcontents
+
+%% -------- chapter I --------
+\newpage
+\pagestyle{headings}
+\hyphenation{Syl-ves-tra}
+\hyphenation{Syl-ves-ter-a}
+
+\chapter{Wstęp}
+\section{Motywacja i cele aplikacji}
+
+
+%% -------- chapter II --------
+\newpage
+\chapter{Definicja projektu}
+\section{Zakres projektu}
+\section{Charakterystyka użytkownika}
+\section{Analiza wymagań}
+\subsection{Ogólne wytyczne}
+\subsection{Funkcjonalności}
+\subsection{Ograniczenia}
+
+
+%% -------- chapter III --------
+\newpage
+\chapter{Opis technologii}
+\subsection{Porównanie rozwiązań}
+
+%% -------- chapter IV --------
+\chapter{Architektura systemu}
+\section{Wprowadzenie}
+\section{Ogólny opis rozwiązania}
+\section{Komponenty aplikacji}
+\section{Opis wizualny aplikacji}
+
+
+%% -------- chapter V --------
+\newpage
+\chapter{Dokumentacja techniczna}
+\section{Informacje ogólne} 
+\section{Opis techniczny modułów}
+
+
+%% -------- chapter VI --------
+\newpage
+\chapter{Podsumowanie projektu}
+\section{Instrukcja użytkownika}
+\section{Opis testów}
+\subsection{Testowane elementy programu}
+\subsection{Wyniki testów}
+\section{Ocena rozwiązania}
+\subsection{Stopień realizacji projektu}
+\subsection{Poprawność rozwiązania}
+
+	
+%% -------- chapter VII --------
+\newpage
+\chapter{Podsumowanie pracy}
+\section{Wpływ projektu na autora}
+\section{Krytyczna refleksja}
+\section{Możliwości rozszerzania projektu}
+
+	
+%% -------- bibliography --------
+\pagestyle{plain}
+\begin{thebibliography}{11}
+
+\bibitem{B} Stanisław Białas, \emph{Macierze. Wybrane problemy}, AGH Uczelniane Wydawnictwa Naukowo-Dydaktyczne, Kraków, 2006.
+
+\bibitem{VuforiaFeatures} \emph{Vuforia Features},
+\\*
+https://www.qualcomm.com/products/vuforia/features
+
+\end{thebibliography}
+
+
+%% -------- statement --------
+\selectlanguage{polish}
+\clearpage
+\pagestyle{empty}
+\noindent Warszawa, dnia \today
+\vspace{5cm}
+\begin{center}
+	\LARGE{Oświadczenie}
+\end{center}
+Oświadczam, że pracę magisterską pod tytułem: ,,Opracowanie symulatora transportera wahadła odwróconego na wózku'', której promotorem jest prof. dr hab. Krzysztof Marciniak, wykonałem samodzielnie, co poświadczam własnoręcznym podpisem.
+\vspace{2cm}
+\begin{flushright}
+...........................................
+\end{flushright}
+
+\end{document}
+
