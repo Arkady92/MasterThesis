@@ -23,9 +23,12 @@ namespace InvertedPendulumTransporter
         private SystemController systemControllerY;
         private SystemState systemState;
         private SystemParameters systemParameters;
-        public double WindControlPowerY;
-        public double WindControlPowerX;
+        public double CorrectAngleX;
+        public double CorrectAngleY;
         public const double WindControlPowerDelta = Math.PI / 60;
+
+        public double MaxAngle { get { return Math.PI / 2.0 * 0.95; } }
+        public double MinAngle { get { return -Math.PI / 2.0 * 0.95; } }
 
 
         ObservableCollection<DataPoint> errorPointsX;
@@ -164,11 +167,11 @@ namespace InvertedPendulumTransporter
         private void SetupParameters()
         {
             //systemState.StateX.Position = 0.1;
-            HorizontalAngle = Math.PI / 3;
-            VerticalAngle = Math.PI / 3;
+            HorizontalAngle = Math.PI / 6;
+            VerticalAngle =  Math.PI / 6;
             RodLength = systemParameters.PendulumLength;
-            WindControlPowerX = 0.0;
-            WindControlPowerY = 0.0;
+            CorrectAngleY = 0.0;
+            CorrectAngleX = 0.0;
             cart.UpdateState(systemState);
             pendulum.UpdateState(systemState);
         }
@@ -215,7 +218,7 @@ namespace InvertedPendulumTransporter
         private void DispatcherTimerTick(object sender, EventArgs e)
         {
             systemControllerX.SetTime(systemState.Time);
-            systemControllerX.SetControlError(WindControlPowerX - systemState.StateX.Angle);
+            systemControllerX.SetControlError(CorrectAngleY - systemState.StateX.Angle);
             systemParameters.Voltage = systemControllerX.GetVoltage();
             voltagePointsX.Add(new DataPoint(systemState.Time, systemParameters.Voltage));
             errorPointsX.Add(new DataPoint(systemState.Time, -systemState.StateX.Angle));
@@ -224,24 +227,26 @@ namespace InvertedPendulumTransporter
             var t = systemState.ToTimeArray();
             var x = systemState.StateX.ToStateArray();
             var xState = solver.SolveODESystem(t, x);
-            if (Math.Abs(xState.Angle) > Math.PI / 2)
+            if (Math.Abs(xState.Angle) > MaxAngle)
             {
-                xState.Angle = Math.Sign(xState.Angle) * Math.PI / 2;
+                xState.Angle = Math.Sign(xState.Angle) * MaxAngle;
+                MessageBox.Show("Pendulum collapsed on the platform");
                 dispatcherTimer.Stop();
             }
             systemState.UpdateSystemStateX(xState);
 
             systemControllerY.SetTime(systemState.Time);
-            systemControllerY.SetControlError(WindControlPowerY - systemState.StateY.Angle);
+            systemControllerY.SetControlError(CorrectAngleX - systemState.StateY.Angle);
             systemParameters.Voltage = systemControllerY.GetVoltage();
             voltagePointsY.Add(new DataPoint(systemState.Time, systemParameters.Voltage));
             errorPointsY.Add(new DataPoint(systemState.Time, -systemState.StateY.Angle));
 
             var y = systemState.StateY.ToStateArray();
             var yState = solver.SolveODESystem(t, y);
-            if (Math.Abs(yState.Angle) > Math.PI / 2)
+            if (Math.Abs(yState.Angle) > MaxAngle)
             {
-                yState.Angle = Math.Sign(yState.Angle) * Math.PI / 2;
+                yState.Angle = Math.Sign(yState.Angle) * MaxAngle;
+                MessageBox.Show("Pendulum collapsed on the platform");
                 dispatcherTimer.Stop();
             }
             systemState.UpdateSystemStateY(yState);
@@ -288,16 +293,16 @@ namespace InvertedPendulumTransporter
             switch(e.Key)
             {
                 case Key.T:
-                    WindControlPowerY -= WindControlPowerDelta;
+                    CorrectAngleX -= WindControlPowerDelta;
                     break;
                 case Key.G:
-                    WindControlPowerY += WindControlPowerDelta;
+                    CorrectAngleX += WindControlPowerDelta;
                     break;
                 case Key.F:
-                    WindControlPowerX += WindControlPowerDelta;
+                    CorrectAngleY += WindControlPowerDelta;
                     break;
                 case Key.H:
-                    WindControlPowerX -= WindControlPowerDelta;
+                    CorrectAngleY -= WindControlPowerDelta;
                     break;
             }
         }

@@ -25,9 +25,9 @@
                 <Label Content="Animation Speed"></Label>
                 <Slider Name="AnimationSpeedSlider" Value="{Binding Path=AnimationSpeed}" Margin="20,0,20,5" Minimum="0.001" Maximum="0.05"></Slider>
                 <Label Content="Horizontal Angle"></Label>
-                <Slider Name="HorizontalAngleSlider" Value="{Binding Path=HorizontalAngle}" Margin="20,0,20,5" Minimum="-1.571" Maximum="1.571"></Slider>
+                <Slider Name="HorizontalAngleSlider" Value="{Binding Path=HorizontalAngle}" Margin="20,0,20,5" Minimum="{Binding Path=MinAngle}" Maximum="{Binding Path=MaxAngle}"></Slider>
                 <Label Content="Vertical Angle"></Label>
-                <Slider Name="VerticalAngleSlider" Value="{Binding Path=VerticalAngle}" Margin="20,0,20,5" Minimum="-1.571" Maximum="1.571"></Slider>
+                <Slider Name="VerticalAngleSlider" Value="{Binding Path=VerticalAngle}" Margin="20,0,20,5" Minimum="{Binding Path=MinAngle}" Maximum="{Binding Path=MaxAngle}"></Slider>
                 <Label Content="Rod Length"></Label>
                 <Slider Name="RodLengthSlider" Value="{Binding Path=RodLength}" Margin="20,0,20,5" Minimum="0.15" Maximum="1.5"></Slider>
                 <!--<Label Content="Curve Description"></Label>-->

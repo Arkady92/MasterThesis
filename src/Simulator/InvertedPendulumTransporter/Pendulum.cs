@@ -50,50 +50,27 @@ namespace InvertedPendulumTransporter
 
             cartLinkPoint = new Point3D(x, y, z);
 
-            if (Math.Abs(beta) < Double.Epsilon)
+            if (Math.Abs(beta) >= Math.PI / 2)
             {
                 massLinkPoint = new Point3D(
-                    x + rodLength * Math.Sin(alpha),
-                    y,
-                    z + rodLength * Math.Cos(alpha));
+                    x + rodLength * Math.Cos(alpha),
+                    y + rodLength * Math.Sin(alpha),
+                    z);
             }
-            else if (Math.Abs(alpha) < Double.Epsilon)
+            else if (Math.Abs(alpha) >= Math.PI / 2)
             {
                 massLinkPoint = new Point3D(
-                    x,
+                    x + rodLength * Math.Cos(beta),
                     y + rodLength * Math.Sin(beta),
-                    z + rodLength * Math.Cos(beta));
+                    z);
             }
             else
             {
-                //TODO
-
-                //massLinkPoint = new Point3D(
-                //    x + rodLength * Math.Sin(alpha) * Math.Cos(beta),
-                //    y + rodLength * Math.Sin(alpha) * Math.Sin(beta),
-                //    z + rodLength * Math.Cos(alpha));
-
-                //massLinkPoint = new Point3D(
-                //    x + rodLength * Math.Sin(alpha),
-                //    y + rodLength * Math.Cos(alpha) * Math.Sin(beta),
-                //    z + rodLength * Math.Cos(alpha) * Math.Cos(beta));
-
-                //var r = rodLength;
-                //var dx = r * Math.Sin(alpha);
-                //var dy = r * Math.Sin(beta);
-                //var dxy = Math.Sqrt(dx * dx + dy * dy);
-                //var dxyr = Math.Sqrt(r * r + dxy * dxy);
-                //// dxyNew : r <-> dxy : dxyr
-                //var dxyNew = r * dxy / dxyr;
-                //// dzNew : dxyNew <-> r : dxy
-                //var dzNew = dxyNew * r / dxy;
-                //var dxNew = dxyNew * dx / dxy;
-                //var dyNew = dxyNew * dy / dxy;
-
-                var dx = rodLength * Math.Sin(alpha);
-                var dy = rodLength * Math.Sin(beta);
-                var calc = Math.Cos(alpha) * Math.Cos(alpha) - Math.Sin(beta) * Math.Sin(beta);
-                var dz = calc > 0.0 ? rodLength * Math.Sqrt(calc) : 0.0;
+                var alphaFactor = 1 / (Math.Cos(alpha) * Math.Cos(alpha));
+                var betaFactor = 1 / (Math.Cos(beta) * Math.Cos(beta));
+                var dz = rodLength / (Math.Sqrt(alphaFactor + betaFactor - 1));
+                var dx = dz * Math.Sqrt(alphaFactor - 1) * Math.Sign(alpha);
+                var dy = dz * Math.Sqrt(betaFactor - 1) * Math.Sign(beta);
 
                 massLinkPoint = new Point3D(
                     x + dx,
