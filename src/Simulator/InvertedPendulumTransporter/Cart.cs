@@ -1,4 +1,5 @@
 ﻿using HelixToolkit.Wpf;
+using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
@@ -34,6 +35,11 @@ namespace InvertedPendulumTransporter
                 wheel.Transform = wheelTransformGroup;
                 cartModel.Children.Add(wheel);
             }
+            var rim = new TubeVisual3D();
+            rim.Fill = Brushes.White;
+            rim.Diameters = new DoubleCollection { 1.5, 0.0 };
+            rim.Path = new Point3DCollection{ new Point3D(0, 0, 1.5), new Point3D(0, 0, 1.75) };
+            cartModel.Children.Add(rim);
         }
 
         public void UpdateState(SystemState systemState)

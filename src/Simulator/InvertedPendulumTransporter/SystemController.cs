@@ -6,66 +6,63 @@ namespace InvertedPendulumTransporter
     public class SystemController
     {
         private Random random;
-        public ControlType controlType { get; set; }
+        public ControlType ControlType { get; set; }
         public double TimeDelta { get; set; }
         private double time;
-        private double controlError;
-        private double previousControlError;
-        private double sumControlErrors;
-        private const double Kp = -50.8;
-        private const double Ti = 7.26;
-        private const double Td = 0.24;
-        private const double MaxVoltage = 230;
+        private PIDCorrector singlePIDCorrector;
+        private PIDCorrector doublePIDCorrector;
 
         public SystemController()
         {
             random = new Random(Guid.NewGuid().GetHashCode());
-        }
-
-        public void SetControlError(double error)
-        {
-            previousControlError = controlError;
-            controlError = error;
-            sumControlErrors += error;
+            singlePIDCorrector = new PIDCorrector();
+            doublePIDCorrector = new PIDCorrector();
         }
 
         public double GetVoltage()
         {
-            switch (controlType)
+            switch (ControlType)
             {
                 case ControlType.Random:
                     return (random.Next(300) - 150) / 1.0;
                 case ControlType.Sinusoidal:
                     return Math.Sin(time * 10) * 2;
                 case ControlType.PID:
-                    return CalculatePIDCorrection();
+                    return CalculateSinglePIDCorrection();
+                case ControlType.DoublePID:
+                    return CalculateDoublePIDCorrection();
                 case ControlType.None:
                     return 0.0;
             }
             return 0.0;
         }
 
-        private double CalculatePIDCorrection()
+        private double CalculateDoublePIDCorrection()
         {
-            var result = Kp * ( controlError + sumControlErrors / Ti + Td * (controlError - previousControlError)/ TimeDelta);
-            return (Math.Abs(result) > MaxVoltage) ? Math.Sign(result) * MaxVoltage : result;
+            return doublePIDCorrector.CalculateParallelPositionAnglePIDCorrection();
         }
 
-        internal void SetTime(double time)
+        private double CalculateSinglePIDCorrection()
+        {
+            return singlePIDCorrector.CalculateAnglePIDCorrection();
+        }
+
+        public void SetTime(double time)
         {
             this.time = time;
         }
 
-        internal void InitializeDefault()
+        public void Reset(double timeDelta)
         {
-            previousControlError = 0.0;
-            controlError = 0.0;
-            sumControlErrors = 0.0;
+            singlePIDCorrector.Reset(timeDelta);
+            doublePIDCorrector.Reset(timeDelta);
         }
 
-        internal void SetControlError(object p)
+        public void SetControlError(double angleError, double positionError)
         {
-            throw new NotImplementedException();
+            singlePIDCorrector.SetAngleError(angleError);
+            doublePIDCorrector.SetAngleError(angleError);
+            doublePIDCorrector.SetPositionError(positionError);
         }
     }
 
@@ -74,6 +71,7 @@ namespace InvertedPendulumTransporter
         Random,
         Sinusoidal,
         None,
-        PID
+        PID,
+        DoublePID
     }
 }

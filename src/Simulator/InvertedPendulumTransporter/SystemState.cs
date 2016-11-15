@@ -11,17 +11,19 @@ namespace InvertedPendulumTransporter
         public OneDimensionalSystemState LastStateY { get; private set; }
 
         public double TimeDelta { get; set; }
+        public double DefaultTimeDelta = 0.01;
 
         public SystemState()
         {
-            InitializeDefault();
+            Reset(0.0,0.0);
         }
 
-        public void InitializeDefault()
+        public void Reset(double horizontalAngle, double verticalAngle)
         {
             StateX = new OneDimensionalSystemState();
+            StateX.Angle = horizontalAngle;
             StateY = new OneDimensionalSystemState();
-            TimeDelta = 0.01;
+            StateY.Angle = verticalAngle;
             ResetTimer();
         }
 

@@ -18,7 +18,7 @@
         public void InitializeDefault()
         {
             Position = 0.0;
-            Angle = 0.0;
+            //Angle = 0.0;
             Velocity = 0.0;
             AngularVelocity = 0.0;
         }

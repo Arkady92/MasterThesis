@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>300px-Cart-pendulum.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="alglibnet2, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\alglibnet2.0.0.0\lib\alglibnet2.dll</HintPath>
@@ -80,12 +83,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Cart.cs" />
+    <Compile Include="PIDCorrector.cs" />
     <Compile Include="SystemController.cs" />
     <Compile Include="OneDimensionalSystemState.cs" />
     <Compile Include="Pendulum.cs" />
     <Compile Include="Solver.cs" />
     <Compile Include="SystemParameters.cs" />
     <Compile Include="SystemState.cs" />
+    <Compile Include="WindController.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -126,6 +131,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="300px-Cart-pendulum.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
