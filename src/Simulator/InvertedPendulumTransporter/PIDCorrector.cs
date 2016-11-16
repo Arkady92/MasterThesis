@@ -61,6 +61,7 @@ namespace InvertedPendulumTransporter
             previousPositionError = 0.0;
             positionError = 0.0;
             firstAngleIteration = true;
+            firstPositionIteration = true;
         }
 
         public double CalculateAnglePIDCorrection()

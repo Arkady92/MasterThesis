@@ -33,9 +33,12 @@
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="Trajectory">
-                        <MenuItem Header="Load"/>
-                        <MenuItem Header="Reset"/>
-                        <MenuItem Header="Clear"/>
+                        <MenuItem Name="LoadTrajectoryItem" Header="Load" Click="LoadTrajectoryItem_Click"/>
+                        <MenuItem Name="ClearTrajectoryItem" Header="Clear" Click="ClearTrajectoryItem_Click"/>
+                        <Separator/>
+                        <MenuItem Header="Show Target Trajectory" IsCheckable="True" />
+                        <MenuItem Header="Show Cart Trajectory" IsCheckable="True" />
+                        <MenuItem Header="Show Pendulum Trajectory" IsCheckable="True" />
                     </MenuItem>
                 </Menu>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
@@ -127,8 +130,8 @@
             </Grid.RowDefinitions>
             <h:HelixViewport3D Name="SimulationScene" ShowFrameRate="True" Grid.Column="1" ShowCoordinateSystem="True" BorderBrush="Black" Panel.ZIndex="1" BorderThickness="2" Camera="{h:PerspectiveCamera 10,10,10}">
                 <h:DefaultLights/>
-                <h:LinesVisual3D  x:Name="TrajectoryChain" Points="{Binding CartTrajectoryPoints}">
-                </h:LinesVisual3D>
+                <!--<h:LinesVisual3D  x:Name="TrajectoryChain" Points="{Binding CartTrajectoryPoints}">
+                </h:LinesVisual3D>-->
                 <!--<h:CubeVisual3D x:Name="FrameStartCube" Visible="False"/>
                 <h:CombinedManipulator x:Name="FrameStartManipulator" TargetTransform="{Binding Transform, ElementName=FrameStartCube}"/>-->
             </h:HelixViewport3D>

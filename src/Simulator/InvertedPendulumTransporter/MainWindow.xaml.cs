@@ -22,6 +22,7 @@ namespace InvertedPendulumTransporter
         private SystemController systemControllerX;
         private SystemController systemControllerY;
         private WindController windController;
+        private TrajectoryController trajectoryController;
         private SystemState systemState;
         private SystemParameters systemParameters;
         public double CorrectAngleX;
@@ -54,12 +55,6 @@ namespace InvertedPendulumTransporter
         public ObservableCollection<DataPoint> VoltagePointsY
         {
             get { return voltagePointsY; }
-        }
-
-        ObservableCollection<Point3D> cartTrajectoryPoints;
-        public ObservableCollection<Point3D> CartTrajectoryPoints
-        {
-            get { return cartTrajectoryPoints; }
         }
 
         /// <summary>
@@ -133,7 +128,15 @@ namespace InvertedPendulumTransporter
         private Point3D sceneCenter;
         private const double SimulationAreaSize = 150.0;
         private bool animationPlaying;
-        private Point3D targetPostion;
+        private Point3DCollection cartTrajectoryPoints;
+        private LinesVisual3D cartTrajectoryLines;
+        private Point3DCollection pendulumTrajectoryPoints;
+        private LinesVisual3D pendulumTrajectoryLines;
+        private Point3DCollection targetTrajectoryPoints;
+        private LinesVisual3D targetTrajectoryLines;
+        private int frameLine;
+        private int frameLineCut = 200;
+        private PointsVisual3D targetTrajectoryCheckPoints;
 
         public double WindPower
         {
@@ -152,20 +155,20 @@ namespace InvertedPendulumTransporter
 
         public double CartPositionX
         {
-            get { return Math.Round(systemState.StateX.Position,2); }
+            get { return Math.Round(systemState.StateX.Position, 2); }
         }
         public double CartPositionY
         {
-            get { return Math.Round(systemState.StateY.Position,2); }
+            get { return Math.Round(systemState.StateY.Position, 2); }
         }
 
         public double PendulumSwingX
         {
-            get { return Math.Round(systemState.StateX.Angle,2); }
+            get { return Math.Round(systemState.StateX.Angle, 2); }
         }
         public double PendulumSwingY
         {
-            get { return Math.Round(systemState.StateY.Angle,2); }
+            get { return Math.Round(systemState.StateY.Angle, 2); }
         }
 
         /// <summary>
@@ -197,18 +200,21 @@ namespace InvertedPendulumTransporter
         {
             if (systemControllerX == null)
                 systemControllerX = new SystemController();
-            systemControllerX.ControlType = ControlType.PID;
+            systemControllerX.ControlType = ControlType.DoublePIDParallel;
             systemControllerX.Reset(systemState.TimeDelta);
 
             if (systemControllerY == null)
                 systemControllerY = new SystemController();
-            systemControllerY.ControlType = ControlType.PID;
+            systemControllerY.ControlType = ControlType.DoublePIDParallel;
             systemControllerY.Reset(systemState.TimeDelta);
 
             if (windController == null)
                 windController = new WindController();
             windController.WindPower = WindPower;
             windController.WindType = WindType.RandomSmooth;
+
+            if (trajectoryController == null)
+                trajectoryController = new TrajectoryController();
         }
 
         private void SetupParameters()
@@ -220,9 +226,7 @@ namespace InvertedPendulumTransporter
             CorrectAngleX = 0.0;
             WindPower = 5.0;
             AnimationSpeed = systemState.DefaultTimeDelta;
-            targetPostion = new Point3D(0,0, 0);
-            cartTrajectoryPoints.Add(new Point3D(0, 0, 0.1));
-            cartTrajectoryPoints.Add(new Point3D(10, 10, 10));
+            systemState.Reset(HorizontalAngle, VerticalAngle);
             UpdateSimuation();
         }
 
@@ -243,12 +247,37 @@ namespace InvertedPendulumTransporter
             voltagePointsX = new ObservableCollection<DataPoint>();
             errorPointsY = new ObservableCollection<DataPoint>();
             voltagePointsY = new ObservableCollection<DataPoint>();
-            cartTrajectoryPoints = new ObservableCollection<Point3D>();
+            cartTrajectoryPoints = new Point3DCollection();
+            pendulumTrajectoryPoints = new Point3DCollection();
+            targetTrajectoryPoints = new Point3DCollection();
         }
 
         private void InitializeScene()
         {
             WindDirectionScene.Camera = SimulationScene.Camera;
+
+            cartTrajectoryLines = new LinesVisual3D();
+            cartTrajectoryLines.Thickness = 3;
+            cartTrajectoryLines.Color = Colors.Blue;
+            cartTrajectoryLines.Points = cartTrajectoryPoints;
+            SimulationScene.Children.Add(cartTrajectoryLines);
+
+            pendulumTrajectoryLines = new LinesVisual3D();
+            pendulumTrajectoryLines.Thickness = 3;
+            pendulumTrajectoryLines.Color = Colors.Gold;
+            pendulumTrajectoryLines.Points = pendulumTrajectoryPoints;
+            SimulationScene.Children.Add(pendulumTrajectoryLines);
+
+            targetTrajectoryLines = new LinesVisual3D();
+            targetTrajectoryLines.Thickness = 3;
+            targetTrajectoryLines.Color = Colors.Red;
+            targetTrajectoryLines.Points = targetTrajectoryPoints;
+
+            targetTrajectoryCheckPoints = new PointsVisual3D();
+            targetTrajectoryCheckPoints.Color = Colors.Purple;
+            targetTrajectoryCheckPoints.Size = 5;
+            targetTrajectoryCheckPoints.Points = targetTrajectoryPoints;
+
 
             var floor = new ModelVisual3D();
             floor.Children.Add(new GridLinesVisual3D() { Center = new Point3D(0.0, 0.0, 0.0), Width = SimulationAreaSize, Length = SimulationAreaSize, MinorDistance = 2, MajorDistance = 10, Thickness = 0.03, Fill = Brushes.Green });
@@ -277,11 +306,12 @@ namespace InvertedPendulumTransporter
         /// </summary>
         private void DispatcherTimerTick(object sender, EventArgs e)
         {
+            var targetPosition = trajectoryController.GetTargetSmoothPosition(systemState.StateX.Position, systemState.StateY.Position);
             windController.UpdateWindForce();
             WindArrow.Point1 = (sceneCenter.ToVector3D() + windController.WindDirection * -5.0).ToPoint3D();
             WindArrow.Point2 = (sceneCenter.ToVector3D() + windController.WindDirection * 5.0).ToPoint3D();
             systemControllerX.SetTime(systemState.Time);
-            systemControllerX.SetControlError(CorrectAngleX - systemState.StateX.Angle, targetPostion.X - systemState.StateX.Position);
+            systemControllerX.SetControlError(CorrectAngleX - systemState.StateX.Angle, targetPosition.X - systemState.StateX.Position);
             systemParameters.Voltage = systemControllerX.GetVoltage();
             systemParameters.VerticalWindForce = windController.GetVerticalWindPower();
             systemParameters.HorizontalWindForce = windController.GetHorizontalXWindPower();
@@ -305,7 +335,7 @@ namespace InvertedPendulumTransporter
             systemState.UpdateSystemStateX(xState);
 
             systemControllerY.SetTime(systemState.Time);
-            systemControllerY.SetControlError(CorrectAngleY - systemState.StateY.Angle, targetPostion.Y - systemState.StateY.Position);
+            systemControllerY.SetControlError(CorrectAngleY - systemState.StateY.Angle, targetPosition.Y - systemState.StateY.Position);
             systemParameters.Voltage = systemControllerY.GetVoltage();
             systemParameters.HorizontalWindForce = windController.GetHorizontalYWindPower();
 
@@ -327,10 +357,25 @@ namespace InvertedPendulumTransporter
             systemState.UpdateTimer();
             UpdateSimuation();
 
-            //var endPoint = new Point3D(xState.Position, yState.Position, 0.1);
-            //cartTrajectoryPoints.Add(endPoint);
-            //cartTrajectoryPoints.Add(endPoint);
+            frameLine++;
+            if (frameLine >= frameLineCut)
+            {
+                //cartTrajectoryPoints.RemoveAt(0);
+                //cartTrajectoryPoints.RemoveAt(0);
+                pendulumTrajectoryPoints.RemoveAt(0);
+                pendulumTrajectoryPoints.RemoveAt(0);
+            }
+            var cartEndPoint = new Point3D(xState.Position, yState.Position, 0.1);
+            cartTrajectoryPoints.Add(cartEndPoint);
+            cartTrajectoryPoints.Add(cartEndPoint);
+            SimulationScene.Children.Remove(cartTrajectoryLines);
+            SimulationScene.Children.Add(cartTrajectoryLines);
 
+            var pendulumEndPoint = pendulum.massLinkPoint;
+            pendulumTrajectoryPoints.Add(pendulumEndPoint);
+            pendulumTrajectoryPoints.Add(pendulumEndPoint);
+            SimulationScene.Children.Remove(pendulumTrajectoryLines);
+            SimulationScene.Children.Add(pendulumTrajectoryLines);
             //if (targetPostion.DistanceTo(new Point3D(xState.Position, yState.Position, 0.0)) <= 0.1)
             //{
             //    targetPostion.X = Math.Cos(alpha) * 5 - 5;
@@ -358,6 +403,11 @@ namespace InvertedPendulumTransporter
         /// </summary>
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
+            if (frameLine == 0)
+            {
+                cartTrajectoryPoints.Add(new Point3D(systemState.StateX.Position, systemState.StateY.Position, 0.1));
+                pendulumTrajectoryPoints.Add(pendulum.massLinkPoint);
+            }
             if (!animationPlaying)
             {
                 animationPlaying = true;
@@ -395,6 +445,7 @@ namespace InvertedPendulumTransporter
             errorPointsY.Clear();
             voltagePointsY.Clear();
             cartTrajectoryPoints.Clear();
+            pendulumTrajectoryPoints.Clear();
             systemState.Reset(HorizontalAngle, VerticalAngle);
             UpdateSimuation();
             systemControllerX.Reset(systemState.TimeDelta);
@@ -404,6 +455,8 @@ namespace InvertedPendulumTransporter
             CorrectAngleX = 0.0;
             ParametersPanel.IsEnabled = true;
             WindArrow.Visible = false;
+            frameLine = 0;
+            trajectoryController.Reset();
         }
 
         private void SimulationScene_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -411,18 +464,49 @@ namespace InvertedPendulumTransporter
             switch (e.Key)
             {
                 case Key.T:
-                    CorrectAngleY -= WindControlPowerDelta;
-                    break;
-                case Key.G:
                     CorrectAngleY += WindControlPowerDelta;
                     break;
-                case Key.F:
-                    CorrectAngleX += WindControlPowerDelta;
+                case Key.G:
+                    CorrectAngleY -= WindControlPowerDelta;
                     break;
-                case Key.H:
+                case Key.F:
                     CorrectAngleX -= WindControlPowerDelta;
                     break;
+                case Key.H:
+                    CorrectAngleX += WindControlPowerDelta;
+                    break;
             }
+        }
+
+        private void LoadTrajectoryItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (SimulationScene.Children.Contains(targetTrajectoryLines))
+                SimulationScene.Children.Remove(targetTrajectoryLines);
+            if (SimulationScene.Children.Contains(targetTrajectoryCheckPoints))
+                SimulationScene.Children.Remove(targetTrajectoryCheckPoints);
+
+            var trajectory = trajectoryController.LoadTrajectory();
+            if (trajectory == null)
+                return;
+            targetTrajectoryPoints = trajectory;
+            targetTrajectoryLines.Points = trajectory;
+            targetTrajectoryCheckPoints.Points = trajectory;
+            SimulationScene.Children.Add(targetTrajectoryLines);
+            SimulationScene.Children.Add(targetTrajectoryCheckPoints);
+
+            SetupParameters();
+            var start = trajectoryController.GetTargetStartPosition();
+
+        }
+
+        private void ClearTrajectoryItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (SimulationScene.Children.Contains(targetTrajectoryLines))
+                SimulationScene.Children.Remove(targetTrajectoryLines);
+            if (SimulationScene.Children.Contains(targetTrajectoryCheckPoints))
+                SimulationScene.Children.Remove(targetTrajectoryCheckPoints);
+            trajectoryController.Clear();
+            SetupParameters();
         }
     }
 }
