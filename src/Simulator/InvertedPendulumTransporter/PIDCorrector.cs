@@ -9,32 +9,47 @@ namespace InvertedPendulumTransporter
         private double sumAngleErrors;
         private double positionError;
         private double previousPositionError;
-        private double sumPositionErrors;
         private const double MaxVoltage = 230;
         private const double KpA = -50.8;
         private const double TiA = 7.26;
         private const double TdA = 0.24;
-        private const double KpP = 6;// 0.05;
-        private const double TiP = double.MaxValue;
-        private const double TdP = 1.5; // 0.7;
+        private const double KpPC = 0.05;
+        private const double TdPC = 0.7;
+        private const double KpPP = 6.0; 
+        private const double TdPP = 1.5; 
         private double TimeDelta;
+        private bool firstAngleIteration;
+        private bool firstPositionIteration;
 
         public PIDCorrector()
         {
+            firstAngleIteration = true;
+            firstPositionIteration = true;
         }
 
         public void SetAngleError(double error)
         {
-            previousAngleError = angleError;
+            if (firstAngleIteration)
+            {
+                previousAngleError = error;
+                firstAngleIteration = false;
+            }
+            else
+                previousAngleError = angleError;
             angleError = error;
             sumAngleErrors += error;
         }
 
         public void SetPositionError(double error)
         {
-            previousPositionError = positionError;
+            if (firstPositionIteration)
+            {
+                previousPositionError = error;
+                firstPositionIteration = false;
+            }
+            else
+                previousPositionError = positionError;
             positionError = error;
-            sumPositionErrors += error;
         }
 
         public void Reset(double timeDelta)
@@ -43,6 +58,9 @@ namespace InvertedPendulumTransporter
             previousAngleError = 0.0;
             angleError = 0.0;
             sumAngleErrors = 0.0;
+            previousPositionError = 0.0;
+            positionError = 0.0;
+            firstAngleIteration = true;
         }
 
         public double CalculateAnglePIDCorrection()
@@ -51,21 +69,17 @@ namespace InvertedPendulumTransporter
             return (Math.Abs(result) > MaxVoltage) ? Math.Sign(result) * MaxVoltage : result;
         }
 
+        public double CalculatePositionPIDCorrection(double angleError)
+        {
+            var result = KpPC * (positionError + TdPC * (positionError - previousPositionError) / TimeDelta);
+            return result;
+        }
+
         public double CalculateParallelPositionAnglePIDCorrection()
         {
-            var A = KpA * (angleError + sumAngleErrors / TiA + TdA * (angleError - previousAngleError) / TimeDelta);
-            var B = KpP * (positionError + sumPositionErrors / TiP + TdP * (positionError - previousPositionError) / TimeDelta);
-
-            //if (Math.Abs(A) < double.Epsilon)
-            //{
-            //    if (Math.Abs(B) < double.Epsilon)
-            //        return 0.0;
-            //    else
-            //        return 0.0;    
-            //    //A = B;
-            //}
-            //return (A * B) / (A + B);
-            var result = A - B;
+            var positionPIDCorrection = KpPP * (positionError + TdPP * (positionError - previousPositionError) / TimeDelta);// *275;
+            var anglePIDCorrection = KpA * (angleError + sumAngleErrors / TiA + TdA * (angleError - previousAngleError) / TimeDelta);
+            var result = (anglePIDCorrection - positionPIDCorrection);
             return (Math.Abs(result) > MaxVoltage) ? Math.Sign(result) * MaxVoltage : result;
         }
     }

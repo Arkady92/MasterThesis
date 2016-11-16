@@ -90,6 +90,7 @@
     <Compile Include="Solver.cs" />
     <Compile Include="SystemParameters.cs" />
     <Compile Include="SystemState.cs" />
+    <Compile Include="TrajectoryController.cs" />
     <Compile Include="WindController.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

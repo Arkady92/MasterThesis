@@ -56,6 +56,12 @@ namespace InvertedPendulumTransporter
             get { return voltagePointsY; }
         }
 
+        ObservableCollection<Point3D> cartTrajectoryPoints;
+        public ObservableCollection<Point3D> CartTrajectoryPoints
+        {
+            get { return cartTrajectoryPoints; }
+        }
+
         /// <summary>
         /// Animation speed ratio [based on inverse exponential function (1 / 2^x)]
         /// </summary>
@@ -125,7 +131,7 @@ namespace InvertedPendulumTransporter
 
         private double windPower;
         private Point3D sceneCenter;
-        private const double SimulationAreaSize = 100.0;
+        private const double SimulationAreaSize = 150.0;
         private bool animationPlaying;
         private Point3D targetPostion;
 
@@ -142,6 +148,24 @@ namespace InvertedPendulumTransporter
                     OnPropertyChanged("WindPower");
                 }
             }
+        }
+
+        public double CartPositionX
+        {
+            get { return Math.Round(systemState.StateX.Position,2); }
+        }
+        public double CartPositionY
+        {
+            get { return Math.Round(systemState.StateY.Position,2); }
+        }
+
+        public double PendulumSwingX
+        {
+            get { return Math.Round(systemState.StateX.Angle,2); }
+        }
+        public double PendulumSwingY
+        {
+            get { return Math.Round(systemState.StateY.Angle,2); }
         }
 
         /// <summary>
@@ -173,18 +197,18 @@ namespace InvertedPendulumTransporter
         {
             if (systemControllerX == null)
                 systemControllerX = new SystemController();
-            systemControllerX.ControlType = ControlType.DoublePID;
+            systemControllerX.ControlType = ControlType.PID;
             systemControllerX.Reset(systemState.TimeDelta);
 
             if (systemControllerY == null)
                 systemControllerY = new SystemController();
-            systemControllerY.ControlType = ControlType.DoublePID;
+            systemControllerY.ControlType = ControlType.PID;
             systemControllerY.Reset(systemState.TimeDelta);
 
             if (windController == null)
                 windController = new WindController();
             windController.WindPower = WindPower;
-            windController.WindType = WindType.RandomSwitch;
+            windController.WindType = WindType.RandomSmooth;
         }
 
         private void SetupParameters()
@@ -194,9 +218,11 @@ namespace InvertedPendulumTransporter
             RodLength = systemParameters.PendulumLength;
             CorrectAngleY = 0.0;
             CorrectAngleX = 0.0;
-            WindPower = 0.0;
+            WindPower = 5.0;
             AnimationSpeed = systemState.DefaultTimeDelta;
-            targetPostion = new Point3D(5, 0, 0);
+            targetPostion = new Point3D(0,0, 0);
+            cartTrajectoryPoints.Add(new Point3D(0, 0, 0.1));
+            cartTrajectoryPoints.Add(new Point3D(10, 10, 10));
             UpdateSimuation();
         }
 
@@ -217,6 +243,7 @@ namespace InvertedPendulumTransporter
             voltagePointsX = new ObservableCollection<DataPoint>();
             errorPointsY = new ObservableCollection<DataPoint>();
             voltagePointsY = new ObservableCollection<DataPoint>();
+            cartTrajectoryPoints = new ObservableCollection<Point3D>();
         }
 
         private void InitializeScene()
@@ -229,7 +256,7 @@ namespace InvertedPendulumTransporter
             SimulationScene.Children.Add(floor);
 
             var walls = new ModelVisual3D();
-            var wallHeight = SimulationAreaSize / 20.0;
+            var wallHeight = SimulationAreaSize / 30.0;
             walls.Children.Add(new GridLinesVisual3D() { Center = new Point3D(0.0, SimulationAreaSize / 2, wallHeight / 2.0), Normal = new Vector3D(0.0, 1.0, 0), Width = wallHeight, Length = SimulationAreaSize, Fill = Brushes.Green });
             walls.Children.Add(new GridLinesVisual3D() { Center = new Point3D(0.0, -SimulationAreaSize / 2, wallHeight / 2.0), Normal = new Vector3D(0.0, 1.0, 0), Width = wallHeight, Length = SimulationAreaSize, Fill = Brushes.Green });
             walls.Children.Add(new GridLinesVisual3D() { Center = new Point3D(SimulationAreaSize / 2, 0.0, wallHeight / 2.0), Normal = new Vector3D(1.0, 0.0, 0), Width = SimulationAreaSize, Length = wallHeight, Fill = Brushes.Green });
@@ -243,13 +270,6 @@ namespace InvertedPendulumTransporter
             pendulum = new Pendulum();
             pendulum.UpdateState(systemState);
             SimulationScene.Children.Add(pendulum.pendulumModel);
-
-            //windArrow = new ArrowVisual3D();
-            //windArrow.Fill = Brushes.Red;
-            //windArrow.Diameter = 1.0;
-            //windArrow.Direction = new Vector3D(0, 0, 1);
-            ////windArrow.Point2 = new Point3D(0, 0, 2);
-            //WindDirectionScene.Children.Add(windArrow);
         }
 
         /// <summary>
@@ -307,7 +327,19 @@ namespace InvertedPendulumTransporter
             systemState.UpdateTimer();
             UpdateSimuation();
 
+            //var endPoint = new Point3D(xState.Position, yState.Position, 0.1);
+            //cartTrajectoryPoints.Add(endPoint);
+            //cartTrajectoryPoints.Add(endPoint);
+
+            //if (targetPostion.DistanceTo(new Point3D(xState.Position, yState.Position, 0.0)) <= 0.1)
+            //{
+            //    targetPostion.X = Math.Cos(alpha) * 5 - 5;
+            //    targetPostion.Y = Math.Sin(alpha) * 5;
+            //    alpha += Math.PI / 32;
+            //}
+
         }
+        //double alpha = 0;// Math.PI / 16;
 
         private void UpdateSimuation()
         {
@@ -315,6 +347,10 @@ namespace InvertedPendulumTransporter
             pendulum.UpdateState(systemState);
             sceneCenter = new Point3D(systemState.StateX.Position, systemState.StateY.Position, pendulum.rodLength / 2);
             SimulationScene.Camera.LookAt(sceneCenter, 0.0);
+            OnPropertyChanged("CartPositionX");
+            OnPropertyChanged("CartPositionY");
+            OnPropertyChanged("PendulumSwingX");
+            OnPropertyChanged("PendulumSwingY");
         }
 
         /// <summary>
@@ -358,6 +394,7 @@ namespace InvertedPendulumTransporter
             voltagePointsX.Clear();
             errorPointsY.Clear();
             voltagePointsY.Clear();
+            cartTrajectoryPoints.Clear();
             systemState.Reset(HorizontalAngle, VerticalAngle);
             UpdateSimuation();
             systemControllerX.Reset(systemState.TimeDelta);

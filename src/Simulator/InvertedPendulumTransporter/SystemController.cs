@@ -29,17 +29,24 @@ namespace InvertedPendulumTransporter
                     return Math.Sin(time * 10) * 2;
                 case ControlType.PID:
                     return CalculateSinglePIDCorrection();
-                case ControlType.DoublePID:
-                    return CalculateDoublePIDCorrection();
+                case ControlType.DoublePIDCascade:
+                    return CalculateDoublePIDCascadeCorrection();
+                case ControlType.DoublePIDParallel:
+                    return CalculateDoublePIDParallelCorrection();
                 case ControlType.None:
                     return 0.0;
             }
             return 0.0;
         }
 
-        private double CalculateDoublePIDCorrection()
+        private double CalculateDoublePIDParallelCorrection()
         {
             return doublePIDCorrector.CalculateParallelPositionAnglePIDCorrection();
+        }
+
+        private double CalculateDoublePIDCascadeCorrection()
+        {
+            return doublePIDCorrector.CalculateAnglePIDCorrection();
         }
 
         private double CalculateSinglePIDCorrection()
@@ -61,8 +68,11 @@ namespace InvertedPendulumTransporter
         public void SetControlError(double angleError, double positionError)
         {
             singlePIDCorrector.SetAngleError(angleError);
-            doublePIDCorrector.SetAngleError(angleError);
             doublePIDCorrector.SetPositionError(positionError);
+            if (ControlType == ControlType.DoublePIDCascade)
+                doublePIDCorrector.SetAngleError(angleError + doublePIDCorrector.CalculatePositionPIDCorrection(angleError));
+            else
+                doublePIDCorrector.SetAngleError(angleError);
         }
     }
 
@@ -72,6 +82,7 @@ namespace InvertedPendulumTransporter
         Sinusoidal,
         None,
         PID,
-        DoublePID
+        DoublePIDCascade,
+        DoublePIDParallel
     }
 }

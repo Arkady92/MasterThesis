@@ -17,6 +17,27 @@
         <Grid Grid.Column ="0">
             <Border BorderBrush="Black" BorderThickness="2"></Border>
             <StackPanel>
+                <Menu BorderThickness="2" BorderBrush="Black">
+                    <MenuItem Header="Control">
+                        <MenuItem Header="Voltage Controller">
+                            <MenuItem Header="PID" IsCheckable="True" />
+                            <MenuItem Header="Double PID Cascade" IsCheckable="True" />
+                            <MenuItem Header="Double PID Parallel" IsCheckable="True" />
+                            <MenuItem Header="Sinusoidal" IsCheckable="True" />
+                            <MenuItem Header="Random" IsCheckable="True" />
+                        </MenuItem>
+                        <MenuItem Header="Wind Generator">
+                            <MenuItem Header="Random Peak" IsCheckable="True" />
+                            <MenuItem Header="Random Switch" IsCheckable="True" />
+                            <MenuItem Header="Random Smooth" IsCheckable="True" />
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Trajectory">
+                        <MenuItem Header="Load"/>
+                        <MenuItem Header="Reset"/>
+                        <MenuItem Header="Clear"/>
+                    </MenuItem>
+                </Menu>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                     <Button Name="PlayButton" Margin="5" Content="Play" Width="50" Height="50" Click="PlayButton_Click"></Button>
                     <Button Name="PauseButton" Margin="5" Content="Pause" Width="50" Height="50" Click="PauseButton_Click" IsEnabled="False"></Button>
@@ -28,7 +49,7 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Content="Time Delta"></Label>
+                        <Label Margin="5,0,0,0"  Grid.Column="0" Content="Time Delta"></Label>
                         <Label Grid.Column="1" Content="{Binding Path=AnimationSpeed}"></Label>
                     </Grid>
                     <Slider Name="AnimationSpeedSlider" Value="{Binding Path=AnimationSpeed, Mode=TwoWay}" Margin="20,0,20,5" Minimum="0.005" Maximum="0.05"></Slider>
@@ -37,7 +58,7 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Horizontal Angle"></Label>
+                        <Label Margin="5,0,0,0"  Content="Horizontal Angle"></Label>
                         <Label Grid.Column="1" Content="{Binding Path=HorizontalAngle, Mode=TwoWay}"></Label>
                     </Grid>
                     <Slider Name="HorizontalAngleSlider" Value="{Binding Path=HorizontalAngle}" Margin="20,0,20,5" Minimum="{Binding Path=MinAngle}" Maximum="{Binding Path=MaxAngle}"></Slider>
@@ -46,7 +67,7 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Vertical Angle"></Label>
+                        <Label Margin="5,0,0,0"  Content="Vertical Angle"></Label>
                         <Label Grid.Column="1" Content="{Binding Path=VerticalAngle}"></Label>
                     </Grid>
                     <Slider Name="VerticalAngleSlider" Value="{Binding Path=VerticalAngle}" Margin="20,0,20,5" Minimum="{Binding Path=MinAngle}" Maximum="{Binding Path=MaxAngle}"></Slider>
@@ -55,7 +76,7 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Rod Length"></Label>
+                        <Label Margin="5,0,0,0"  Content="Rod Length"></Label>
                         <Label Grid.Column="1" Content="{Binding Path=RodLength}"></Label>
                     </Grid>
                     <Slider Name="RodLengthSlider" Value="{Binding Path=RodLength}" Margin="20,0,20,5" Minimum="0.15" Maximum="1.5"></Slider>
@@ -64,75 +85,38 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Wind Power"></Label>
+                        <Label Margin="5,0,0,0"  Content="Wind Power"></Label>
                         <Label Grid.Column="1" Content="{Binding Path=WindPower}"></Label>
                     </Grid>
                     <Slider Name="WindPowerSlider" Value="{Binding Path=WindPower}" Margin="20,0,20,5" Minimum="0.0" Maximum="50"></Slider>
-
-                    <!--<Label Content="Curve Description"></Label>-->
-                    <!--<TabControl Name="TabControlPanel" Margin="5" Background="White" BorderThickness="1" BorderBrush="Black" SelectionChanged="TabControl_SelectionChanged">
-                    <TabItem Header="[X, Y, Z]" Name="XYZTabItem">
-                        <StackPanel>
-                            <Label Content="Parametrization of X"></Label>
-                            <TextBox Name="XParametrizationTextBox" Text="{Binding Path=XParametrization, Mode=TwoWay}" Margin="20,0,20,0"></TextBox>
-                            <Label Content="Parametrization of Y"></Label>
-                            <TextBox Name="YParametrizationTextBox" Text="{Binding Path=YParametrization}" Margin="20,0,20,0"></TextBox>
-                            <Label Content="Parametrization of Z"></Label>
-                            <TextBox Name="ZParametrizationTextBox" Text="{Binding Path=ZParametrization}" Margin="20,0,20,0"></TextBox>
-                        </StackPanel>
-                    </TabItem>
-                    <TabItem Header="C-S-Frame" Name="CSFrameTabItem">
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="2,5,0,0">
-                                <Label Content="Curvature"></Label>
-                                <TextBox Name="CurvatureParametrizationTextBox" Text="{Binding Path=CurvatureParametrization, Mode=TwoWay}" Width="140" Margin="0"></TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="2,5,0,0">
-                                <Label Content="Skewness"></Label>
-                                <TextBox Name="SkewnessParametrizationTextBox" Text="{Binding Path=SkewnessParametrization}" Width="140" Margin="0"></TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="35,0,0,0">
-                                <Label Content="X0"></Label>
-                                <TextBox Name="StartPointXTextBox" Text="{Binding Path=FrameStartPointX}" Width="40" Margin="5"></TextBox>
-                                <TextBox Name="StartPointYTextBox" Text="{Binding Path=FrameStartPointY}" Width="40" Margin="5"></TextBox>
-                                <TextBox Name="StartPointZTextBox" Text="{Binding Path=FrameStartPointZ}" Width="40" Margin="5"></TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-                                <Label Content="Tangent"></Label>
-                                <TextBox Name="TangentVectorXTextBox" Text="{Binding Path=FrameTangentVectorX}" Width="40" Margin="5"></TextBox>
-                                <TextBox Name="TangentVectorYTextBox" Text="{Binding Path=FrameTangentVectorY}" Width="40" Margin="5"></TextBox>
-                                <TextBox Name="TangentVectorZTextBox" Text="{Binding Path=FrameTangentVectorZ}" Width="40" Margin="5"></TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
-                                <Label Content="Normal"></Label>
-                                <TextBox Name="NormalVectorXTextBox" Text="{Binding Path=FrameNormalVectorX}" Width="40" Margin="5"></TextBox>
-                                <TextBox Name="NormalVectorYTextBox" Text="{Binding Path=FrameNormalVectorY}" Width="40" Margin="5"></TextBox>
-                                <TextBox Name="NormalVectorZTextBox" Text="{Binding Path=FrameNormalVectorZ}" Width="40" Margin="5"></TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Binormal"></Label>
-                                <TextBox Name="BinromalVectorXTextBox" Text="{Binding Path=FrameBinormalVectorX}" Width="40" Margin="5"></TextBox>
-                                <TextBox Name="BinromalVectorYTextBox" Text="{Binding Path=FrameBinormalVectorY}" Width="40" Margin="5"></TextBox>
-                                <TextBox Name="BinormalVectorZTextBox" Text="{Binding Path=FrameBinormalVectorZ}" Width="40" Margin="5"></TextBox>
-                            </StackPanel>
-                        </StackPanel>
-                    </TabItem>
-                </TabControl>-->
-                    <!--<Label Content="Minimum parameter value"></Label>
-                <TextBox Name="MinParameterValueTextBox" Text="{Binding Path=MinParameterValue}" Width="50" Margin="20,0,20,0" HorizontalAlignment="Left"></TextBox>
-                <Label Content="Maximum parameter value"></Label>
-                <TextBox Name="MaxParameterValueTextBox" Text="{Binding Path=MaxParameterValue}" Width="50" Margin="20,0,20,0" HorizontalAlignment="Left"></TextBox>
-                <Label Content="Curve Segments Count"></Label>
-                <TextBox Name="CurveSegmentsCount" Text="{Binding Path=SegmentsCount}" Width="50" Margin="20,0,20,10" HorizontalAlignment="Left"></TextBox>
-                -->
-                    <!--<Button Name="LoadCurveButton" Margin="20,0,20,0" Content="Load Curve" Width="100" Height="30" Click="LoadCurveButton_Click"></Button>-->
-                    <!--
-                <Label Content="Display"></Label>-->
-                    <!--<CheckBox Name="WindCheckBox" Content="Wind Enabled" Margin="20,0,20,5" IsChecked="{Binding Path=WindEnabled}"></CheckBox>-->
-                    <!--<CheckBox Foreground="Green" Name="TangentPlaneCheckBox" Content="Tangent" Margin="20,0,20,5" IsChecked="{Binding Path=TangentPlaneSelected}"></CheckBox>
-                <CheckBox Foreground="Cyan" Name="NormalPlaneCheckBox" Content="Normal" Margin="20,0,20,5" IsChecked="{Binding Path=NormalPlaneSelected}"></CheckBox>
-                <CheckBox Foreground="Red" Name="BinormalPlaneCheckBox" Content="Binormal" Margin="20,0,20,5" IsChecked="{Binding Path=BinormalPlaneSelected}"></CheckBox>
-                <CheckBox Name="SkewnessInterpretationCheckBox" Content="Skewness Interpretation" Margin="20,0,20,5" IsChecked="{Binding Path=SkewnessInterpretationSelected}"></CheckBox>-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Margin="5,0,0,0" Content="Position"></Label>
+                        <Label Content="X:" Grid.Column="1"></Label>
+                        <Label Grid.Column="2" Content="{Binding Path=CartPositionX}"></Label>
+                        <Label Content="Y:" Grid.Column="3"></Label>
+                        <Label Grid.Column="4" Content="{Binding Path=CartPositionY}"></Label>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Margin="5,0,0,0"  Content="Swing"></Label>
+                        <Label Content="X:" Grid.Column="1"></Label>
+                        <Label Grid.Column="2" Content="{Binding Path=PendulumSwingX}"></Label>
+                        <Label Content="Y:" Grid.Column="3"></Label>
+                        <Label Grid.Column="4" Content="{Binding Path=PendulumSwingY}"></Label>
+                    </Grid>
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -141,16 +125,16 @@
                 <RowDefinition Height="3*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
-            <h:HelixViewport3D Name="SimulationScene" ShowFrameRate="True" Grid.Column="1" ShowCoordinateSystem="True" BorderBrush="Black" Panel.ZIndex="2" BorderThickness="2" Camera="{h:PerspectiveCamera 10,10,10}">
+            <h:HelixViewport3D Name="SimulationScene" ShowFrameRate="True" Grid.Column="1" ShowCoordinateSystem="True" BorderBrush="Black" Panel.ZIndex="1" BorderThickness="2" Camera="{h:PerspectiveCamera 10,10,10}">
                 <h:DefaultLights/>
-                <!--<h:LinesVisual3D Points="{Binding Path=CurvePoints}" Thickness="2" Color="Blue">
+                <h:LinesVisual3D  x:Name="TrajectoryChain" Points="{Binding CartTrajectoryPoints}">
                 </h:LinesVisual3D>
-                <h:CubeVisual3D x:Name="FrameStartCube" Visible="False"/>
+                <!--<h:CubeVisual3D x:Name="FrameStartCube" Visible="False"/>
                 <h:CombinedManipulator x:Name="FrameStartManipulator" TargetTransform="{Binding Transform, ElementName=FrameStartCube}"/>-->
             </h:HelixViewport3D>
             <!--<Button x:Name="LoadFrameButton" Content="Apply Changes" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="100" Height="30" Click="LoadFrameButton_Click"/>
             <Button x:Name="ResetFrameButton" Content="Reset Changes" Grid.Column="1" HorizontalAlignment="Left" Margin="120,0,0,10" VerticalAlignment="Bottom" Width="100" Height="30" Click="ResetFrameButton_Click"/>-->
-            <h:HelixViewport3D CameraMode="FixedPosition" Name="WindDirectionScene" ShowViewCube="False" BorderBrush="Black" BorderThickness="0" Panel.ZIndex="1" Margin="10,10,434,268" Camera="{h:PerspectiveCamera 10,10,10}">
+            <h:HelixViewport3D CameraMode="FixedPosition" Name="WindDirectionScene" ShowViewCube="False" BorderBrush="Black" BorderThickness="0" Panel.ZIndex="2" Margin="10,10,434,268" Camera="{h:PerspectiveCamera 10,10,10}">
                 <h:DefaultLights></h:DefaultLights>
                 <h:ArrowVisual3D Fill="Red" Visible="False" x:Name="WindArrow"></h:ArrowVisual3D>
             </h:HelixViewport3D>

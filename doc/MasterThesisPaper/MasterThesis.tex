@@ -90,10 +90,11 @@
 \textbf{Opracowanie symulatora transportera wahadła odwróconego na wózku}
 \end{center}
 
-%\begin{center}
-%\Large
-%\textbf{Opracowanie symulatora transportera wahadła odwróconego na wózku}
-%\end{center}
+\begin{center}
+\Large
+\textbf{Development of simulator for transporter \\of inverted pendulum on a cart}
+\end{center}
+
 
 \vfill
 \begin{center}
@@ -129,8 +130,52 @@ podpis promotora & \hspace*{100pt} & podpis autora
 \selectlanguage{polish}
 
 \begin{abstract}
+Rozwój nowoczesnych technologii opiera się w głównej mierze na usprawnianiu istniejących zasobów oraz poszukiwaniu innowacyjnych rozwiązań. Ze względu na ograniczenia finansowe, jak również niebezpieczeństwo wystąpienia niepożądanych efektów pracy, nie można pozwolić sobie na bezpośrednie wdrażanie pomysłów. W celu znacznego zmniejszenia ryzyka warto rozważyć zastosowanie narzędzi oferowanych przez środowiska symulacyjne. Komputer jest w stanie wybaczyć błędy popełniane na etapie projektowania, jak również z niezwykłą precyzją potrafi zbadać dane zagadnienie i odpowiedzieć na większość pytań zadanych przez użytkownika. Dodatkowo, odpowiednio przygotowany, posiada możliwość wykonania optymalizacji procesu tak, by uzyskać zmaksymalizowany efekt końcowy. Przedstawione argumenty nie pozostawiają wątpliwości, że symulacja jest niezbędnym elementem przy wdrażaniu nowej technologii.
+
+Niniejsza praca wpisuje się w przestawioną retorykę, gdyż poświęcona jest opracowaniu symulatora transportera wahadła odwróconego na wózku. Bazą dla projektu jest dobrze znane zagadnienie dwuwymiarowego układu złożonego z wahadła odwróconego umieszczonego na ruchomej podstawie. Głównym zadaniem systemu jest utrzymanie wahadła w niestabilnym punkcie równowagi i reagowanie na zakłócenia pochodzące z zewnątrz poprzez odpowiedni regulator napięcia na silniku sterującym ruchem podstawy. Prezentowana praca podchodzi do tego zagadnienia w sposób innowacyjny. Wspomniany układ zostaje przeniesiony do świata trójwymiarowego, w którym dwa niezależne systemy związane z kierunkami poziomych osi głównych zostają połączone w jeden moduł sterowania układem. Dzięki temu pojawia się możliwość zadania trajektorii i zmuszenia układu do jak najwierniejszego odwzorowania ścieżki ruchu. Dodatkowym elementem projektu jest zadanie zewnętrznej siły pochodzącej od wiatru, z którą transporter musi sobie poradzić w taki sposób, by zminimalizować ryzyko stracenia kontroli nad wahadłem. 
+
+Przygotowane rozwiązanie nie posiada jeszcze odzwierciedlenia w technice, natomiast doskonale odnajduje się w świecie symulacji i pozwala na dogłębną analizę pracy układu, jak również wykorzystanie go w grach komputerowych jako wirtualnego pojazdu z nietrywialnym sterowaniem. 
+
+Celem pracy jest zbudowanie uniwersalnego symulatora z konkretną realizacją przedstawionego problemu. Dodatkowym elementem jest możliwość dokonania dogłębnej analizy procesu tworzenia symulacji i wypracowania optymalnego rozwiązania. Ponadto dokument ma na celu ilustrację architektury i ogólnego schematu działania programu, a także przedstawienie wyników przeprowadzonych testów.
+
+Pierwszy rozdział tekstu stanowi bazę teoretyczną dalszych rozważań. Zawiera on podstawowe definicje, przybliża tło fizyczne oraz istniejące rozwiązania. Rozdział drugi opisuje logikę systemu. Rozdział trzeci skupia się na mechanice układu oraz porównaniu rozwiązań przyjętych w projekcie. W czwartym i piątym rozdziale zostają omówione architektura i dokumentacja techniczna systemu. Rozdział szósty obejmuje instrukcję obsługi oraz opis testów. Ostatni rozdział podsumowuje całość pracy. Prezentuje wnioski oraz przedstawia przyszłe, możliwe kierunki rozwoju systemu.
 \end{abstract}
 
+\selectlanguage{english}
+\begin{abstract}
+Development of new technologies is based mainly on the analysis, improvement of existing resources and finding innovative solutions. Unfortunately, due to financial constraints, as well as the risk of adverse effects it is not recommended to implement the idea without special preparation. In order to significantly reduce the risks using the tools offered by simulation environments should be considered. The computer is able to forgive the mistakes made at the design stage, as well as it can investigate the matter with great precision and answer most of the questions asked by the user. In addition it has the possibility of optimizing processes, so as to obtain the final effect maximized. These arguments leave no doubt that the simulation is an essential element in implementing the new technology.
+
+The thesis is devoted to the development of a simulator for transporter of inverted pendulum on a cart. The project is based on well-known problem of two-dimensional system consisting of an inverted pendulum mounted on a movable platform. The main task of the system is to keep the pendulum in an unstable equilibrium and respond to noises from the environment through the special voltage controller of the platform's engine. The thesis approaches this problem in an innovative way. The system is transferred to a three-dimensional world in which two independent systems associated with the horizontal directions of the principal axes are integrated into a unit. As a result, the movement trajectory can be applied to the system and the pendulum should be transported according to given trajectory. An additional element of the project is adding the wind force. The transporter have to deal with the noise in such a way as to minimize the risk of losing control of the pendulum. 
+
+Prepared solution has not yet reflected in the technique however it perfectly finds itself in the world of simulation. The project allows for in-depth analysis of system's dynamics, as well as it can be used in computer games as a virtual vehicle with non-trivial control.
+
+The aim of the thesis is to build a universal simulator with a concrete realization of the presented problem. An additional element is the possibility of an in-depth analysis of simulation's creation to develop the optimal solution. Furthermore, the document was prepared to illustrate the architecture and general scheme of the system, as well as present the results of tests.
+
+The first chapter is a theoretical basis for further discussion. It includes basic definitions, brings physical background and discusses the existing solutions. The second chapter describes the logic of the whole program. The third chapter focuses on the mechanics of the system and comparison of the solutions adopted in the project. In the fourth and fifth chapter the system architecture and technical documentation are discussed. Chapter six covers manual and tests' description. The last chapter summarizes the whole work. It presents conclusions and future possible directions of development of the system.
+\end{abstract}
+
+\selectlanguage{polish}
+
+%% Key words
+\newpage
+\pagestyle{empty}
+\vspace*{\fill}
+\begin{center}
+\LARGE\textbf{Słowa kluczowe}\\
+\end{center}
+\begin{center}
+Symulacja\\
+Transporter\\
+Wahadło odwrócone na wózku\\
+Dynamika układu\\
+Trajektoria ruchu\\
+Stabilizacja układu\\
+Regulator PID\\
+Zakłócenia siłą wiatru 
+\end{center}
+\vspace{\fill}
+
+%% Acknowledgements
 \newpage
 \pagestyle{empty}
 \vspace*{\fill}
@@ -138,12 +183,14 @@ podpis promotora & \hspace*{100pt} & podpis autora
 \LARGE\textbf{Podziękowania}\\
 \end{center}
 
+Chciałbym wyrazić wdzięczność promotorowi: prof. Krzysztofowi Marciniakomwi za jego wsparcie i dobre rady odnośnie kwestii merytorycznych jak i praktycznej części pracy. Specjalne podziękowania dla całej kadry zakładu CAD/CAM na wydziale Matematyki i Nauk Informacyjnych za przekazanie podstaw umożliwiających osiągnięcie odpowiedniego zaawansowania pracy i ugruntowanie wiedzy niezbędnej w przyszłej karierze zawodowej.
+
 \vspace{\fill}
 
 %% -------- table of contents --------
 \newpage
 \pagestyle{plain}
-\setcounter{page}{3}
+\setcounter{page}{5}
 \tableofcontents
 
 %% -------- chapter I --------
@@ -154,24 +201,31 @@ podpis promotora & \hspace*{100pt} & podpis autora
 
 \chapter{Wstęp}
 \section{Podstawowe definicje}
+\section{Tło fizyczne}
 \section{Motywacja i cele aplikacji}
+\section{Przegląd istniejących rozwiązań}
 
 
 %% -------- chapter II --------
 \newpage
 \chapter{Definicja projektu}
 \section{Zakres projektu}
-\section{Charakterystyka użytkownika}
 \section{Analiza wymagań}
-\subsection{Ogólne wytyczne}
-\subsection{Funkcjonalności}
-\subsection{Ograniczenia}
+\section{Opis Funkcjonalności}
+\section{Ograniczenia}
 
 
 %% -------- chapter III --------
 \newpage
-\chapter{Opis technologii}
-\subsection{Porównanie rozwiązań}
+\chapter{Opis rozwiązania}
+\section{Mechanika systemu}
+\subsection{Model matematyczny ruchu}
+\subsection{Linearyzacja modelu}
+\subsection{Stabilizacja zakłóceń układu}
+\subsection{Ruch transportera po zadanej trajektorii}
+\subsection{Linearyzacja modelu}
+\section{Porównanie przyjętych rozwiązań}
+
 
 %% -------- chapter IV --------
 \chapter{Architektura systemu}
@@ -213,6 +267,8 @@ podpis promotora & \hspace*{100pt} & podpis autora
 \begin{thebibliography}{11}
 
 \bibitem{B} Stanisław Białas, \emph{Macierze. Wybrane problemy}, AGH Uczelniane Wydawnictwa Naukowo-Dydaktyczne, Kraków, 2006.
+
+\bibitem{B} Robles R., Shardt Y., \emph{Linear motion inverted pendulum, derivation of the state-space model}
 
 \bibitem{VuforiaFeatures} \emph{Vuforia Features},
 \\*
