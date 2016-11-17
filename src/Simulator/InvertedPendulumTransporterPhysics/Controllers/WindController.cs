@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Windows.Media.Media3D;
 
-namespace InvertedPendulumTransporter
+namespace InvertedPendulumTransporterPhysics.Controllers
 {
     public class WindController
     {
         public WindType WindType { get; set; }
         public double WindPower { get; set; }
-        public Vector3D WindDirection { get; private set; }
+        public double MaxWindPower { get { return 10.0; } }
+        public double MinWindPower { get { return 0.0; } }
+        public double DefaultWindPower { get { return 0.0; } }
+        public const WindType DefaultWindType = WindType.RandomSmooth;
 
-        private const double DefaultWindPower = 0.0;
-        private const WindType DefaultWindType = WindType.RandomPeak;
+        private Vector3D windDirection;
         private int tickCounter = 0;
         private const int peakResetValue = 10;
         private const int switchResetValue = 100;
@@ -24,24 +26,24 @@ namespace InvertedPendulumTransporter
             random = new Random(Guid.NewGuid().GetHashCode());
             WindType = DefaultWindType;
             WindPower = DefaultWindPower;
-            WindDirection = GeneratePeakWindDirection();
-            startWindDirection = WindDirection;
+            windDirection = GeneratePeakWindDirection();
+            startWindDirection = windDirection;
             endWindDirection = GeneratePeakWindDirection();
         }
 
-        public double GetHorizontalXWindPower()
+        public double GetXCoordWindPower()
         {
-            return WindDirection.X * WindPower;
+            return windDirection.X * WindPower;
         }
 
-        public double GetHorizontalYWindPower()
+        public double GetYCoordWindPower()
         {
-            return WindDirection.Y * WindPower;
+            return windDirection.Y * WindPower;
         }
 
-        public double GetVerticalWindPower()
+        public double GetZCoordWindPower()
         {
-            return WindDirection.Z * WindPower;
+            return windDirection.Z * WindPower;
         }
 
         public Vector3D GeneratePeakWindDirection()
@@ -52,8 +54,8 @@ namespace InvertedPendulumTransporter
 
         private Vector3D GenerateSwitchWindDirection()
         {
-            var result = new Vector3D(-Math.Sign(WindDirection.X) * random.NextDouble(), 
-                -Math.Sign(WindDirection.X) * random.NextDouble(), -Math.Sign(WindDirection.X) * random.NextDouble());
+            var result = new Vector3D(-Math.Sign(windDirection.X) * random.NextDouble(), 
+                -Math.Sign(windDirection.X) * random.NextDouble(), -Math.Sign(windDirection.X) * random.NextDouble());
             return Normalize(result);
             
         }
@@ -63,7 +65,7 @@ namespace InvertedPendulumTransporter
             return vector * (1 / Math.Sqrt(vector.LengthSquared));
         }
 
-        public void UpdateWindForce()
+        public Vector3D UpdateWindForce()
         {
             switch (WindType)
             {
@@ -72,7 +74,7 @@ namespace InvertedPendulumTransporter
                     if(tickCounter >= peakResetValue)
                     {
                         tickCounter = 0;
-                        WindDirection = GeneratePeakWindDirection();
+                        windDirection = GeneratePeakWindDirection();
                     }
                     break;
                 case WindType.RandomSwitch:
@@ -80,7 +82,7 @@ namespace InvertedPendulumTransporter
                     if (tickCounter >= switchResetValue)
                     {
                         tickCounter = 0;
-                        WindDirection = GenerateSwitchWindDirection();
+                        windDirection = GenerateSwitchWindDirection();
                     }
                     break;
                 case WindType.RandomSmooth:
@@ -91,18 +93,18 @@ namespace InvertedPendulumTransporter
                         startWindDirection = endWindDirection;
                         endWindDirection = GenerateSwitchWindDirection();
                     }
-                    WindDirection = startWindDirection * (smoothResetValue - tickCounter) / 100.0 + endWindDirection * tickCounter / 100.0;
-                    WindDirection = Normalize(WindDirection);
+                    windDirection = startWindDirection * (smoothResetValue - tickCounter) / 100.0 + endWindDirection * tickCounter / 100.0;
+                    windDirection = Normalize(windDirection);
                     break;
                 default:
                     break;
             }
+            return windDirection;
         }
 
         public void Reset()
         {
             tickCounter = 0;
-            WindType = DefaultWindType;
         }
     }
 

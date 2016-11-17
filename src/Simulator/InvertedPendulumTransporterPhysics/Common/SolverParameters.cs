@@ -1,6 +1,6 @@
-﻿namespace InvertedPendulumTransporter
+﻿namespace InvertedPendulumTransporterPhysics.Common
 {
-    public class SystemParameters
+    public class SolverParameters
     {
         public double PendulumMass { get; set; }
         public double CartMass { get; set; }
@@ -12,16 +12,16 @@
         public double VerticalWindForce { get; set; }
         public const double G = 9.83;
 
-        public SystemParameters()
+        public SolverParameters()
         {
-            PendulumMass = 2.31; // 0.231
+            PendulumMass = 0.231;
             CartMass = 0.792;
             PendulumLength = 0.610;
             Gamma1 = 1.72;
             Gamma2 = 7.68;
             Voltage = 0.0;
             HorizontalWindForce = 0.0;
-            VerticalWindForce = 50.0;
+            VerticalWindForce = 0.0;
         }
     }
 }

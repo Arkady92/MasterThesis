@@ -38,10 +38,6 @@
     <ApplicationIcon>300px-Cart-pendulum.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="alglibnet2, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\alglibnet2.0.0.0\lib\alglibnet2.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="HelixToolkit, Version=2015.1.715.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
       <HintPath>..\packages\HelixToolkit.2015.1.715\lib\portable-net4+sl4+wp71+win8\HelixToolkit.dll</HintPath>
       <Private>True</Private>
@@ -64,6 +60,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -82,16 +80,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Cart.cs" />
-    <Compile Include="PIDCorrector.cs" />
-    <Compile Include="SystemController.cs" />
-    <Compile Include="OneDimensionalSystemState.cs" />
-    <Compile Include="Pendulum.cs" />
-    <Compile Include="Solver.cs" />
-    <Compile Include="SystemParameters.cs" />
-    <Compile Include="SystemState.cs" />
-    <Compile Include="TrajectoryController.cs" />
-    <Compile Include="WindController.cs" />
+    <Compile Include="Controls\PlotsControl.xaml.cs">
+      <DependentUpon>PlotsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Controls\SceneControl.xaml.cs">
+      <DependentUpon>SceneControl.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\PlotsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -104,8 +103,16 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Controls\SceneControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ICart.cs" />
+    <Compile Include="Models\IModel.cs" />
+    <Compile Include="Models\IPendulum.cs" />
+    <Compile Include="Models\Pendulum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -136,6 +143,13 @@
   <ItemGroup>
     <Resource Include="300px-Cart-pendulum.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InvertedPendulumTransporterPhysics\InvertedPendulumTransporterPhysics.csproj">
+      <Project>{17924a04-5b6a-4e34-84b8-9cfdf82004fe}</Project>
+      <Name>InvertedPendulumTransporterPhysics</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

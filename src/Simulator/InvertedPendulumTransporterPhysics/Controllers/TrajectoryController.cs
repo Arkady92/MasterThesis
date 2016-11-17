@@ -1,5 +1,4 @@
-﻿using HelixToolkit.Wpf;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,14 +7,14 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media.Media3D;
 
-namespace InvertedPendulumTransporter
+namespace InvertedPendulumTransporterPhysics.Controllers
 {
     public class TrajectoryController
     {
         private List<Point3D> trajectoryPoints;
         private int actualPointIndex = 0;
         private const double ZValue = 0.05;
-        private const double DistanceEps = 0.01;
+        private const double DistanceEps = 0.05;
         private double averageDistance;
         private const double ApproximateDistanceFactor = 0.75;
 
@@ -68,8 +67,8 @@ namespace InvertedPendulumTransporter
                     result.Add(trajectoryPoints[trajectoryPoints.Count - 1]);
                     return result;
                 }
+                MessageBox.Show("Trajectory cannot be loaded.");
             }
-            MessageBox.Show("Trajectory cannot be loaded.");
             return null;
         }
 
@@ -129,6 +128,14 @@ namespace InvertedPendulumTransporter
 
         private bool WriteTrajectoryToFile(string fileName)
         {
+            var alpha = 0.0;
+            var r = 10.0;
+            var step = Math.PI / 18;
+            for (int i = 0; i <= 36; i++)
+            {
+                trajectoryPoints.Add(new Point3D(Math.Cos(alpha) * r, Math.Sin(alpha) * r, 0.0));
+                alpha += step;
+            }
             try
             {
                 using (StreamWriter writer = new StreamWriter(fileName))
@@ -151,18 +158,24 @@ namespace InvertedPendulumTransporter
             return trajectoryPoints[0];
         }
 
-        public Point3D GetTargetAccuratePosition(double x, double y)
+        public Point3D GetTargetAccuratePosition(double x, double y, out bool nextCheckPoint)
         {
+            nextCheckPoint = false;
             if (!TrajectoryEnabled)
                 return new Point3D();
             if (TrajectoryAchieved)
                 return trajectoryPoints[trajectoryPoints.Count - 1];
 
             if (trajectoryPoints[actualPointIndex].DistanceTo(new Point3D(x, y, ZValue)) < DistanceEps)
+            {
                 actualPointIndex++;
+                nextCheckPoint = true;
+            }
+
             if (actualPointIndex >= trajectoryPoints.Count)
             {
                 TrajectoryAchieved = true;
+                nextCheckPoint = false;
                 return trajectoryPoints[trajectoryPoints.Count - 1];
             }
             return trajectoryPoints[actualPointIndex];

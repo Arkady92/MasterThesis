@@ -1,4 +1,4 @@
-﻿namespace InvertedPendulumTransporter
+﻿namespace InvertedPendulumTransporterPhysics.Common
 {
     public class OneDimensionalSystemState
     {

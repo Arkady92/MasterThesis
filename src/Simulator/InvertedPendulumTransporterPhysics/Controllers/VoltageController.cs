@@ -1,22 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace InvertedPendulumTransporter
+namespace InvertedPendulumTransporterPhysics.Controllers
 {
-    public class SystemController
+    public class VoltageController : IVoltageController
     {
-        private Random random;
         public ControlType ControlType { get; set; }
-        public double TimeDelta { get; set; }
+        public const ControlType DefaultControlType = ControlType.DoublePIDParallel;
+
+        private Random random;
         private double time;
         private PIDCorrector singlePIDCorrector;
         private PIDCorrector doublePIDCorrector;
 
-        public SystemController()
+        public VoltageController()
         {
             random = new Random(Guid.NewGuid().GetHashCode());
             singlePIDCorrector = new PIDCorrector();
             doublePIDCorrector = new PIDCorrector();
+            ControlType = DefaultControlType;
         }
 
         public double GetVoltage()
@@ -39,21 +40,6 @@ namespace InvertedPendulumTransporter
             return 0.0;
         }
 
-        private double CalculateDoublePIDParallelCorrection()
-        {
-            return doublePIDCorrector.CalculateParallelPositionAnglePIDCorrection();
-        }
-
-        private double CalculateDoublePIDCascadeCorrection()
-        {
-            return doublePIDCorrector.CalculateAnglePIDCorrection();
-        }
-
-        private double CalculateSinglePIDCorrection()
-        {
-            return singlePIDCorrector.CalculateAnglePIDCorrection();
-        }
-
         public void SetTime(double time)
         {
             this.time = time;
@@ -73,6 +59,22 @@ namespace InvertedPendulumTransporter
                 doublePIDCorrector.SetAngleError(angleError + doublePIDCorrector.CalculatePositionPIDCorrection(angleError));
             else
                 doublePIDCorrector.SetAngleError(angleError);
+        }
+
+
+        private double CalculateDoublePIDParallelCorrection()
+        {
+            return doublePIDCorrector.CalculateParallelPositionAnglePIDCorrection();
+        }
+
+        private double CalculateDoublePIDCascadeCorrection()
+        {
+            return doublePIDCorrector.CalculateAnglePIDCorrection();
+        }
+
+        private double CalculateSinglePIDCorrection()
+        {
+            return singlePIDCorrector.CalculateAnglePIDCorrection();
         }
     }
 

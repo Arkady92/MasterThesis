@@ -1,29 +1,37 @@
 ﻿using System;
+using System.Windows.Media.Media3D;
 
-namespace InvertedPendulumTransporter
+namespace InvertedPendulumTransporterPhysics.Common
 {
     public class SystemState
     {
         public OneDimensionalSystemState StateX { get; private set; }
         public OneDimensionalSystemState StateY { get; private set; }
-        public double Time { get; set; }
         public OneDimensionalSystemState LastStateX { get; private set; }
         public OneDimensionalSystemState LastStateY { get; private set; }
 
-        public double TimeDelta { get; set; }
+        public double MaxAngle { get { return Math.PI / 2.0 * 0.75; } }
+        public double MinAngle { get { return -Math.PI / 2.0 * 0.75; } }
+
         public double DefaultTimeDelta = 0.01;
+        public double Time { get; set; }
+        public double TimeDelta { get; set; }
+        public SolverParameters SolverParameters { get; set; }
 
         public SystemState()
         {
-            Reset(0.0,0.0);
+            Reset();
+            SolverParameters = new SolverParameters();
         }
 
-        public void Reset(double horizontalAngle, double verticalAngle)
+        public void Reset(double xCoordAngle = 0.0, double yCoordAngle = 0.0, double xCoordPosition = 0.0, double yCoordPosition = 0.0)
         {
             StateX = new OneDimensionalSystemState();
-            StateX.Angle = horizontalAngle;
+            StateX.Angle = xCoordAngle;
+            StateX.Position = xCoordPosition;
             StateY = new OneDimensionalSystemState();
-            StateY.Angle = verticalAngle;
+            StateY.Angle = yCoordAngle;
+            StateY.Position = yCoordPosition;
             ResetTimer();
         }
 
@@ -52,6 +60,11 @@ namespace InvertedPendulumTransporter
         {
             LastStateY = StateY;
             StateY = yState;
+        }
+
+        public Point3D GetSystemPosition()
+        {
+            return new Point3D(StateX.Position, StateY.Position, 0.0);
         }
     }
 }

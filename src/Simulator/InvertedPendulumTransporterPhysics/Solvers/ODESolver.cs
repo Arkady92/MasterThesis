@@ -1,17 +1,17 @@
-﻿using System;
+﻿using InvertedPendulumTransporterPhysics.Common;
 
-namespace InvertedPendulumTransporter
+namespace InvertedPendulumTransporterPhysics.Solvers
 {
-    public class Solver
+    public class ODESolver
     {
-        private SystemParameters ODESolverData;
+        private SolverParameters ODESolverData;
 
-        public Solver(SystemParameters parameters)
+        public ODESolver(SolverParameters parameters)
         {
             UpdateSystemParameters(parameters);
         }
 
-        public void UpdateSystemParameters(SystemParameters parameters)
+        public void UpdateSystemParameters(SolverParameters parameters)
         {
             ODESolverData = parameters;
         }
@@ -20,15 +20,15 @@ namespace InvertedPendulumTransporter
         {
             // y: x, theta, dx, dtheta
             // dy: dx, dtheta, d2x, d2theta
-            var data = obj as SystemParameters;
+            var data = obj as SolverParameters;
             double Fw_X = data.HorizontalWindForce;
             double Fw_Z = data.VerticalWindForce;
             dy[0] = y[2];
             dy[1] = y[3];
-            dy[2] = (-data.PendulumMass * SystemParameters.G / data.CartMass) * y[1] + (-data.Gamma2 / data.CartMass) * y[2]
+            dy[2] = (-data.PendulumMass * SolverParameters.G / data.CartMass) * y[1] + (-data.Gamma2 / data.CartMass) * y[2]
                 + (data.Gamma1 / data.CartMass * data.Voltage)
                 + ((Fw_X - Fw_Z * y[1]) / data.CartMass);
-            dy[3] = ((data.CartMass + data.PendulumMass) * SystemParameters.G / data.CartMass / data.PendulumLength) * y[1]
+            dy[3] = ((data.CartMass + data.PendulumMass) * SolverParameters.G / data.CartMass / data.PendulumLength) * y[1]
                 + (data.Gamma2 / data.CartMass / data.PendulumLength) * y[2]
                 + (-data.Gamma1 / data.CartMass / data.PendulumLength * data.Voltage)
                 + ((Fw_Z * y[1] - Fw_X) * (data.CartMass + data.PendulumMass) / (data.CartMass * data.PendulumMass));

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace InvertedPendulumTransporter
+namespace InvertedPendulumTransporterPhysics.Controllers
 {
     public class PIDCorrector
     {
