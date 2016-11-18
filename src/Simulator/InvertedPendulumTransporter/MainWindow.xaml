@@ -5,8 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InvertedPendulumTransporter"
         xmlns:controls="clr-namespace:InvertedPendulumTransporter.Controls"
-        xmlns:h="http://helix-toolkit.org/wpf"
-        xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
         Title="Inverted Pendulum Transporter Simulation" Height="600" Width="800" WindowStartupLocation="CenterScreen"
         KeyDown="SimulationScene_KeyDown">
@@ -20,27 +18,35 @@
             <StackPanel>
                 <!--<controls:ControlMenu/>-->
                 <Menu Name="Menu" BorderThickness="2" BorderBrush="Black">
-                    <MenuItem Header="Control">
-                        <MenuItem Header="Voltage Controller">
-                            <MenuItem Header="PID" IsCheckable="True" />
-                            <MenuItem Header="Double PID Cascade" IsCheckable="True" />
-                            <MenuItem Header="Double PID Parallel" IsCheckable="True" />
-                            <MenuItem Header="Sinusoidal" IsCheckable="True" />
-                            <MenuItem Header="Random" IsCheckable="True" />
+                    <MenuItem Header="File">
+                        <MenuItem Name="LoadTrajectoryItem" Header="LoadTrajectory" Click="LoadTrajectoryItem_Click"/>
+                        <MenuItem Name="ClearTrajectoryItem" Header="ClearTrajectory" Click="ClearTrajectoryItem_Click"/>
+                    </MenuItem>
+                    <MenuItem Header="Options">
+                        <MenuItem Name="VoltageMenuItem" Header="Voltage Controller">
+                            <MenuItem Name="DoublePIDParallelVoltageMenuItem" Header="Double PID Parallel" IsCheckable="True" Click="DoublePIDParallelVoltageMenuItem_Click" />
+                            <MenuItem Name="DoublePIDCascadeVoltageMenuItem" Header="Double PID Cascade" IsCheckable="True" Click="DoublePIDCascadeVoltageMenuItem_Click" />
+                            <MenuItem Name="PIDVoltageMenuItem" Header="PID" IsCheckable="True" Click="PIDVoltageMenuItem_Click"/>
+                            <MenuItem Name="SinusoidalVoltageMenuItem" Header="Sinusoidal" IsCheckable="True" Click="SinusoidalVoltageMenuItem_Click"/>
+                            <MenuItem Name="RandomVoltageMenuItem" Header="Random" IsCheckable="True" Click="RandomVoltageMenuItem_Click"/>
                         </MenuItem>
-                        <MenuItem Header="Wind Generator">
-                            <MenuItem Header="Random Peak" IsCheckable="True" />
-                            <MenuItem Header="Random Switch" IsCheckable="True" />
-                            <MenuItem Header="Random Smooth" IsCheckable="True" />
+                        <MenuItem Name="WindMenuItem" Header="Wind Generator">
+                            <MenuItem Name="RandomSmoothWindMenuItem" Header="Random Smooth" IsCheckable="True" Click="RandomSmoothWindMenuItem_Click"/>
+                            <MenuItem Name="RandomPeakWindMenuItem" Header="Random Peak" IsCheckable="True" Click="RandomPeakWindMenuItem_Click"/>
+                            <MenuItem Name="RandomSwitchWindMenuItem" Header="Random Switch" IsCheckable="True" Click="RandomSwitchWindMenuItem_Click"/>
+                        </MenuItem>
+                        <MenuItem Header="Trajectory Enablement">
+                            <MenuItem Name="ShowTargetTrajectoryMenuItem" Header="Show Target Trajectory" Click="ShowTargetTrajectoryMenuItem_Click" IsCheckable="True" />
+                            <MenuItem Name="ShowCartTrajectoryMenuItem" Header="Show Cart Trajectory" Click="ShowCartTrajectoryMenuItem_Click" IsCheckable="True" />
+                            <MenuItem Name="ShowPendulumTrajectoryMenuItem" Header="Show Pendulum Trajectory" Click="ShowPendulumTrajectoryMenuItem_Click" IsCheckable="True" />
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="Trajectory">
-                        <MenuItem Name="LoadTrajectoryItem" Header="Load" Click="LoadTrajectoryItem_Click"/>
-                        <MenuItem Name="ClearTrajectoryItem" Header="Clear" Click="ClearTrajectoryItem_Click"/>
+                    <MenuItem Header="About">
+                        <MenuItem Name="ApplicationMenuItem" Header="Application"/>
+                        <MenuItem Name="PhysicsMenuItem" Header="System Physics"/>
+                        <MenuItem Name="AuthorMenuItem" Header="Author"/>
                         <Separator/>
-                        <MenuItem Header="Show Target Trajectory" IsCheckable="True" />
-                        <MenuItem Header="Show Cart Trajectory" IsCheckable="True" />
-                        <MenuItem Header="Show Pendulum Trajectory" IsCheckable="True" />
+                        <MenuItem Name="HelpMenuItem" Header="Help"/>
                     </MenuItem>
                 </Menu>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
@@ -131,7 +137,8 @@
                 <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
             <controls:SceneControl x:Name="SceneControl" Grid.Column="1" Panel.ZIndex="1"></controls:SceneControl>
-            <Grid Grid.Row="1">
+            <controls:PlotsControl Grid.Row="1" x:Name="PlotsControl"></controls:PlotsControl>
+            <!--<Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
@@ -152,7 +159,7 @@
                         </oxy:Plot.Series>
                     </oxy:Plot>
                 </Grid>
-            </Grid>
+            </Grid>-->
         </Grid>
     </Grid>
 </Window>

@@ -30,7 +30,9 @@ namespace InvertedPendulumTransporter.Controls
         private const double WindDirectionResizeFactor = 5.0;
         private const double CartTrajectoryHeight = 0.1;
         private Point3D sceneCenter;
-
+        private bool renderTargetTrajectory;
+        private bool renderPendulumTrajectory;
+        private bool renderCartTrajectory;
 
         public SceneControl()
         {
@@ -45,6 +47,9 @@ namespace InvertedPendulumTransporter.Controls
             pendulumTrajectoryPoints = new Point3DCollection();
             targetTrajectoryPoints = new Point3DCollection();
             sceneCenter = new Point3D();
+            renderTargetTrajectory = true;
+            renderPendulumTrajectory = true;
+            renderCartTrajectory = true;
         }
 
         private void InitializeScene()
@@ -112,8 +117,10 @@ namespace InvertedPendulumTransporter.Controls
             UpdateState(systemState);
             UpdateCamera(systemState);
 
-            SimulationScene.Children.Remove(cartTrajectoryLines);
-            SimulationScene.Children.Remove(pendulumTrajectoryLines);
+            // render pendulum trajectory
+            if (renderPendulumTrajectory)
+                SimulationScene.Children.Remove(pendulumTrajectoryLines);
+
             if (frame >= FrameLineCutNumber)
             {
                 pendulumTrajectoryPoints.RemoveAt(0);
@@ -121,6 +128,10 @@ namespace InvertedPendulumTransporter.Controls
             }
             pendulumTrajectoryPoints.Add(pendulum.MassLinkPoint);
             pendulumTrajectoryPoints.Add(pendulum.MassLinkPoint);
+
+            // render cart trajectory
+            if (renderCartTrajectory)
+                SimulationScene.Children.Remove(cartTrajectoryLines);
 
             var cartEndPoint = new Point3D(systemState.StateX.Position, systemState.StateY.Position, CartTrajectoryHeight);
             if (frame >= FrameLineOptimizeNumber)
@@ -138,8 +149,10 @@ namespace InvertedPendulumTransporter.Controls
             cartTrajectoryPoints.Add(cartEndPoint);
             cartTrajectoryPoints.Add(cartEndPoint);
 
-            SimulationScene.Children.Add(cartTrajectoryLines);
-            SimulationScene.Children.Add(pendulumTrajectoryLines);
+            if (renderPendulumTrajectory)
+                SimulationScene.Children.Add(pendulumTrajectoryLines);
+            if (renderCartTrajectory)
+                SimulationScene.Children.Add(cartTrajectoryLines);
         }
 
         public void ResetSimulation(SystemState systemState)
@@ -178,8 +191,55 @@ namespace InvertedPendulumTransporter.Controls
             targetTrajectoryPoints = trajectory;
             targetTrajectoryLines.Points = trajectory;
             targetTrajectoryCheckPoints.Points = trajectory;
-            SimulationScene.Children.Add(targetTrajectoryLines);
-            SimulationScene.Children.Add(targetTrajectoryCheckPoints);
+            if (renderTargetTrajectory)
+            {
+                SimulationScene.Children.Add(targetTrajectoryLines);
+                SimulationScene.Children.Add(targetTrajectoryCheckPoints);
+            }
+        }
+
+        public void ShowTargetTrajectory(bool isChecked)
+        {
+            if (isChecked && !renderTargetTrajectory)
+            {
+                renderTargetTrajectory = true;
+                SimulationScene.Children.Add(targetTrajectoryLines);
+                SimulationScene.Children.Add(targetTrajectoryCheckPoints);
+            }
+            if (!isChecked && renderTargetTrajectory)
+            {
+                renderTargetTrajectory = false;
+                SimulationScene.Children.Remove(targetTrajectoryLines);
+                SimulationScene.Children.Remove(targetTrajectoryCheckPoints);
+            }
+        }
+
+        public void ShowCartTrajectory(bool isChecked)
+        {
+            if (isChecked && !renderCartTrajectory)
+            {
+                renderCartTrajectory = true;
+                SimulationScene.Children.Add(cartTrajectoryLines);
+            }
+            if (!isChecked && renderCartTrajectory)
+            {
+                renderCartTrajectory = false;
+                SimulationScene.Children.Remove(cartTrajectoryLines);
+            }
+        }
+
+        public void ShowPendulumTrajectory(bool isChecked)
+        {
+            if (isChecked && !renderPendulumTrajectory)
+            {
+                renderPendulumTrajectory = true;
+                SimulationScene.Children.Add(pendulumTrajectoryLines);
+            }
+            if (!isChecked && renderPendulumTrajectory)
+            {
+                renderPendulumTrajectory = false;
+                SimulationScene.Children.Remove(pendulumTrajectoryLines);
+            }
         }
     }
 }

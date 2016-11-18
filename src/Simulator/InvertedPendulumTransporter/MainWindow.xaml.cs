@@ -1,12 +1,11 @@
-﻿using OxyPlot;
-using System;
-using System.Collections.ObjectModel;
+﻿using System;
 using System.ComponentModel;
 using System.Windows;
 using InvertedPendulumTransporterPhysics.Common;
 using InvertedPendulumTransporterPhysics.Controllers;
 using InvertedPendulumTransporterPhysics.Solvers;
 using InvertedPendulumTransporter.Controls;
+using System.Windows.Controls;
 
 namespace InvertedPendulumTransporter
 {
@@ -34,30 +33,6 @@ namespace InvertedPendulumTransporter
 
         private double windPower;
         private bool animationPlaying;
-
-        ObservableCollection<DataPoint> errorPointsX;
-        public ObservableCollection<DataPoint> ErrorPointsX
-        {
-            get { return errorPointsX; }
-        }
-
-        ObservableCollection<DataPoint> voltagePointsX;
-        public ObservableCollection<DataPoint> VoltagePointsX
-        {
-            get { return voltagePointsX; }
-        }
-
-        ObservableCollection<DataPoint> errorPointsY;
-        public ObservableCollection<DataPoint> ErrorPointsY
-        {
-            get { return errorPointsY; }
-        }
-
-        ObservableCollection<DataPoint> voltagePointsY;
-        public ObservableCollection<DataPoint> VoltagePointsY
-        {
-            get { return voltagePointsY; }
-        }
 
         /// <summary>
         /// Animation speed ratio [based on inverse exponential function (1 / 2^x)]
@@ -183,6 +158,7 @@ namespace InvertedPendulumTransporter
             InitializeObjects();
             InitializeControllers();
             SetupParameters();
+            SetupMenu();
         }
 
         /// <summary>
@@ -202,11 +178,6 @@ namespace InvertedPendulumTransporter
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += DispatcherTimerTick;
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 20);
-
-            errorPointsX = new ObservableCollection<DataPoint>();
-            voltagePointsX = new ObservableCollection<DataPoint>();
-            errorPointsY = new ObservableCollection<DataPoint>();
-            voltagePointsY = new ObservableCollection<DataPoint>();
         }
 
         private void InitializeControllers()
@@ -222,6 +193,16 @@ namespace InvertedPendulumTransporter
         {
             xCoordVoltageController.Reset(systemState.TimeDelta);
             yCoordVoltageController.Reset(systemState.TimeDelta);
+        }
+
+        private void SetupMenu()
+        {
+            ShowTargetTrajectoryMenuItem.IsChecked = true;
+            ShowCartTrajectoryMenuItem.IsChecked = true;
+            ShowPendulumTrajectoryMenuItem.IsChecked = true;
+
+            DoublePIDParallelVoltageMenuItem.IsChecked = true;
+            RandomSmoothWindMenuItem.IsChecked = true;
         }
 
         private void SetupParameters()
@@ -258,12 +239,10 @@ namespace InvertedPendulumTransporter
 
             xCoordVoltageController.SetTime(systemState.Time);
             xCoordVoltageController.SetControlError(movementController.CorrectAngleX - systemState.StateX.Angle, targetPosition.X - systemState.StateX.Position);
-            systemState.SolverParameters.Voltage = xCoordVoltageController.GetVoltage();
+            var xCoordVoltage = xCoordVoltageController.GetVoltage();
+            systemState.SolverParameters.Voltage = xCoordVoltage;
             systemState.SolverParameters.VerticalWindForce = windController.GetZCoordWindPower();
             systemState.SolverParameters.HorizontalWindForce = windController.GetXCoordWindPower();
-
-            voltagePointsX.Add(new DataPoint(systemState.Time, systemState.SolverParameters.Voltage));
-            errorPointsX.Add(new DataPoint(systemState.Time, -systemState.StateX.Angle));
 
             solver.UpdateSystemParameters(systemState.SolverParameters);
             var t = systemState.ToTimeArray();
@@ -282,11 +261,9 @@ namespace InvertedPendulumTransporter
 
             yCoordVoltageController.SetTime(systemState.Time);
             yCoordVoltageController.SetControlError(movementController.CorrectAngleY - systemState.StateY.Angle, targetPosition.Y - systemState.StateY.Position);
-            systemState.SolverParameters.Voltage = yCoordVoltageController.GetVoltage();
+            var yCoordVoltage = yCoordVoltageController.GetVoltage();
+            systemState.SolverParameters.Voltage = yCoordVoltage;
             systemState.SolverParameters.HorizontalWindForce = windController.GetYCoordWindPower();
-
-            voltagePointsY.Add(new DataPoint(systemState.Time, systemState.SolverParameters.Voltage));
-            errorPointsY.Add(new DataPoint(systemState.Time, -systemState.StateY.Angle));
 
             var y = systemState.StateY.ToStateArray();
             var yState = solver.SolveODESystem(t, y);
@@ -300,8 +277,8 @@ namespace InvertedPendulumTransporter
                 yState.Position = Math.Sign(yState.Position) * (SceneControl.SimulationAreaSize / 2 - SceneControl.cart.PlatformSize / 2);
             systemState.UpdateSystemStateY(yState);
 
+            PlotsControl.UpdatePlots(systemState, xCoordVoltage, yCoordVoltage);
             systemState.UpdateTimer();
-
             UpdateGUI();
             SceneControl.UpdateFrame(systemState);
         }
@@ -321,7 +298,6 @@ namespace InvertedPendulumTransporter
         {
             if (!animationPlaying)
             {
-                Menu.IsEnabled = false;
                 animationPlaying = true;
                 ParametersPanel.IsEnabled = false;
                 SceneControl.ResetSimulation(systemState);
@@ -351,13 +327,9 @@ namespace InvertedPendulumTransporter
             PlayButton.IsEnabled = true;
             PauseButton.IsEnabled = false;
             ParametersPanel.IsEnabled = true;
-            Menu.IsEnabled = true;
             dispatcherTimer.Stop();
 
-            errorPointsX.Clear();
-            voltagePointsX.Clear();
-            errorPointsY.Clear();
-            voltagePointsY.Clear();
+            PlotsControl.ResetPlots();
 
             if (trajectoryController.TrajectoryEnabled)
             {
@@ -383,6 +355,7 @@ namespace InvertedPendulumTransporter
 
         private void LoadTrajectoryItem_Click(object sender, RoutedEventArgs e)
         {
+            ResetButton_Click(null, null);
             var trajectory = trajectoryController.LoadTrajectory();
             if (trajectory == null)
                 return;
@@ -399,6 +372,7 @@ namespace InvertedPendulumTransporter
 
         private void ClearTrajectoryItem_Click(object sender, RoutedEventArgs e)
         {
+            ResetButton_Click(null, null);
             SceneControl.ClearTrajectory();
             trajectoryController.Clear();
             systemState.Reset();
@@ -408,6 +382,82 @@ namespace InvertedPendulumTransporter
             SceneControl.UpdateState(systemState);
             SceneControl.UpdateCamera(systemState);
             UpdateGUI();
+        }
+
+        private void ShowTargetTrajectoryMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            SceneControl.ShowTargetTrajectory(menuItem.IsChecked);
+        }
+
+        private void ShowCartTrajectoryMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            SceneControl.ShowCartTrajectory(menuItem.IsChecked);
+        }
+
+        private void ShowPendulumTrajectoryMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            SceneControl.ShowPendulumTrajectory(menuItem.IsChecked);
+        }
+
+        private void SetMenuVoltage(MenuItem sender, ControlType controlType)
+        {
+            foreach (var item in VoltageMenuItem.Items)
+                (item as MenuItem).IsChecked = false;
+            sender.IsChecked = true;
+            xCoordVoltageController.ControlType = controlType;
+            yCoordVoltageController.ControlType = controlType;
+        }
+
+        private void DoublePIDParallelVoltageMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SetMenuVoltage(sender as MenuItem, ControlType.DoublePIDParallel);
+        }
+
+        private void DoublePIDCascadeVoltageMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SetMenuVoltage(sender as MenuItem, ControlType.DoublePIDCascade);
+        }
+
+        private void PIDVoltageMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SetMenuVoltage(sender as MenuItem, ControlType.PID);
+        }
+
+        private void SinusoidalVoltageMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SetMenuVoltage(sender as MenuItem, ControlType.Sinusoidal);
+        }
+
+        private void RandomVoltageMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SetMenuVoltage(sender as MenuItem, ControlType.Random);
+        }
+
+
+        private void SetMenuWind(MenuItem sender, WindType windType)
+        {
+            foreach (var item in WindMenuItem.Items)
+                (item as MenuItem).IsChecked = false;
+            sender.IsChecked = true;
+            windController.WindType = windType;
+        }
+
+        private void RandomPeakWindMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SetMenuWind(sender as MenuItem, WindType.RandomPeak);
+        }
+
+        private void RandomSwitchWindMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SetMenuWind(sender as MenuItem, WindType.RandomSwitch);
+        }
+
+        private void RandomSmoothWindMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SetMenuWind(sender as MenuItem, WindType.RandomSmooth);
         }
     }
 }

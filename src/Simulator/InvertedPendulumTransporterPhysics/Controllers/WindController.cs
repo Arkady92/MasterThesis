@@ -7,7 +7,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
     {
         public WindType WindType { get; set; }
         public double WindPower { get; set; }
-        public double MaxWindPower { get { return 10.0; } }
+        public double MaxWindPower { get { return 5.0; } }
         public double MinWindPower { get { return 0.0; } }
         public double DefaultWindPower { get { return 0.0; } }
         public const WindType DefaultWindType = WindType.RandomSmooth;
