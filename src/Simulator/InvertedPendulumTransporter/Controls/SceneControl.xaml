@@ -8,12 +8,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="428" d:DesignWidth="594">
     <Grid>
-        <h:HelixViewport3D Name="SimulationScene" ShowFrameRate="True" ShowCoordinateSystem="True" BorderBrush="Black" Panel.ZIndex="1" BorderThickness="2" Camera="{h:PerspectiveCamera 10,10,10}">
+        <h:HelixViewport3D Name="SimulationScene" ShowFrameRate="True" ShowCoordinateSystem="True" BorderBrush="Black" Panel.ZIndex="1" BorderThickness="2" Camera="{h:PerspectiveCamera 15,15,15}">
             <h:DefaultLights/>
         </h:HelixViewport3D>
-        <h:HelixViewport3D CameraMode="FixedPosition" Name="WindDirectionScene" ShowViewCube="False" BorderBrush="Black" BorderThickness="0" Panel.ZIndex="2" Margin="10,10,434,268" Camera="{h:PerspectiveCamera 10,10,10}">
+        <h:HelixViewport3D CameraMode="FixedPosition" Name="WindDirectionScene" ShowViewCube="False" BorderBrush="Black" BorderThickness="0" Panel.ZIndex="2" Width="150" Height="150" Margin="10,10" Camera="{h:PerspectiveCamera 15,15,15}" HorizontalAlignment="Left" VerticalAlignment="Top">
             <h:DefaultLights></h:DefaultLights>
-            <h:ArrowVisual3D Fill="Red" Visible="False" x:Name="WindArrow"></h:ArrowVisual3D>
+            <h:ArrowVisual3D Fill="Gold" Visible="False" x:Name="WindArrow"></h:ArrowVisual3D>
         </h:HelixViewport3D>
     </Grid>
 </UserControl>

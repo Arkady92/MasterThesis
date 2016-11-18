@@ -5,7 +5,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
     public class VoltageController : IVoltageController
     {
         public ControlType ControlType { get; set; }
-        public const ControlType DefaultControlType = ControlType.DoublePIDParallel;
+        public const ControlType DefaultControlType = ControlType.PID;
 
         private Random random;
         private double time;
@@ -43,6 +43,12 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         public void SetTime(double time)
         {
             this.time = time;
+        }
+
+        public void Reset()
+        {
+            singlePIDCorrector.Reset();
+            doublePIDCorrector.Reset();
         }
 
         public void Reset(double timeDelta)

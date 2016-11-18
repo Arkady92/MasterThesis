@@ -50,12 +50,16 @@ namespace InvertedPendulumTransporter.Controls
             voltagePointsY = new ObservableCollection<DataPoint>();
         }
 
-        public void UpdatePlots(SystemState systemState, double xCoordVoltage, double yCoordVoltage)
+        public void UpdateVoltagePlots(double time, double xCoordVoltage, double yCoordVoltage)
         {
-            voltagePointsX.Add(new DataPoint(systemState.Time, xCoordVoltage));
-            errorPointsX.Add(new DataPoint(systemState.Time, systemState.StateX.Angle));
-            voltagePointsY.Add(new DataPoint(systemState.Time, yCoordVoltage));
-            errorPointsY.Add(new DataPoint(systemState.Time, systemState.StateY.Angle));
+            voltagePointsX.Add(new DataPoint(time, xCoordVoltage));
+            voltagePointsY.Add(new DataPoint(time, yCoordVoltage));
+        }
+
+        public void UpdateErrorPlots(double time, double xCoordError, double yCoordError)
+        {
+            errorPointsX.Add(new DataPoint(time, xCoordError));
+            errorPointsY.Add(new DataPoint(time, yCoordError));
         }
 
         public void ResetPlots()

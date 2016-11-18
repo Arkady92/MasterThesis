@@ -2,7 +2,7 @@
 
 namespace InvertedPendulumTransporterPhysics.Solvers
 {
-    public class ODESolver
+    public class ODESolver : IODESolver
     {
         private SolverParameters ODESolverData;
 
@@ -16,7 +16,7 @@ namespace InvertedPendulumTransporterPhysics.Solvers
             ODESolverData = parameters;
         }
 
-        public void ODESolverFunction(double[] y, double x, double[] dy, object obj)
+        private void ODESolverFunction(double[] y, double x, double[] dy, object obj)
         {
             // y: x, theta, dx, dtheta
             // dy: dx, dtheta, d2x, d2theta

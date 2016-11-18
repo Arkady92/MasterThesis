@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:InvertedPendulumTransporter"
         xmlns:controls="clr-namespace:InvertedPendulumTransporter.Controls"
         mc:Ignorable="d"
-        Title="Inverted Pendulum Transporter Simulation" Height="600" Width="800" WindowStartupLocation="CenterScreen"
+        Title="Inverted Pendulum Transporter Simulation" Height="630" Width="840" MinWidth="840" WindowState="Maximized" MinHeight="630" WindowStartupLocation="CenterScreen"
         KeyDown="SimulationScene_KeyDown">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -16,11 +16,12 @@
         <Grid Grid.Column ="0">
             <Border BorderBrush="Black" BorderThickness="2"></Border>
             <StackPanel>
-                <!--<controls:ControlMenu/>-->
                 <Menu Name="Menu" BorderThickness="2" BorderBrush="Black">
-                    <MenuItem Header="File">
-                        <MenuItem Name="LoadTrajectoryItem" Header="LoadTrajectory" Click="LoadTrajectoryItem_Click"/>
-                        <MenuItem Name="ClearTrajectoryItem" Header="ClearTrajectory" Click="ClearTrajectoryItem_Click"/>
+                    <MenuItem Header="Mode">
+                        <MenuItem Name="LoadTrajectoryItem" Header="Load Trajectory" Click="LoadTrajectoryItem_Click"/>
+                        <MenuItem Name="ClearTrajectoryItem" Header="Clear Trajectory" Click="ClearTrajectoryItem_Click"/>
+                        <MenuItem Name="LoadGameItem" Header="Load Game" Click="LoadGameItem_Click"/>
+                        <MenuItem Name="ClearGameItem" Header="Clear Game" Click="ClearGameItem_Click"/>
                     </MenuItem>
                     <MenuItem Header="Options">
                         <MenuItem Name="VoltageMenuItem" Header="Voltage Controller">
@@ -29,6 +30,7 @@
                             <MenuItem Name="PIDVoltageMenuItem" Header="PID" IsCheckable="True" Click="PIDVoltageMenuItem_Click"/>
                             <MenuItem Name="SinusoidalVoltageMenuItem" Header="Sinusoidal" IsCheckable="True" Click="SinusoidalVoltageMenuItem_Click"/>
                             <MenuItem Name="RandomVoltageMenuItem" Header="Random" IsCheckable="True" Click="RandomVoltageMenuItem_Click"/>
+                            <MenuItem Name="NoneVoltageMenuItem" Header="None" IsCheckable="True" Click="NoneVoltageMenuItem_Click"/>
                         </MenuItem>
                         <MenuItem Name="WindMenuItem" Header="Wind Generator">
                             <MenuItem Name="RandomSmoothWindMenuItem" Header="Random Smooth" IsCheckable="True" Click="RandomSmoothWindMenuItem_Click"/>
@@ -39,6 +41,12 @@
                             <MenuItem Name="ShowTargetTrajectoryMenuItem" Header="Show Target Trajectory" Click="ShowTargetTrajectoryMenuItem_Click" IsCheckable="True" />
                             <MenuItem Name="ShowCartTrajectoryMenuItem" Header="Show Cart Trajectory" Click="ShowCartTrajectoryMenuItem_Click" IsCheckable="True" />
                             <MenuItem Name="ShowPendulumTrajectoryMenuItem" Header="Show Pendulum Trajectory" Click="ShowPendulumTrajectoryMenuItem_Click" IsCheckable="True" />
+                        </MenuItem>
+                        <MenuItem Name="TrajectoryAccuracyMenuItem" Header="Trajectory Accuracy">
+                            <MenuItem Name="UltraAccuracyMenuItem" Header="Ultra" Click="UltraAccuracyMenuItem_Click" IsCheckable="True" />
+                            <MenuItem Name="HighAccuracyMenuItem" Header="High" Click="HighAccuracyMenuItem_Click" IsCheckable="True" />
+                            <MenuItem Name="MediumAccuracyMenuItem" Header="Medium" Click="MediumAccuracyMenuItem_Click" IsCheckable="True" />
+                            <MenuItem Name="LowAccuracyMenuItem" Header="Low" Click="LowAccuracyMenuItem_Click" IsCheckable="True" />
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="About">
@@ -54,61 +62,102 @@
                     <Button Name="PauseButton" Margin="5" Content="Pause" Width="50" Height="50" Click="PauseButton_Click" IsEnabled="False"></Button>
                     <Button Name="ResetButton" Margin="5" Content="Reset" Width="50" Height="50" Click="ResetButton_Click"></Button>
                 </StackPanel>
-                <StackPanel Name="ParametersPanel">
+                <StackPanel Name="SystemParametersPanel">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="System Parameters" HorizontalAlignment="Right"/>
+                        <Button Name="ResetParametersButton" Grid.Column="1" Content="Reset" Width="40" HorizontalAlignment="Right" Margin="0,0,20,0" Click="ResetParametersButton_Click"></Button>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2.5*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Label Margin="5,0,0,0"  Grid.Column="0" Content="Time Delta"></Label>
-                        <Label Grid.Column="1" Content="{Binding Path=AnimationSpeed}"></Label>
+                        <Label Grid.Column="1" Content="{Binding Path=TimeDelta}" HorizontalAlignment="Right" Margin="0,0,20,0"></Label>
                     </Grid>
-                    <Slider Name="AnimationSpeedSlider" Value="{Binding Path=AnimationSpeed, Mode=TwoWay}" Margin="20,0,20,5" Minimum="0.005" Maximum="0.05"></Slider>
+                    <Slider Name="AnimationSpeedSlider" Value="{Binding Path=TimeDelta, Mode=TwoWay}" Margin="20,0,20,5" Minimum="0.005" Maximum="0.05"></Slider>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="2.5*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Label Margin="5,0,0,0"  Content="X-Coordinate Angle"></Label>
-                        <Label Grid.Column="1" Content="{Binding Path=HorizontalAngle, Mode=TwoWay}"></Label>
+                        <Label Grid.Column="1" Content="{Binding Path=XCoordAngle, Mode=TwoWay}" HorizontalAlignment="Right" Margin="0,0,20,0"></Label>
                     </Grid>
                     <Slider Name="XCoordAngleSlider" Value="{Binding Path=XCoordAngle}" Margin="20,0,20,5" Minimum="{Binding Path=MinAngle}" Maximum="{Binding Path=MaxAngle}"></Slider>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="2.5*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Label Margin="5,0,0,0"  Content="Y-Coordinate Angle"></Label>
-                        <Label Grid.Column="1" Content="{Binding Path=VerticalAngle}"></Label>
+                        <Label Grid.Column="1" Content="{Binding Path=YCoordAngle}" HorizontalAlignment="Right" Margin="0,0,20,0"></Label>
                     </Grid>
                     <Slider Name="YCoordAngleSlider" Value="{Binding Path=YCoordAngle}" Margin="20,0,20,5" Minimum="{Binding Path=MinAngle}" Maximum="{Binding Path=MaxAngle}"></Slider>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="2.5*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Label Margin="5,0,0,0"  Content="Rod Length"></Label>
-                        <Label Grid.Column="1" Content="{Binding Path=RodLength}"></Label>
+                        <Label Grid.Column="1" Content="{Binding Path=RodLength}" HorizontalAlignment="Right" Margin="0,0,20,0"></Label>
                     </Grid>
                     <Slider Name="RodLengthSlider" Value="{Binding Path=RodLength}" Margin="20,0,20,5" Minimum="0.15" Maximum="0.85"></Slider>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="2.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Margin="5,0,0,0"  Content="Cart Mass"></Label>
+                        <Label Grid.Column="1" Content="{Binding Path=CartMass}" HorizontalAlignment="Right" Margin="0,0,20,0"></Label>
+                    </Grid>
+                    <Slider Name="CartMassSlider" Value="{Binding Path=CartMass}" Margin="20,0,20,5" Minimum="0.15" Maximum="5"></Slider>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Margin="5,0,0,0"  Content="Pendulum Mass"></Label>
+                        <Label Grid.Column="1" Content="{Binding Path=PendulumMass}" HorizontalAlignment="Right" Margin="0,0,20,0"></Label>
+                    </Grid>
+                    <Slider Name="PendulumMassSlider" Value="{Binding Path=PendulumMass}" Margin="20,0,20,5" Minimum="0.15" Maximum="5"></Slider>
+                </StackPanel>
+                <StackPanel Name="WindParametersPanel" Margin="0,5,0,0" VerticalAlignment="Bottom">
+                    <Label HorizontalAlignment="Center" Content="Wind Parameters"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2.5*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Label Margin="5,0,0,0"  Content="Wind Power"></Label>
-                        <Label Grid.Column="1" Content="{Binding Path=WindPower}"></Label>
+                        <Label Grid.Column="1" Content="{Binding Path=WindPower}" HorizontalAlignment="Right" Margin="0,0,20,0"></Label>
                     </Grid>
                     <Slider Name="WindPowerSlider" Value="{Binding Path=WindPower}" Margin="20,0,20,5" Minimum="{Binding MinWindPower}" Maximum="{Binding MaxWindPower}"></Slider>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="2.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Margin="5,0,0,0"  Content="Wind Change Speed"></Label>
+                        <Label Grid.Column="1" Content="{Binding Path=WindChangeSpeed}" HorizontalAlignment="Right" Margin="0,0,20,0"></Label>
+                    </Grid>
+                    <Slider Name="WindChangeSpeedSlider" Value="{Binding Path=WindChangeSpeed}" Margin="20,0,20,5" Minimum="{Binding MinWindPower}" Maximum="{Binding MaxWindPower}"></Slider>
+                </StackPanel>
+                <StackPanel>
+                    <Label HorizontalAlignment="Center" Content="System state" Margin="0,10,0,0"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="2*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="2*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label Margin="5,0,0,0" Content="Position"></Label>
+                        <Label Margin="20,0,0,0" Content="Position"></Label>
                         <Label Content="X:" Grid.Column="1"></Label>
                         <Label Grid.Column="2" Content="{Binding Path=CartPositionX}"></Label>
                         <Label Content="Y:" Grid.Column="3"></Label>
@@ -116,17 +165,45 @@
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="4*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="2*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="2*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label Margin="5,0,0,0"  Content="Swing"></Label>
+                        <Label Margin="20,0,0,0"  Content="Velocity"></Label>
                         <Label Content="X:" Grid.Column="1"></Label>
-                        <Label Grid.Column="2" Content="{Binding Path=PendulumSwingX}"></Label>
+                        <Label Grid.Column="2" Content="{Binding Path=CartVelocityX}"></Label>
                         <Label Content="Y:" Grid.Column="3"></Label>
-                        <Label Grid.Column="4" Content="{Binding Path=PendulumSwingY}"></Label>
+                        <Label Grid.Column="4" Content="{Binding Path=CartVelocityY}"></Label>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Margin="20,0,0,0"  Content="Angle"></Label>
+                        <Label Content="X:" Grid.Column="1"></Label>
+                        <Label Grid.Column="2" Content="{Binding Path=PendulumAngleX}"></Label>
+                        <Label Content="Y:" Grid.Column="3"></Label>
+                        <Label Grid.Column="4" Content="{Binding Path=PendulumAngleY}"></Label>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Margin="20,0,0,0"  Content="Angular Velocity"></Label>
+                        <Label Content="X:" Grid.Column="1"></Label>
+                        <Label Grid.Column="2" Content="{Binding Path=PendulumAngularVelocityX}"></Label>
+                        <Label Content="Y:" Grid.Column="3"></Label>
+                        <Label Grid.Column="4" Content="{Binding Path=PendulumAngularVelocityY}"></Label>
                     </Grid>
                 </StackPanel>
             </StackPanel>
@@ -138,28 +215,6 @@
             </Grid.RowDefinitions>
             <controls:SceneControl x:Name="SceneControl" Grid.Column="1" Panel.ZIndex="1"></controls:SceneControl>
             <controls:PlotsControl Grid.Row="1" x:Name="PlotsControl"></controls:PlotsControl>
-            <!--<Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <oxy:Plot Title="Error" TitleFontSize="12" BorderBrush="Black" BorderThickness="2">
-                        <oxy:Plot.Series>
-                            <oxy:LineSeries ItemsSource="{Binding ErrorPointsX}"/>
-                            <oxy:LineSeries ItemsSource="{Binding ErrorPointsY}"/>
-                        </oxy:Plot.Series>
-                    </oxy:Plot>
-                </Grid>
-                <Grid Grid.Column="1">
-                    <oxy:Plot Title="Voltage" TitleFontSize="12" BorderBrush="Black" BorderThickness="2">
-                        <oxy:Plot.Series>
-                            <oxy:LineSeries ItemsSource="{Binding VoltagePointsX}"/>
-                            <oxy:LineSeries ItemsSource="{Binding VoltagePointsY}"/>
-                        </oxy:Plot.Series>
-                    </oxy:Plot>
-                </Grid>
-            </Grid>-->
         </Grid>
     </Grid>
 </Window>

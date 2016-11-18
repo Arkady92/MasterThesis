@@ -9,17 +9,19 @@ using System.Windows.Media.Media3D;
 
 namespace InvertedPendulumTransporterPhysics.Controllers
 {
-    public class TrajectoryController
+    public class TrajectoryController : ITrajectoryController
     {
         private List<Point3D> trajectoryPoints;
         private int actualPointIndex = 0;
         private const double ZValue = 0.05;
-        private const double DistanceEps = 0.05;
         private double averageDistance;
+        private const AccuracyType DefaultAccuracyType = AccuracyType.Medium;
+        private double distanceEps;
         private const double ApproximateDistanceFactor = 0.75;
 
         public bool TrajectoryAchieved { get; private set; }
         public bool TrajectoryEnabled { get; private set; }
+        public bool TrajectoryAccuracy { get; private set; }
 
         public TrajectoryController()
         {
@@ -41,6 +43,27 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             TrajectoryEnabled = false;
         }
 
+        public void SetAccuracy(AccuracyType accuracy)
+        {
+            switch (accuracy)
+            {
+                case AccuracyType.Ultra:
+                    distanceEps = averageDistance * 0.001;
+                    break;
+                case AccuracyType.High:
+                    distanceEps = averageDistance * 0.01;
+                    break;
+                case AccuracyType.Medium:
+                    distanceEps = averageDistance * 0.05;
+                    break;
+                case AccuracyType.Low:
+                    distanceEps = averageDistance * 0.25;
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public Point3DCollection LoadTrajectory()
         {
             var fileDialog = new OpenFileDialog
@@ -57,6 +80,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
                 {
                     TrajectoryEnabled = true;
                     averageDistance = CalculateAverageDistance();
+                    SetAccuracy(DefaultAccuracyType);
                     var result = new Point3DCollection();
                     result.Add(trajectoryPoints[0]);
                     for (int i = 1; i < trajectoryPoints.Count - 1; i++)
@@ -166,7 +190,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             if (TrajectoryAchieved)
                 return trajectoryPoints[trajectoryPoints.Count - 1];
 
-            if (trajectoryPoints[actualPointIndex].DistanceTo(new Point3D(x, y, ZValue)) < DistanceEps)
+            if (trajectoryPoints[actualPointIndex].DistanceTo(new Point3D(x, y, ZValue)) < distanceEps)
             {
                 actualPointIndex++;
                 nextCheckPoint = true;
@@ -229,7 +253,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             }
             if (actualPointIndex >= trajectoryPoints.Count - 1)
             {
-                if (trajectoryPoints[actualPointIndex].DistanceTo(new Point3D(x, y, ZValue)) < DistanceEps)
+                if (trajectoryPoints[actualPointIndex].DistanceTo(new Point3D(x, y, ZValue)) < distanceEps)
                 {
                     TrajectoryAchieved = true;
                     return trajectoryPoints[trajectoryPoints.Count - 1];
@@ -237,5 +261,14 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             }
             return trajectoryPoints[actualPointIndex];
         }
+
+    }
+
+    public enum AccuracyType
+    {
+        Ultra,
+        High,
+        Medium,
+        Low
     }
 }

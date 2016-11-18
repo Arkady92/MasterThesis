@@ -52,9 +52,8 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             positionError = error;
         }
 
-        public void Reset(double timeDelta)
+        public void Reset()
         {
-            TimeDelta = timeDelta;
             previousAngleError = 0.0;
             angleError = 0.0;
             sumAngleErrors = 0.0;
@@ -62,6 +61,12 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             positionError = 0.0;
             firstAngleIteration = true;
             firstPositionIteration = true;
+        }
+
+        public void Reset(double timeDelta)
+        {
+            TimeDelta = timeDelta;
+            Reset();
         }
 
         public double CalculateAnglePIDCorrection()

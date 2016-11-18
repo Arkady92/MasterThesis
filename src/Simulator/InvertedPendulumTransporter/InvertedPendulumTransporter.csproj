@@ -83,6 +83,8 @@
     <Compile Include="Controls\PlotsControl.xaml.cs">
       <DependentUpon>PlotsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindowControlPanel.cs" />
+    <Compile Include="MainWindowMenu.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Controls\SceneControl.xaml.cs">
       <DependentUpon>SceneControl.xaml</DependentUpon>
