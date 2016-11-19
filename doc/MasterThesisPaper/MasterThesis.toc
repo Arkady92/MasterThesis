@@ -5,12 +5,12 @@
 \contentsline {chapter}{\numberline {1}Wst\IeC {\k e}p}{7}
 \contentsline {section}{\numberline {1.1}Podstawowe definicje}{7}
 \contentsline {section}{\numberline {1.2}T\IeC {\l }o fizyczne}{7}
-\contentsline {section}{\numberline {1.3}Motywacja i cele aplikacji}{7}
+\contentsline {section}{\numberline {1.3}Opis problemu}{7}
 \contentsline {section}{\numberline {1.4}Przegl\IeC {\k a}d istniej\IeC {\k a}cych rozwi\IeC {\k a}za\IeC {\'n}}{7}
 \contentsline {chapter}{\numberline {2}Definicja projektu}{8}
 \contentsline {section}{\numberline {2.1}Zakres projektu}{8}
 \contentsline {section}{\numberline {2.2}Analiza wymaga\IeC {\'n}}{8}
-\contentsline {section}{\numberline {2.3}Opis Funkcjonalno\IeC {\'s}ci}{8}
+\contentsline {section}{\numberline {2.3}Opis funkcjonalno\IeC {\'s}ci}{8}
 \contentsline {section}{\numberline {2.4}Ograniczenia}{8}
 \contentsline {chapter}{\numberline {3}Opis rozwi\IeC {\k a}zania}{9}
 \contentsline {section}{\numberline {3.1}Mechanika systemu}{9}
@@ -18,13 +18,11 @@
 \contentsline {subsection}{\numberline {3.1.2}Linearyzacja modelu}{9}
 \contentsline {subsection}{\numberline {3.1.3}Stabilizacja zak\IeC {\l }\IeC {\'o}ce\IeC {\'n} uk\IeC {\l }adu}{9}
 \contentsline {subsection}{\numberline {3.1.4}Ruch transportera po zadanej trajektorii}{9}
-\contentsline {subsection}{\numberline {3.1.5}Linearyzacja modelu}{9}
 \contentsline {section}{\numberline {3.2}Por\IeC {\'o}wnanie przyj\IeC {\k e}tych rozwi\IeC {\k a}za\IeC {\'n}}{9}
 \contentsline {chapter}{\numberline {4}Architektura systemu}{10}
-\contentsline {section}{\numberline {4.1}Wprowadzenie}{10}
-\contentsline {section}{\numberline {4.2}Og\IeC {\'o}lny opis rozwi\IeC {\k a}zania}{10}
-\contentsline {section}{\numberline {4.3}Komponenty aplikacji}{10}
-\contentsline {section}{\numberline {4.4}Opis wizualny aplikacji}{10}
+\contentsline {section}{\numberline {4.1}Og\IeC {\'o}lny opis rozwi\IeC {\k a}zania}{10}
+\contentsline {section}{\numberline {4.2}Komponenty aplikacji}{10}
+\contentsline {section}{\numberline {4.3}Opis wizualny aplikacji}{10}
 \contentsline {chapter}{\numberline {5}Dokumentacja techniczna}{11}
 \contentsline {section}{\numberline {5.1}Informacje og\IeC {\'o}lne}{11}
 \contentsline {section}{\numberline {5.2}Opis techniczny modu\IeC {\l }\IeC {\'o}w}{11}
@@ -37,7 +35,6 @@
 \contentsline {subsection}{\numberline {6.3.1}Stopie\IeC {\'n} realizacji projektu}{12}
 \contentsline {subsection}{\numberline {6.3.2}Poprawno\IeC {\'s}\IeC {\'c} rozwi\IeC {\k a}zania}{12}
 \contentsline {chapter}{\numberline {7}Podsumowanie pracy}{13}
-\contentsline {section}{\numberline {7.1}Wp\IeC {\l }yw projektu na autora}{13}
-\contentsline {section}{\numberline {7.2}Krytyczna refleksja}{13}
-\contentsline {section}{\numberline {7.3}Mo\IeC {\.z}liwo\IeC {\'s}ci rozszerzania projektu}{13}
+\contentsline {section}{\numberline {7.1}Krytyczna refleksja}{13}
+\contentsline {section}{\numberline {7.2}Mo\IeC {\.z}liwo\IeC {\'s}ci rozszerzania projektu}{13}
 \select@language {polish}

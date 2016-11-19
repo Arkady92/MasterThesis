@@ -5,6 +5,8 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System;
 using InvertedPendulumTransporter.Models;
+using System.Windows.Media.Imaging;
+using System.Linq;
 
 namespace InvertedPendulumTransporter.Controls
 {
@@ -33,6 +35,8 @@ namespace InvertedPendulumTransporter.Controls
         private bool renderTargetTrajectory;
         private bool renderPendulumTrajectory;
         private bool renderCartTrajectory;
+        private ModelVisual3D floor;
+        private ModelVisual3D walls;
 
         public SceneControl()
         {
@@ -79,12 +83,12 @@ namespace InvertedPendulumTransporter.Controls
             targetTrajectoryCheckPoints.Points = targetTrajectoryPoints;
 
 
-            var floor = new ModelVisual3D();
+            floor = new ModelVisual3D();
             floor.Children.Add(new GridLinesVisual3D() { Center = new Point3D(0.0, 0.0, 0.0), Width = SimulationAreaSize, Length = SimulationAreaSize, MinorDistance = 2, MajorDistance = 10, Thickness = 0.03, Fill = Brushes.Green });
             floor.Children.Add(new RectangleVisual3D() { Origin = new Point3D(0.0, 0.0, -0.01), Normal = new Vector3D(0, 0, 1), Width = SimulationAreaSize, Length = SimulationAreaSize, Fill = Brushes.Tomato });
             SimulationScene.Children.Add(floor);
 
-            var walls = new ModelVisual3D();
+            walls = new ModelVisual3D();
             var wallHeight = SimulationAreaSize / 30.0;
             walls.Children.Add(new GridLinesVisual3D() { Center = new Point3D(0.0, SimulationAreaSize / 2, wallHeight / 2.0), Normal = new Vector3D(0.0, 1.0, 0), Width = wallHeight, Length = SimulationAreaSize, Fill = Brushes.Green });
             walls.Children.Add(new GridLinesVisual3D() { Center = new Point3D(0.0, -SimulationAreaSize / 2, wallHeight / 2.0), Normal = new Vector3D(0.0, 1.0, 0), Width = wallHeight, Length = SimulationAreaSize, Fill = Brushes.Green });
@@ -97,6 +101,26 @@ namespace InvertedPendulumTransporter.Controls
 
             pendulum = new Pendulum();
             SimulationScene.Children.Add(pendulum.Model);
+        }
+
+        public void SetupHighGradeTextures()
+        {
+            ImageBrush imageBrush = new ImageBrush();
+            imageBrush.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/Resources/Floor.jpg"));
+            floor.Children.OfType<RectangleVisual3D>().First().Fill = imageBrush;
+            foreach (var wall in walls.Children.OfType<GridLinesVisual3D>())
+                wall.Visible = false;
+            cart.SetupHighGradeTextures();
+            pendulum.SetupHighGradeTextures();
+        }
+
+        public void SetupLowGradeTextures()
+        {
+            floor.Children.OfType<RectangleVisual3D>().First().Fill = Brushes.Tomato;
+            foreach (var wall in walls.Children.OfType<GridLinesVisual3D>())
+                wall.Visible = true;
+            cart.SetupLowGradeTextures();
+            pendulum.SetupLowGradeTextures();
         }
 
         public void UpdateState(SystemState systemState)

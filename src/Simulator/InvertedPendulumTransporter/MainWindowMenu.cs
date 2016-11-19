@@ -19,6 +19,8 @@ namespace InvertedPendulumTransporter
             PIDVoltageMenuItem.IsChecked = true;
             RandomSmoothWindMenuItem.IsChecked = true;
             MediumAccuracyMenuItem.IsChecked = true;
+
+            SolidColorsGraphicsMenuItem.IsChecked = true;
         }
 
         private void LoadTrajectoryItem_Click(object sender, RoutedEventArgs e)
@@ -180,6 +182,18 @@ namespace InvertedPendulumTransporter
         private void LowAccuracyMenuItem_Click(object sender, RoutedEventArgs e)
         {
             SetTrajectoryAccuracy(sender as MenuItem, AccuracyType.Low);
+        }
+
+        private void TexturesGraphicsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SceneControl.SetupHighGradeTextures();
+            SolidColorsGraphicsMenuItem.IsChecked = false;
+        }
+
+        private void SolidColorsGraphicsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SceneControl.SetupLowGradeTextures();
+            TexturesGraphicsMenuItem.IsChecked = false;
         }
         #endregion
 

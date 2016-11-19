@@ -48,6 +48,10 @@
                             <MenuItem Name="MediumAccuracyMenuItem" Header="Medium" Click="MediumAccuracyMenuItem_Click" IsCheckable="True" />
                             <MenuItem Name="LowAccuracyMenuItem" Header="Low" Click="LowAccuracyMenuItem_Click" IsCheckable="True" />
                         </MenuItem>
+                        <MenuItem Name="GraphicsMenuItem" Header="Graphics">
+                            <MenuItem Name="TexturesGraphicsMenuItem" Header="Textures" Click="TexturesGraphicsMenuItem_Click" IsCheckable="True" />
+                            <MenuItem Name="SolidColorsGraphicsMenuItem" Header="Solid Colors" Click="SolidColorsGraphicsMenuItem_Click" IsCheckable="True" />
+                        </MenuItem>
                     </MenuItem>
                     <MenuItem Header="About">
                         <MenuItem Name="ApplicationMenuItem" Header="Application"/>

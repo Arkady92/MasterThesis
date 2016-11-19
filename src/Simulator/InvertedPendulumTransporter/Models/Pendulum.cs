@@ -3,6 +3,7 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System;
 using InvertedPendulumTransporterPhysics.Common;
+using System.Windows.Media.Imaging;
 
 namespace InvertedPendulumTransporter.Models
 {
@@ -84,6 +85,20 @@ namespace InvertedPendulumTransporter.Models
             rodModel.Point1 = CartLinkPoint;
             rodModel.Point2 = MassLinkPoint;
             massModel.Center = MassLinkPoint;
+        }
+
+        public void SetupHighGradeTextures()
+        {
+            ImageBrush pendulumImageBrush = new ImageBrush();
+            pendulumImageBrush.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/Resources/Pendulum.jpg"));
+            massModel.Fill = pendulumImageBrush;
+            rodModel.Fill = pendulumImageBrush;
+        }
+
+        public void SetupLowGradeTextures()
+        {
+            massModel.Fill = Brushes.Gold;
+            rodModel.Fill = Brushes.Gold;
         }
     }
 }

@@ -7,5 +7,8 @@ namespace InvertedPendulumTransporter.Models
         Point3D MassLinkPoint { get; }
         Point3D CartLinkPoint { get; }
         double RodLength { get; }
+
+        void SetupHighGradeTextures();
+        void SetupLowGradeTextures();
     }
 }
