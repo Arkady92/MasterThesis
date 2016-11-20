@@ -64,35 +64,39 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             }
         }
 
-        public Point3DCollection LoadTrajectory()
+        public Point3DCollection LoadTrajectory(string fileName = null)
         {
-            var fileDialog = new OpenFileDialog
+            if (fileName == null)
             {
-                Filter = @"Trajectory files (*.trj)|*.trj",
-                Multiselect = false
-            };
-
-            bool? userClickedOK = fileDialog.ShowDialog();
-
-            if (userClickedOK == true)
-            {
-                if (ReadTrajectoryFromFile(fileDialog.FileName) && trajectoryPoints.Count >= 2)
+                var fileDialog = new OpenFileDialog
                 {
-                    TrajectoryEnabled = true;
-                    averageDistance = CalculateAverageDistance();
-                    SetAccuracy(DefaultAccuracyType);
-                    var result = new Point3DCollection();
-                    result.Add(trajectoryPoints[0]);
-                    for (int i = 1; i < trajectoryPoints.Count - 1; i++)
-                    {
-                        result.Add(trajectoryPoints[i]);
-                        result.Add(trajectoryPoints[i]);
-                    }
-                    result.Add(trajectoryPoints[trajectoryPoints.Count - 1]);
-                    return result;
-                }
-                MessageBox.Show("Trajectory cannot be loaded.");
+                    Filter = @"Trajectory files (*.trj)|*.trj",
+                    Multiselect = false
+                };
+
+                bool? userClickedOK = fileDialog.ShowDialog();
+
+                if (userClickedOK == false) return null;
+
+                fileName = fileDialog.FileName;
             }
+
+            if (ReadTrajectoryFromFile(fileName) && trajectoryPoints.Count >= 2)
+            {
+                TrajectoryEnabled = true;
+                averageDistance = CalculateAverageDistance();
+                SetAccuracy(DefaultAccuracyType);
+                var result = new Point3DCollection();
+                result.Add(trajectoryPoints[0]);
+                for (int i = 1; i < trajectoryPoints.Count - 1; i++)
+                {
+                    result.Add(trajectoryPoints[i]);
+                    result.Add(trajectoryPoints[i]);
+                }
+                result.Add(trajectoryPoints[trajectoryPoints.Count - 1]);
+                return result;
+            }
+            MessageBox.Show("Trajectory cannot be loaded.");
             return null;
         }
 
@@ -106,8 +110,9 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             return sum / trajectoryPoints.Count;
         }
 
-        public void SaveTrajectory()
+        public string SaveTrajectory(List<Point3D> trajectory)
         {
+            trajectoryPoints = trajectory;
             var fileDialog = new SaveFileDialog
             {
                 FileName = "Trajectory.trj",
@@ -119,8 +124,13 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             if (userClickedOK == true)
             {
                 if (!WriteTrajectoryToFile(fileDialog.FileName))
+                {
                     MessageBox.Show("Trajectory cannot be saved.");
+                    return null;
+                }
+                return fileDialog.FileName;
             }
+            return null;
         }
 
 
@@ -152,17 +162,9 @@ namespace InvertedPendulumTransporterPhysics.Controllers
 
         private bool WriteTrajectoryToFile(string fileName)
         {
-            var alpha = 0.0;
-            var r = 10.0;
-            var step = Math.PI / 18;
-            for (int i = 0; i <= 36; i++)
-            {
-                trajectoryPoints.Add(new Point3D(Math.Cos(alpha) * r, Math.Sin(alpha) * r, 0.0));
-                alpha += step;
-            }
             try
             {
-                using (StreamWriter writer = new StreamWriter(fileName))
+                using (StreamWriter writer = new StreamWriter(fileName, false))
                 {
                     foreach (var point in trajectoryPoints)
                     {
@@ -221,10 +223,10 @@ namespace InvertedPendulumTransporterPhysics.Controllers
                 result = trajectoryPoints[actualPointIndex];
             else
                 result = new Point3D(
-                    trajectoryPoints[actualPointIndex].X * (distanceTo / distanceSum) 
+                    trajectoryPoints[actualPointIndex].X * (distanceTo / distanceSum)
                     + trajectoryPoints[actualPointIndex + 1].X * (distanceFrom / distanceSum),
                     trajectoryPoints[actualPointIndex].Y * (distanceTo / distanceSum)
-                    + trajectoryPoints[actualPointIndex + 1].Y * (distanceFrom / distanceSum), 
+                    + trajectoryPoints[actualPointIndex + 1].Y * (distanceFrom / distanceSum),
                     trajectoryPoints[actualPointIndex].Z);
 
             if (distanceTo < averageDistance * ApproximateDistanceFactor)

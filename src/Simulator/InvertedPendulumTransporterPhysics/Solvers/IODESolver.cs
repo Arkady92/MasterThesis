@@ -6,5 +6,6 @@ namespace InvertedPendulumTransporterPhysics.Solvers
     {
         void UpdateSystemParameters(SolverParameters parameters);
         OneDimensionalSystemState SolveODESystem(double[] x, double[] y);
+        void SetupStrategy(IODESolverFunctionStrategy strategy);
     }
 }

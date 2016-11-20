@@ -1,4 +1,5 @@
 ﻿using InvertedPendulumTransporterPhysics.Controllers;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -43,6 +44,33 @@ namespace InvertedPendulumTransporter
             UpdateGUI();
         }
 
+
+        private void CreateTrajectoryItem_Click(object sender, RoutedEventArgs e)
+        {
+            ClearTrajectoryItem_Click(null, null);
+            var window = new CreateTrajectoryWindow();
+            window.ShowDialog();
+            if (window.DialogResult == false || !window.TrajectoryLoaded) return;
+
+            var fileName = trajectoryController.SaveTrajectory(window.TrajectoryPoints);
+            if (fileName == null) return;
+            var trajectory = trajectoryController.LoadTrajectory(fileName);
+            if (trajectory == null)
+                return;
+            SceneControl.UpdateTrajectory(trajectory);
+
+            var startPosition = trajectoryController.GetTargetStartPosition();
+            XCoordAngle = 0.0;
+            YCoordAngle = 0.0;
+            systemState.Reset(0.0, 0.0, startPosition.X, startPosition.Y);
+            SceneControl.UpdateState(systemState);
+            SceneControl.UpdateCamera(systemState);
+            if (xCoordVoltageController.ControlType != ControlType.DoublePIDParallel
+                && xCoordVoltageController.ControlType != ControlType.DoublePIDCascade)
+                SetMenuVoltage(DoublePIDParallelVoltageMenuItem, ControlType.DoublePIDParallel);
+            UpdateGUI();
+        }
+
         private void ClearTrajectoryItem_Click(object sender, RoutedEventArgs e)
         {
             ResetButton_Click(null, null);
@@ -64,12 +92,14 @@ namespace InvertedPendulumTransporter
         {
             if (!trajectoryController.TrajectoryEnabled)
                 LoadTrajectoryItem_Click(null, null);
+            ButtonsGrid.Visibility = Visibility.Visible;
             gameController.GameEnabled = true;
             SetMenuVoltage(NoneVoltageMenuItem, ControlType.PID);
         }
 
         private void ClearGameItem_Click(object sender, RoutedEventArgs e)
         {
+            ButtonsGrid.Visibility = Visibility.Hidden;
             ClearTrajectoryItem_Click(null, null);
             gameController.GameEnabled = false;
         }
@@ -198,7 +228,91 @@ namespace InvertedPendulumTransporter
         #endregion
 
         #region About
+        private void ApplicationMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new AboutWindow();
+            window.SetupWindowType(WindowType.Application);
+            window.ShowDialog();
+        }
 
+        private void SystemMechanicsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new AboutWindow();
+            window.SetupWindowType(WindowType.SystemMechanics);
+            window.ShowDialog();
+        }
+
+        private void AuthorMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new AboutWindow();
+            window.SetupWindowType(WindowType.Author);
+            window.ShowDialog();
+        }
+
+        private void SetElementsVisibility(Visibility visibility)
+        {
+            Menu.Visibility = visibility;
+            AnimationControlPanel.Visibility = visibility;
+            SystemParametersPanel.Visibility = visibility;
+            WindParametersPanel.Visibility = visibility;
+            SystemStateInfo.Visibility = visibility;
+            SceneControl.Visibility = visibility;
+            PlotsControl.Visibility = visibility;
+            ControlPanelBorder.Visibility = visibility;
+        }
+
+        private void HelpMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var count = 9;
+            SetElementsVisibility(Visibility.Hidden);
+            for (int i = 0; i < count; i++)
+            {
+                var window = new AboutWindow();
+                switch (i)
+                {
+                    case 0:
+                        window.SetupWindowType(WindowType.HelpMenuMode);
+                        Menu.Visibility = Visibility.Visible;
+                        break;
+                    case 1:
+                        window.SetupWindowType(WindowType.HelpMenuOptions);
+                        break;
+                    case 2:
+                        window.SetupWindowType(WindowType.HelpMenuAbout);
+                        break;
+                    case 3:
+                        window.SetupWindowType(WindowType.HelpAnimationPanel);
+                        AnimationControlPanel.Visibility = Visibility.Visible;
+                        break;
+                    case 4:
+                        window.SetupWindowType(WindowType.HelpSystemParameters);
+                        SystemParametersPanel.Visibility = Visibility.Visible;
+                        break;
+                    case 5:
+                        window.SetupWindowType(WindowType.HelpWindParameters);
+                        WindParametersPanel.Visibility = Visibility.Visible;
+                        break;
+                    case 6:
+                        window.SetupWindowType(WindowType.HelpSystemStateInfo);
+                        SystemStateInfo.Visibility = Visibility.Visible;
+                        break;
+                    case 7:
+                        window.SetupWindowType(WindowType.HelpSimulationScene);
+                        SceneControl.Visibility = Visibility.Visible;
+                        ControlPanelBorder.Visibility = Visibility.Visible;
+                        break;
+                    case 8:
+                        window.SetupWindowType(WindowType.HelpPlots);
+                        PlotsControl.Visibility = Visibility.Visible;
+                        break;
+                }
+                window.SetupHelpWindow(i == count - 1);
+                window.ShowDialog();
+                if (window.DialogResult == false)
+                    break;
+            }
+            SetElementsVisibility(Visibility.Visible);
+        }
         #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Windows.Media.Media3D;
+﻿using System.Collections.Generic;
+using System.Windows.Media.Media3D;
 
 namespace InvertedPendulumTransporterPhysics.Controllers
 {
@@ -10,8 +11,8 @@ namespace InvertedPendulumTransporterPhysics.Controllers
 
         void Clear();
         void SetAccuracy(AccuracyType accuracy);
-        Point3DCollection LoadTrajectory();
-        void SaveTrajectory();
+        Point3DCollection LoadTrajectory(string fileName = null);
+        string SaveTrajectory(List<Point3D> trajectory);
         Point3D GetTargetStartPosition();
         Point3D GetTargetAccuratePosition(double x, double y, out bool nextCheckPoint);
     }

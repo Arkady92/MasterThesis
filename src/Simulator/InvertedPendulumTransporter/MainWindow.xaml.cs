@@ -5,7 +5,6 @@ using InvertedPendulumTransporterPhysics.Common;
 using InvertedPendulumTransporterPhysics.Controllers;
 using InvertedPendulumTransporterPhysics.Solvers;
 using InvertedPendulumTransporter.Controls;
-using System.Windows.Media.Media3D;
 
 namespace InvertedPendulumTransporter
 {
@@ -43,6 +42,7 @@ namespace InvertedPendulumTransporter
 
             systemState = new SystemState();
             solver = new ODESolver(systemState.SolverParameters);
+            solver.SetupStrategy(new NoisySystemODESolverFunctionStrategy());
 
             SceneControl.ResetSimulation(systemState);
             SceneControl.UpdateState(systemState);
@@ -59,7 +59,7 @@ namespace InvertedPendulumTransporter
             yCoordVoltageController = new VoltageController();
             windController = new WindController();
             trajectoryController = new TrajectoryController();
-            gameController = new GameController();
+            gameController = new GameController(UpKeyboardButton, DownKeyboardButton, LeftKeyboardButton, RightKeyboardButton);
         }
 
         private void SetupControllers()
@@ -105,7 +105,7 @@ namespace InvertedPendulumTransporter
             double yCoordVoltage = 0.0;
             var resultYState = ExecuteSystemCalculations(yCoordVoltageController, systemState.StateY, gameController.UserAngleY, 
                 targetPosition.Y, windController.GetZCoordWindPower(), windController.GetYCoordWindPower(), out yCoordVoltage);
-            if (resultXState == null) return;
+            if (resultYState == null) return;
             systemState.UpdateSystemStateY(resultYState);
 
             PlotsControl.UpdateVoltagePlots(systemState.Time, xCoordVoltage, yCoordVoltage);

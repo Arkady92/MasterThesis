@@ -17,18 +17,16 @@ namespace InvertedPendulumTransporterPhysics.Common
         public double Time { get; set; }
         public double TimeDelta { get; set; }
         public SolverParameters SolverParameters { get; set; }
-        private SolverParameters defaultSolverParameters;
 
         public SystemState()
         {
             Reset();
             SolverParameters = new SolverParameters();
-            defaultSolverParameters = new SolverParameters();
         }
 
         public void ResetSystemParameters()
         {
-            SolverParameters = defaultSolverParameters;
+            SolverParameters = new SolverParameters();
         }
 
         public void Reset(double xCoordAngle = 0.0, double yCoordAngle = 0.0, double xCoordPosition = 0.0, double yCoordPosition = 0.0)

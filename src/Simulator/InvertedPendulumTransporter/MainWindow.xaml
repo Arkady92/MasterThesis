@@ -14,11 +14,12 @@
             <ColumnDefinition Width="3*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column ="0">
-            <Border BorderBrush="Black" BorderThickness="2"></Border>
+            <Border Name="ControlPanelBorder" BorderBrush="Black" BorderThickness="2"></Border>
             <StackPanel>
                 <Menu Name="Menu" BorderThickness="2" BorderBrush="Black">
                     <MenuItem Header="Mode">
                         <MenuItem Name="LoadTrajectoryItem" Header="Load Trajectory" Click="LoadTrajectoryItem_Click"/>
+                        <MenuItem Name="CreateTrajectoryItem" Header="Create Trajectory" Click="CreateTrajectoryItem_Click"/>
                         <MenuItem Name="ClearTrajectoryItem" Header="Clear Trajectory" Click="ClearTrajectoryItem_Click"/>
                         <MenuItem Name="LoadGameItem" Header="Load Game" Click="LoadGameItem_Click"/>
                         <MenuItem Name="ClearGameItem" Header="Clear Game" Click="ClearGameItem_Click"/>
@@ -54,14 +55,14 @@
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="About">
-                        <MenuItem Name="ApplicationMenuItem" Header="Application"/>
-                        <MenuItem Name="PhysicsMenuItem" Header="System Physics"/>
-                        <MenuItem Name="AuthorMenuItem" Header="Author"/>
+                        <MenuItem Name="ApplicationMenuItem" Header="Application" Click="ApplicationMenuItem_Click"/>
+                        <MenuItem Name="SystemMechanicsMenuItem" Header="System Mechanics" Click="SystemMechanicsMenuItem_Click"/>
+                        <MenuItem Name="AuthorMenuItem" Header="Author" Click="AuthorMenuItem_Click"/>
                         <Separator/>
-                        <MenuItem Name="HelpMenuItem" Header="Help"/>
+                        <MenuItem Name="HelpMenuItem" Header="Help" Click="HelpMenuItem_Click"/>
                     </MenuItem>
                 </Menu>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <StackPanel Name="AnimationControlPanel" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                     <Button Name="PlayButton" Margin="5" Content="Play" Width="50" Height="50" Click="PlayButton_Click"></Button>
                     <Button Name="PauseButton" Margin="5" Content="Pause" Width="50" Height="50" Click="PauseButton_Click" IsEnabled="False"></Button>
                     <Button Name="ResetButton" Margin="5" Content="Reset" Width="50" Height="50" Click="ResetButton_Click"></Button>
@@ -151,7 +152,7 @@
                     </Grid>
                     <Slider Name="WindChangeSpeedSlider" Value="{Binding Path=WindChangeSpeed}" Margin="20,0,20,5" Minimum="{Binding MinWindPower}" Maximum="{Binding MaxWindPower}"></Slider>
                 </StackPanel>
-                <StackPanel>
+                <StackPanel Name="SystemStateInfo">
                     <Label HorizontalAlignment="Center" Content="System state" Margin="0,10,0,0"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -219,6 +220,21 @@
             </Grid.RowDefinitions>
             <controls:SceneControl x:Name="SceneControl" Grid.Column="1" Panel.ZIndex="1"></controls:SceneControl>
             <controls:PlotsControl Grid.Row="1" x:Name="PlotsControl"></controls:PlotsControl>
+            <Grid Name="ButtonsGrid" Visibility="Hidden" Margin="10" Panel.ZIndex="3" HorizontalAlignment="Center" Height="80" VerticalAlignment="Bottom" Width="120">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Name="UpKeyboardButton" FontSize="20" FontWeight="DemiBold" Content="T" Grid.Column="1" Grid.Row="0" Click="UpKeyboardButton_Click"></Button>
+                <Button Name="DownKeyboardButton" FontSize="20" FontWeight="DemiBold" Content="G" Grid.Column="1" Grid.Row="1" Click="DownKeyboardButton_Click"></Button>
+                <Button Name="LeftKeyboardButton" FontSize="20" FontWeight="DemiBold" Content="F" Grid.Column="0" Grid.Row="1" Click="LeftKeyboardButton_Click"></Button>
+                <Button Name="RightKeyboardButton" FontSize="20" FontWeight="DemiBold" Content="H" Grid.Column="2" Grid.Row="1" Click="RightKeyboardButton_Click"></Button>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

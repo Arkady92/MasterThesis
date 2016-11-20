@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace InvertedPendulumTransporterPhysics.Controllers
 {
@@ -7,6 +8,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         double UserAngleX { get; }
         double UserAngleY { get; }
         bool GameEnabled { get; set; }
+        bool GamePlaying { get; set; }
         void HandleKey(Key key);
     }
 }

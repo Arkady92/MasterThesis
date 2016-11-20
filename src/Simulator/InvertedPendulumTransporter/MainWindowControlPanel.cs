@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 
 namespace InvertedPendulumTransporter
 {
@@ -226,6 +228,7 @@ namespace InvertedPendulumTransporter
             }
             PlayButton.IsEnabled = false;
             PauseButton.IsEnabled = true;
+            gameController.GamePlaying = true;
             dispatcherTimer.Start();
         }
 
@@ -237,6 +240,7 @@ namespace InvertedPendulumTransporter
             dispatcherTimer.Stop();
             PlayButton.IsEnabled = true;
             PauseButton.IsEnabled = false;
+            gameController.GamePlaying = false;
         }
 
         /// <summary>
@@ -291,6 +295,26 @@ namespace InvertedPendulumTransporter
             CartMass = systemState.SolverParameters.CartMass;
             PendulumMass = systemState.SolverParameters.PendulumMass;
             UpdateGUI();
+        }
+
+        private void UpKeyboardButton_Click(object sender, RoutedEventArgs e)
+        {
+            gameController.HandleKey(Key.T);
+        }
+
+        private void DownKeyboardButton_Click(object sender, RoutedEventArgs e)
+        {
+            gameController.HandleKey(Key.G);
+        }
+
+        private void LeftKeyboardButton_Click(object sender, RoutedEventArgs e)
+        {
+            gameController.HandleKey(Key.F);
+        }
+
+        private void RightKeyboardButton_Click(object sender, RoutedEventArgs e)
+        {
+            gameController.HandleKey(Key.H);
         }
         #endregion
     }

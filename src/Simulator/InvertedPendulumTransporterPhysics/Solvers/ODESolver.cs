@@ -5,33 +5,23 @@ namespace InvertedPendulumTransporterPhysics.Solvers
     public class ODESolver : IODESolver
     {
         private SolverParameters ODESolverData;
+        private IODESolverFunctionStrategy solverFunctionStrategy;
 
         public ODESolver(SolverParameters parameters)
         {
+            SetupStrategy(new StandardSystemODESolverFunctionStrategy());
             UpdateSystemParameters(parameters);
         }
+
+        public void SetupStrategy(IODESolverFunctionStrategy strategy)
+        {
+            solverFunctionStrategy = strategy;
+        }
+
 
         public void UpdateSystemParameters(SolverParameters parameters)
         {
             ODESolverData = parameters;
-        }
-
-        private void ODESolverFunction(double[] y, double x, double[] dy, object obj)
-        {
-            // y: x, theta, dx, dtheta
-            // dy: dx, dtheta, d2x, d2theta
-            var data = obj as SolverParameters;
-            double Fw_X = data.HorizontalWindForce;
-            double Fw_Z = data.VerticalWindForce;
-            dy[0] = y[2];
-            dy[1] = y[3];
-            dy[2] = (-data.PendulumMass * SolverParameters.G / data.CartMass) * y[1] + (-data.Gamma2 / data.CartMass) * y[2]
-                + (data.Gamma1 / data.CartMass * data.Voltage)
-                + ((Fw_X - Fw_Z * y[1]) / data.CartMass);
-            dy[3] = ((data.CartMass + data.PendulumMass) * SolverParameters.G / data.CartMass / data.PendulumLength) * y[1]
-                + (data.Gamma2 / data.CartMass / data.PendulumLength) * y[2]
-                + (-data.Gamma1 / data.CartMass / data.PendulumLength * data.Voltage)
-                + ((Fw_Z * y[1] - Fw_X) * (data.CartMass + data.PendulumMass) / (data.CartMass * data.PendulumMass));
         }
 
         public OneDimensionalSystemState SolveODESystem(double[] x, double[] y)
@@ -45,7 +35,7 @@ namespace InvertedPendulumTransporterPhysics.Solvers
             alglib.odesolverreport rep;
 
             alglib.odesolverrkck(y, x, eps, h, out s);
-            alglib.odesolversolve(s, ODESolverFunction, ODESolverData);
+            alglib.odesolversolve(s, solverFunctionStrategy.ODESolverFunction, ODESolverData);
             alglib.odesolverresults(s, out m, out xtbl, out ytbl, out rep);
 
             return new OneDimensionalSystemState(ytbl[1, 0], ytbl[1, 1], ytbl[1, 2], ytbl[1, 3]);

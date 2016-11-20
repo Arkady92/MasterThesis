@@ -58,12 +58,15 @@
     <Compile Include="Controllers\PIDCorrector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Solvers\IODESolver.cs" />
+    <Compile Include="Solvers\IODESolverFunctionStrategy.cs" />
+    <Compile Include="Solvers\NoisySystemODESolverFunctionStrategy.cs" />
     <Compile Include="Solvers\ODESolver.cs" />
     <Compile Include="Controllers\VoltageController.cs" />
     <Compile Include="Common\SolverParameters.cs" />
     <Compile Include="Common\SystemState.cs" />
     <Compile Include="Controllers\TrajectoryController.cs" />
     <Compile Include="Controllers\WindController.cs" />
+    <Compile Include="Solvers\StandardSystemODESolverFunctionStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
