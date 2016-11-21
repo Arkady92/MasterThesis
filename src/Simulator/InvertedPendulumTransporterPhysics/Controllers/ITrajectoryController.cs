@@ -8,6 +8,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         bool TrajectoryAchieved { get; }
         bool TrajectoryEnabled { get; }
         bool TrajectoryAccuracy { get; }
+        double AverageDistance { get; }
 
         void Clear();
         void SetAccuracy(AccuracyType accuracy);

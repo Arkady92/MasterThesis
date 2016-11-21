@@ -13,7 +13,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
-            <oxy:Plot Title="Control Error" TitleFontSize="12" BorderBrush="Black" BorderThickness="2">
+            <oxy:Plot Name="ControlErrorPlot" Title="Control Error" MouseRightButtonDown="ControlErrorPlot_MouseRightButtonDown" TitleFontSize="12" BorderBrush="Black" BorderThickness="2">
                 <oxy:Plot.Series>
                     <oxy:LineSeries Title="X-Coord" ItemsSource="{Binding ErrorPointsX}"/>
                     <oxy:LineSeries Title="Y-Coord" ItemsSource="{Binding ErrorPointsY}"/>
@@ -21,7 +21,7 @@
             </oxy:Plot>
         </Grid>
         <Grid Grid.Column="1">
-            <oxy:Plot Title="Engine Voltage" TitleFontSize="12" BorderBrush="Black" BorderThickness="2">
+            <oxy:Plot Name="EngineVoltagePlot" Title="Engine Voltage" MouseRightButtonDown="EngineVoltagePlot_MouseRightButtonDown" TitleFontSize="12" BorderBrush="Black" BorderThickness="2">
                 <oxy:Plot.Series>
                     <oxy:LineSeries Title="X-Coord" ItemsSource="{Binding VoltagePointsX}"/>
                     <oxy:LineSeries Title="Y-Coord" ItemsSource="{Binding VoltagePointsY}"/>

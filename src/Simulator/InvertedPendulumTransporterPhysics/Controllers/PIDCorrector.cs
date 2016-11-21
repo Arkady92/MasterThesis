@@ -16,7 +16,8 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         private const double KpPC = 0.05;
         private const double TdPC = 0.7;
         private const double KpPP = 6.0; 
-        private const double TdPP = 1.5; 
+        private const double TdPP = 1.5;
+        private const double angleControlReductionFactor = 1;
         private double TimeDelta;
         private bool firstAngleIteration;
         private bool firstPositionIteration;
@@ -81,10 +82,14 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             return result;
         }
 
-        public double CalculateParallelPositionAnglePIDCorrection()
+        public double CalculateParallelPositionAnglePIDCorrection(bool integral)
         {
-            var positionPIDCorrection = KpPP * (positionError + TdPP * (positionError - previousPositionError) / TimeDelta);// *275;
-            var anglePIDCorrection = KpA * (angleError + sumAngleErrors / TiA + TdA * (angleError - previousAngleError) / TimeDelta);
+            var positionPIDCorrection = KpPP * (positionError + TdPP * (positionError - previousPositionError) / TimeDelta);
+            double anglePIDCorrection = 0.0;
+            if(integral)
+                anglePIDCorrection = KpA * (angleError + sumAngleErrors / TiA + TdA * (angleError - previousAngleError) / TimeDelta);
+            else
+                anglePIDCorrection = KpA * (angleError + TdA * (angleError - previousAngleError) / TimeDelta) * angleControlReductionFactor;
             var result = (anglePIDCorrection - positionPIDCorrection);
             return (Math.Abs(result) > MaxVoltage) ? Math.Sign(result) * MaxVoltage : result;
         }

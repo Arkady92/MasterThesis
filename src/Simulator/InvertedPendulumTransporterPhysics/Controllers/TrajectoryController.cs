@@ -14,7 +14,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         private List<Point3D> trajectoryPoints;
         private int actualPointIndex = 0;
         private const double ZValue = 0.05;
-        private double averageDistance;
+        public double AverageDistance { get; private set; }
         private const AccuracyType DefaultAccuracyType = AccuracyType.Medium;
         private double distanceEps;
         private const double ApproximateDistanceFactor = 0.75;
@@ -48,16 +48,16 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             switch (accuracy)
             {
                 case AccuracyType.Ultra:
-                    distanceEps = averageDistance * 0.001;
+                    distanceEps = AverageDistance * 0.001;
                     break;
                 case AccuracyType.High:
-                    distanceEps = averageDistance * 0.01;
+                    distanceEps = AverageDistance * 0.01;
                     break;
                 case AccuracyType.Medium:
-                    distanceEps = averageDistance * 0.05;
+                    distanceEps = AverageDistance * 0.05;
                     break;
                 case AccuracyType.Low:
-                    distanceEps = averageDistance * 0.25;
+                    distanceEps = AverageDistance * 0.25;
                     break;
                 default:
                     break;
@@ -84,7 +84,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             if (ReadTrajectoryFromFile(fileName) && trajectoryPoints.Count >= 2)
             {
                 TrajectoryEnabled = true;
-                averageDistance = CalculateAverageDistance();
+                AverageDistance = CalculateAverageDistance();
                 SetAccuracy(DefaultAccuracyType);
                 var result = new Point3DCollection();
                 result.Add(trajectoryPoints[0]);
@@ -107,7 +107,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             {
                 sum += trajectoryPoints[i - 1].DistanceTo(trajectoryPoints[i]);
             }
-            return sum / trajectoryPoints.Count;
+            return sum / (trajectoryPoints.Count - 1);
         }
 
         public string SaveTrajectory(List<Point3D> trajectory)
@@ -229,7 +229,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
                     + trajectoryPoints[actualPointIndex + 1].Y * (distanceFrom / distanceSum),
                     trajectoryPoints[actualPointIndex].Z);
 
-            if (distanceTo < averageDistance * ApproximateDistanceFactor)
+            if (distanceTo < AverageDistance * ApproximateDistanceFactor)
                 actualPointIndex++;
             if (actualPointIndex >= trajectoryPoints.Count)
             {
@@ -247,7 +247,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
                 return trajectoryPoints[trajectoryPoints.Count - 1];
             for (int i = actualPointIndex + 1; i < trajectoryPoints.Count; i++)
             {
-                if (trajectoryPoints[i].DistanceTo(new Point3D(x, y, ZValue)) < averageDistance * ApproximateDistanceFactor)
+                if (trajectoryPoints[i].DistanceTo(new Point3D(x, y, ZValue)) < AverageDistance * ApproximateDistanceFactor)
                 {
                     actualPointIndex = i;
                     break;

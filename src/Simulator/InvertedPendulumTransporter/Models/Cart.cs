@@ -75,21 +75,21 @@ namespace InvertedPendulumTransporter.Models
             cartTG.Children.Add(new TranslateTransform3D(systemState.StateX.Position, systemState.StateY.Position, 0.0));
             Model.Transform = cartTG;
 
-            if (highGradeTexturesEnabled)
-            {
-                foreach (var wheel in wheels)
-                {
-                    var wheelTG = new Transform3DGroup();
-                    var offsetX = (systemState.StateX.Position - lastPoint.X) * 180 / (Math.PI * wheelRadius);
-                    var offsetY = (systemState.StateY.Position - lastPoint.Y) * 180 / (Math.PI * wheelRadius);
-                    wheelTG.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(offsetXRotationAxis, offsetX)));
-                    wheelTG.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(offsetYRotationAxis, offsetY)));
-                    wheelTG.Children.Add(wheel.Transform);
-                    wheel.Transform = wheelTG;
-                }
-            }
+            //if (highGradeTexturesEnabled)
+            //{
+            //    foreach (var wheel in wheels)
+            //    {
+            //        var wheelTG = new Transform3DGroup();
+            //        var offsetX = (systemState.StateX.Position - lastPoint.X) * 180 / (Math.PI * wheelRadius);
+            //        var offsetY = (systemState.StateY.Position - lastPoint.Y) * 180 / (Math.PI * wheelRadius);
+            //        wheelTG.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(offsetXRotationAxis, offsetX)));
+            //        wheelTG.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(offsetYRotationAxis, offsetY)));
+            //        wheelTG.Children.Add(wheel.Transform);
+            //        wheel.Transform = wheelTG;
+            //    }
+            //}
 
-            lastPoint = new Point3D(systemState.StateX.Position, systemState.StateY.Position, 0.0);
+            //lastPoint = new Point3D(systemState.StateX.Position, systemState.StateY.Position, 0.0);
         }
 
         public void SetupHighGradeTextures()

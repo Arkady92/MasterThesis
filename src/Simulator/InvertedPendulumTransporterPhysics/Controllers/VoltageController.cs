@@ -34,6 +34,8 @@ namespace InvertedPendulumTransporterPhysics.Controllers
                     return CalculateDoublePIDCascadeCorrection();
                 case ControlType.DoublePIDParallel:
                     return CalculateDoublePIDParallelCorrection();
+                case ControlType.DoublePDParallel:
+                    return CalculateDoublePDParallelCorrection();
                 case ControlType.None:
                     return 0.0;
             }
@@ -67,10 +69,14 @@ namespace InvertedPendulumTransporterPhysics.Controllers
                 doublePIDCorrector.SetAngleError(angleError);
         }
 
+        private double CalculateDoublePDParallelCorrection()
+        {
+            return doublePIDCorrector.CalculateParallelPositionAnglePIDCorrection(false);
+        }
 
         private double CalculateDoublePIDParallelCorrection()
         {
-            return doublePIDCorrector.CalculateParallelPositionAnglePIDCorrection();
+            return doublePIDCorrector.CalculateParallelPositionAnglePIDCorrection(true);
         }
 
         private double CalculateDoublePIDCascadeCorrection()
@@ -91,6 +97,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         None,
         PID,
         DoublePIDCascade,
-        DoublePIDParallel
+        DoublePIDParallel,
+        DoublePDParallel
     }
 }

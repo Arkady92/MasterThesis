@@ -27,6 +27,7 @@
                     <MenuItem Header="Options">
                         <MenuItem Name="VoltageMenuItem" Header="Voltage Controller">
                             <MenuItem Name="DoublePIDParallelVoltageMenuItem" Header="Double PID Parallel" IsCheckable="True" Click="DoublePIDParallelVoltageMenuItem_Click" />
+                            <MenuItem Name="DoublePDParallelVoltageMenuItem" Header="Double PD Parallel" IsCheckable="True" Click="DoublePDParallelVoltageMenuItem_Click" />
                             <MenuItem Name="DoublePIDCascadeVoltageMenuItem" Header="Double PID Cascade" IsCheckable="True" Click="DoublePIDCascadeVoltageMenuItem_Click" />
                             <MenuItem Name="PIDVoltageMenuItem" Header="PID" IsCheckable="True" Click="PIDVoltageMenuItem_Click"/>
                             <MenuItem Name="SinusoidalVoltageMenuItem" Header="Sinusoidal" IsCheckable="True" Click="SinusoidalVoltageMenuItem_Click"/>

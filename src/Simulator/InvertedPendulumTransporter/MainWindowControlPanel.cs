@@ -160,7 +160,7 @@ namespace InvertedPendulumTransporter
             get { return windController.WindPower; }
             set
             {
-                value = Math.Round(value, 1);
+                value = Math.Round(value, 2);
                 if (value != windController.WindPower)
                 {
                     windController.WindPower = value;

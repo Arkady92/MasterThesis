@@ -1,5 +1,4 @@
 ﻿using InvertedPendulumTransporterPhysics.Controllers;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -39,7 +38,8 @@ namespace InvertedPendulumTransporter
             SceneControl.UpdateState(systemState);
             SceneControl.UpdateCamera(systemState);
             if (xCoordVoltageController.ControlType != ControlType.DoublePIDParallel
-                && xCoordVoltageController.ControlType != ControlType.DoublePIDCascade)
+                && xCoordVoltageController.ControlType != ControlType.DoublePIDCascade 
+                && xCoordVoltageController.ControlType != ControlType.DoublePDParallel)
                 SetMenuVoltage(DoublePIDParallelVoltageMenuItem, ControlType.DoublePIDParallel);
             UpdateGUI();
         }
@@ -66,7 +66,9 @@ namespace InvertedPendulumTransporter
             SceneControl.UpdateState(systemState);
             SceneControl.UpdateCamera(systemState);
             if (xCoordVoltageController.ControlType != ControlType.DoublePIDParallel
-                && xCoordVoltageController.ControlType != ControlType.DoublePIDCascade)
+                && xCoordVoltageController.ControlType != ControlType.DoublePIDCascade
+                && xCoordVoltageController.ControlType != ControlType.DoublePDParallel
+                && xCoordVoltageController.ControlType != ControlType.DoublePDParallel)
                 SetMenuVoltage(DoublePIDParallelVoltageMenuItem, ControlType.DoublePIDParallel);
             UpdateGUI();
         }
@@ -83,7 +85,8 @@ namespace InvertedPendulumTransporter
             SceneControl.UpdateState(systemState);
             SceneControl.UpdateCamera(systemState);
             if (xCoordVoltageController.ControlType == ControlType.DoublePIDParallel
-                || xCoordVoltageController.ControlType == ControlType.DoublePIDCascade)
+                || xCoordVoltageController.ControlType == ControlType.DoublePIDCascade
+                || xCoordVoltageController.ControlType == ControlType.DoublePDParallel)
                 SetMenuVoltage(PIDVoltageMenuItem, ControlType.PID);
             UpdateGUI();
         }
@@ -94,7 +97,7 @@ namespace InvertedPendulumTransporter
                 LoadTrajectoryItem_Click(null, null);
             ButtonsGrid.Visibility = Visibility.Visible;
             gameController.GameEnabled = true;
-            SetMenuVoltage(NoneVoltageMenuItem, ControlType.PID);
+            SetMenuVoltage(PIDVoltageMenuItem, ControlType.PID);
         }
 
         private void ClearGameItem_Click(object sender, RoutedEventArgs e)
@@ -167,6 +170,11 @@ namespace InvertedPendulumTransporter
         private void DoublePIDParallelVoltageMenuItem_Click(object sender, RoutedEventArgs e)
         {
             SetMenuVoltage(sender as MenuItem, ControlType.DoublePIDParallel);
+        }
+
+        private void DoublePDParallelVoltageMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SetMenuVoltage(sender as MenuItem, ControlType.DoublePDParallel);
         }
 
         private void DoublePIDCascadeVoltageMenuItem_Click(object sender, RoutedEventArgs e)

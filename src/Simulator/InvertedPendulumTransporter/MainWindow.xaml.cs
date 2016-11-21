@@ -98,13 +98,13 @@ namespace InvertedPendulumTransporter
 
             double xCoordVoltage = 0.0;
             var resultXState = ExecuteSystemCalculations(xCoordVoltageController, systemState.StateX, gameController.UserAngleX, 
-                targetPosition.X, windController.GetZCoordWindPower(), windController.GetXCoordWindPower(), out xCoordVoltage);
+                targetPosition.X, -windController.GetZCoordWindPower(), -windController.GetXCoordWindPower(), out xCoordVoltage);
             if (resultXState == null) return;
             systemState.UpdateSystemStateX(resultXState);
 
             double yCoordVoltage = 0.0;
             var resultYState = ExecuteSystemCalculations(yCoordVoltageController, systemState.StateY, gameController.UserAngleY, 
-                targetPosition.Y, windController.GetZCoordWindPower(), windController.GetYCoordWindPower(), out yCoordVoltage);
+                targetPosition.Y, -windController.GetZCoordWindPower(), -windController.GetYCoordWindPower(), out yCoordVoltage);
             if (resultYState == null) return;
             systemState.UpdateSystemStateY(resultYState);
 

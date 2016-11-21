@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System;
 using InvertedPendulumTransporterPhysics.Common;
+using OxyPlot.Wpf;
+using Microsoft.Win32;
 
 namespace InvertedPendulumTransporter.Controls
 {
@@ -68,6 +70,33 @@ namespace InvertedPendulumTransporter.Controls
             voltagePointsX.Clear();
             errorPointsY.Clear();
             voltagePointsY.Clear();
+        }
+
+        private void EngineVoltagePlot_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            SavePlotAsImage(EngineVoltagePlot.ActualModel);
+        }
+
+        private void ControlErrorPlot_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            SavePlotAsImage(ControlErrorPlot.ActualModel);
+        }
+
+        private void SavePlotAsImage(IPlotModel model)
+        {
+            var fileDialog = new SaveFileDialog
+            {
+                FileName = "EngineVoltage.png",
+                Filter = @"Image files (*.png)|*.png",
+            };
+
+            bool? userClickedOK = fileDialog.ShowDialog();
+
+            if (userClickedOK == true)
+            {
+                var pngExporter = new PngExporter { Width = 800, Height = 400, Background = OxyColors.White };
+                pngExporter.ExportToFile(model, fileDialog.FileName);
+            }
         }
     }
 }

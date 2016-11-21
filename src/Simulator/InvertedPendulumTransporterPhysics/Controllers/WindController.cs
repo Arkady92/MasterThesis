@@ -23,6 +23,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         private Vector3D startWindDirection;
         private Vector3D endWindDirection;
         private double actualWindChangeSpeed;
+        private double omega;
 
         public WindController()
         {
@@ -33,7 +34,8 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             actualWindChangeSpeed = DefaultWindChangeSpeed;
             windDirection = GeneratePeakWindDirection();
             startWindDirection = windDirection;
-            endWindDirection = GeneratePeakWindDirection();
+            endWindDirection = GenerateSwitchWindDirection();
+            omega = Math.Acos(Vector3D.DotProduct(startWindDirection, endWindDirection));
         }
 
         public double GetXCoordWindPower()
@@ -53,16 +55,19 @@ namespace InvertedPendulumTransporterPhysics.Controllers
 
         private Vector3D GeneratePeakWindDirection()
         {
-            var result = new Vector3D(random.NextDouble() * 2 - 1, random.NextDouble() * 2 - 1, random.NextDouble() * 2 - 1);
+            var result = new Vector3D(random.NextDouble() * 2 - 1, random.NextDouble() * 2 - 1, random.NextDouble() - 0.5);
+            if(result.Length < double.Epsilon)
+                return GeneratePeakWindDirection();
             return Normalize(result);
         }
 
         private Vector3D GenerateSwitchWindDirection()
         {
             var result = new Vector3D(-Math.Sign(windDirection.X) * random.NextDouble(), 
-                -Math.Sign(windDirection.X) * random.NextDouble(), -Math.Sign(windDirection.X) * random.NextDouble());
+                -Math.Sign(windDirection.X) * random.NextDouble(), -Math.Sign(windDirection.X) * random.NextDouble() * 0.5);
+            if (result.Length < double.Epsilon)
+                return GenerateSwitchWindDirection();
             return Normalize(result);
-            
         }
 
         private Vector3D Normalize(Vector3D vector)
@@ -93,21 +98,28 @@ namespace InvertedPendulumTransporterPhysics.Controllers
                 case WindType.RandomSmooth:
                     tickCounter++;
                     if (Math.Abs(WindChangeSpeed) < double.Epsilon)
+                    {
+                        if (tickCounter == 1)
+                            windDirection = GeneratePeakWindDirection();
                         return windDirection;
-                    if(Math.Abs(actualWindChangeSpeed - WindChangeSpeed) > double.Epsilon)
+                    }
+                    if (Math.Abs(actualWindChangeSpeed - WindChangeSpeed) > double.Epsilon)
                     {
                         actualWindChangeSpeed = WindChangeSpeed;
                         tickCounter = (int)(tickCounter * (1.1 - actualWindChangeSpeed));
                     }
-                    var resetValue = (int)(smoothResetValue * (1.1 - actualWindChangeSpeed));
+                    double resetValue = (smoothResetValue * (1.1 - actualWindChangeSpeed));
                     if (tickCounter >= resetValue)
                     {
                         tickCounter = 0;
+                        omega = Math.Acos(Vector3D.DotProduct(startWindDirection, endWindDirection));
                         startWindDirection = endWindDirection;
                         endWindDirection = GenerateSwitchWindDirection();
                     }
-                    windDirection = startWindDirection * (resetValue - tickCounter) / resetValue 
-                        + endWindDirection * tickCounter / resetValue;
+                    //windDirection = startWindDirection * (resetValue - tickCounter) / resetValue 
+                    //    + endWindDirection * tickCounter / resetValue;
+                    windDirection = startWindDirection * Math.Sin(((resetValue - tickCounter) / resetValue) * omega) / Math.Sin(omega)
+                        + endWindDirection * Math.Sin(((tickCounter) / resetValue) * omega) / Math.Sin(omega);
                     windDirection = Normalize(windDirection);
                     break;
                 default:
