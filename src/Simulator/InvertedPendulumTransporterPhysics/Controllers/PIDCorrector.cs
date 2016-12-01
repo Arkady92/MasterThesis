@@ -17,7 +17,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         private const double TdPC = 0.7;
         private const double KpPP = 6.0; 
         private const double TdPP = 1.5;
-        private const double angleControlReductionFactor = 1;
+        private const double angleControlReductionFactor = 0.5;
         private double TimeDelta;
         private bool firstAngleIteration;
         private bool firstPositionIteration;

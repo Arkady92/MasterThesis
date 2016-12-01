@@ -4,37 +4,66 @@
 \select@language {polish}
 \contentsline {chapter}{\numberline {1}Wst\IeC {\k e}p}{7}
 \contentsline {section}{\numberline {1.1}Podstawowe definicje}{7}
-\contentsline {section}{\numberline {1.2}T\IeC {\l }o fizyczne}{7}
-\contentsline {section}{\numberline {1.3}Opis problemu}{7}
-\contentsline {section}{\numberline {1.4}Przegl\IeC {\k a}d istniej\IeC {\k a}cych rozwi\IeC {\k a}za\IeC {\'n}}{7}
-\contentsline {chapter}{\numberline {2}Definicja projektu}{8}
-\contentsline {section}{\numberline {2.1}Zakres projektu}{8}
-\contentsline {section}{\numberline {2.2}Analiza wymaga\IeC {\'n}}{8}
-\contentsline {section}{\numberline {2.3}Opis funkcjonalno\IeC {\'s}ci}{8}
-\contentsline {section}{\numberline {2.4}Ograniczenia}{8}
-\contentsline {chapter}{\numberline {3}Opis rozwi\IeC {\k a}zania}{9}
-\contentsline {section}{\numberline {3.1}Mechanika systemu}{9}
-\contentsline {subsection}{\numberline {3.1.1}Model matematyczny ruchu}{9}
-\contentsline {subsection}{\numberline {3.1.2}Linearyzacja modelu}{9}
-\contentsline {subsection}{\numberline {3.1.3}Stabilizacja zak\IeC {\l }\IeC {\'o}ce\IeC {\'n} uk\IeC {\l }adu}{9}
-\contentsline {subsection}{\numberline {3.1.4}Ruch transportera po zadanej trajektorii}{9}
-\contentsline {section}{\numberline {3.2}Por\IeC {\'o}wnanie przyj\IeC {\k e}tych rozwi\IeC {\k a}za\IeC {\'n}}{9}
-\contentsline {chapter}{\numberline {4}Architektura systemu}{10}
-\contentsline {section}{\numberline {4.1}Og\IeC {\'o}lny opis rozwi\IeC {\k a}zania}{10}
-\contentsline {section}{\numberline {4.2}Komponenty aplikacji}{10}
-\contentsline {section}{\numberline {4.3}Opis wizualny aplikacji}{10}
-\contentsline {chapter}{\numberline {5}Dokumentacja techniczna}{11}
-\contentsline {section}{\numberline {5.1}Informacje og\IeC {\'o}lne}{11}
-\contentsline {section}{\numberline {5.2}Opis techniczny modu\IeC {\l }\IeC {\'o}w}{11}
-\contentsline {chapter}{\numberline {6}Podsumowanie projektu}{12}
-\contentsline {section}{\numberline {6.1}Instrukcja u\IeC {\.z}ytkownika}{12}
-\contentsline {section}{\numberline {6.2}Opis test\IeC {\'o}w}{12}
-\contentsline {subsection}{\numberline {6.2.1}Testowane elementy programu}{12}
-\contentsline {subsection}{\numberline {6.2.2}Wyniki test\IeC {\'o}w}{12}
-\contentsline {section}{\numberline {6.3}Ocena rozwi\IeC {\k a}zania}{12}
-\contentsline {subsection}{\numberline {6.3.1}Stopie\IeC {\'n} realizacji projektu}{12}
-\contentsline {subsection}{\numberline {6.3.2}Poprawno\IeC {\'s}\IeC {\'c} rozwi\IeC {\k a}zania}{12}
-\contentsline {chapter}{\numberline {7}Podsumowanie pracy}{13}
-\contentsline {section}{\numberline {7.1}Krytyczna refleksja}{13}
-\contentsline {section}{\numberline {7.2}Mo\IeC {\.z}liwo\IeC {\'s}ci rozszerzania projektu}{13}
+\contentsline {subsection}{\numberline {1.1.1}Symulacja}{7}
+\contentsline {subsection}{\numberline {1.1.2}Uk\IeC {\l }ad dynamiczny}{9}
+\contentsline {subsubsection}{Wprowadzenie}{9}
+\contentsline {subsubsection}{Wahad\IeC {\l }o odwr\IeC {\'o}cone na w\IeC {\'o}zku}{9}
+\contentsline {subsubsection}{Tr\IeC {\'o}jwymiarowa wersja uk\IeC {\l }adu}{11}
+\contentsline {section}{\numberline {1.2}Opis problemu}{12}
+\contentsline {subsection}{\numberline {1.2.1}Motywacja}{12}
+\contentsline {subsection}{\numberline {1.2.2}G\IeC {\l }\IeC {\'o}wne cele}{12}
+\contentsline {section}{\numberline {1.3}Przegl\IeC {\k a}d istniej\IeC {\k a}cych rozwi\IeC {\k a}za\IeC {\'n}}{13}
+\contentsline {subsection}{\numberline {1.3.1}Symulatory}{13}
+\contentsline {subsection}{\numberline {1.3.2}Dynamika i sterowanie}{14}
+\contentsline {chapter}{\numberline {2}Definicja projektu}{15}
+\contentsline {section}{\numberline {2.1}Zakres projektu}{15}
+\contentsline {section}{\numberline {2.2}Analiza wymaga\IeC {\'n}}{15}
+\contentsline {section}{\numberline {2.3}Ograniczenia}{17}
+\contentsline {chapter}{\numberline {3}Opis rozwi\IeC {\k a}zania}{18}
+\contentsline {section}{\numberline {3.1}Podstawy matematyczno-fizyczne}{18}
+\contentsline {subsection}{\numberline {3.1.1}R\IeC {\'o}wnanie stanu}{18}
+\contentsline {subsection}{\numberline {3.1.2}Algorytm Rungego-Kutty}{18}
+\contentsline {subsection}{\numberline {3.1.3}Regulator PID}{18}
+\contentsline {subsection}{\numberline {3.1.4}Regulator podw\IeC {\'o}jny PID}{18}
+\contentsline {section}{\numberline {3.2}Mechanika systemu}{18}
+\contentsline {subsection}{\numberline {3.2.1}Model matematyczny ruchu}{18}
+\contentsline {subsection}{\numberline {3.2.2}Linearyzacja modelu}{18}
+\contentsline {subsection}{\numberline {3.2.3}Stabilizacja uk\IeC {\l }adu}{18}
+\contentsline {subsection}{\numberline {3.2.4}Wprowadzenie zak\IeC {\l }\IeC {\'o}ce\IeC {\'n} do modelu}{18}
+\contentsline {subsection}{\numberline {3.2.5}Wprowadzenie trajektorii ruchu}{18}
+\contentsline {subsection}{\numberline {3.2.6}Regulacja ruchu wzgl\IeC {\k e}dem zadanej trajektorii}{18}
+\contentsline {section}{\numberline {3.3}Rozwi\IeC {\k a}zywanie r\IeC {\'o}wna\IeC {\'n} mechaniki systemu}{18}
+\contentsline {subsection}{\numberline {3.3.1}Algorytmy}{18}
+\contentsline {chapter}{\numberline {4}Testy i por\IeC {\'o}wnanie przyj\IeC {\k e}tych rozwi\IeC {\k a}za\IeC {\'n}}{19}
+\contentsline {section}{\numberline {4.1}Stabilizacja uk\IeC {\l }adu}{19}
+\contentsline {section}{\numberline {4.2}Ruch po trajektorii}{19}
+\contentsline {section}{\numberline {4.3}Wp\IeC {\l }yw parametr\IeC {\'o}w uk\IeC {\l }adu na jego zachowanie}{19}
+\contentsline {section}{\numberline {4.4}Testowanie przypadk\IeC {\'o}w szczeg\IeC {\'o}lnych}{19}
+\contentsline {chapter}{\numberline {5}Architektura systemu}{20}
+\contentsline {section}{\numberline {5.1}Og\IeC {\'o}lny opis rozwi\IeC {\k a}zania}{20}
+\contentsline {section}{\numberline {5.2}Wykorzystane narz\IeC {\k e}dzia}{20}
+\contentsline {subsection}{\numberline {5.2.1}Windows Presentation Foundation}{20}
+\contentsline {subsection}{\numberline {5.2.2}HelixToolkit}{20}
+\contentsline {subsection}{\numberline {5.2.3}OxyPlot}{20}
+\contentsline {subsection}{\numberline {5.2.4}Pozosta\IeC {\l }e}{20}
+\contentsline {section}{\numberline {5.3}Wzorce projektowe}{20}
+\contentsline {section}{\numberline {5.4}Komponenty aplikacji}{20}
+\contentsline {subsection}{\numberline {5.4.1}Modele}{20}
+\contentsline {subsection}{\numberline {5.4.2}Kontrolery}{20}
+\contentsline {section}{\numberline {5.5}Zarz\IeC {\k a}dzanie aplikacj\IeC {\k a}}{20}
+\contentsline {chapter}{\numberline {6}Instrukcja u\IeC {\.z}ytkownika}{21}
+\contentsline {section}{\numberline {6.1}Panel kontrolny}{21}
+\contentsline {subsection}{\numberline {6.1.1}Modu\IeC {\l }y}{21}
+\contentsline {subsection}{\numberline {6.1.2}Opcje}{21}
+\contentsline {subsection}{\numberline {6.1.3}Sterowanie parametrami}{21}
+\contentsline {section}{\numberline {6.2}Wizualizacja}{21}
+\contentsline {subsection}{\numberline {6.2.1}Scena}{21}
+\contentsline {subsection}{\numberline {6.2.2}Wykresy}{21}
+\contentsline {subsection}{\numberline {6.2.3}Podgl\IeC {\k a}d stanu}{21}
+\contentsline {chapter}{\numberline {7}Podsumowanie pracy}{22}
+\contentsline {section}{\numberline {7.1}Ocena rozwi\IeC {\k a}zania}{22}
+\contentsline {subsection}{\numberline {7.1.1}Stopie\IeC {\'n} realizacji projektu}{22}
+\contentsline {subsection}{\numberline {7.1.2}Poprawno\IeC {\'s}\IeC {\'c} rozwi\IeC {\k a}zania}{22}
+\contentsline {section}{\numberline {7.2}Krytyczna refleksja}{22}
+\contentsline {section}{\numberline {7.3}Mo\IeC {\.z}liwo\IeC {\'s}ci rozszerzania projektu}{22}
 \select@language {polish}

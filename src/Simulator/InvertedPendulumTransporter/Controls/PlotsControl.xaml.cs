@@ -37,6 +37,14 @@ namespace InvertedPendulumTransporter.Controls
             get { return voltagePointsY; }
         }
 
+        private double timeDelta;
+        private double xCoordAngle;
+        private double yCoordAngle;
+        private double rodLength;
+        private double cartMass;
+        private double pendulumMass;
+        private double windPower;
+
         public PlotsControl()
         {
             InitializeComponent();
@@ -74,19 +82,21 @@ namespace InvertedPendulumTransporter.Controls
 
         private void EngineVoltagePlot_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            SavePlotAsImage(EngineVoltagePlot.ActualModel);
+            var fileName = "EngineVoltage[" + "TD=" + timeDelta + "XC=" + xCoordAngle + "YC=" + yCoordAngle + "RL=" + rodLength + "CM=" + cartMass + "PM=" + pendulumMass + "WP=" + windPower + "].png";
+            SavePlotAsImage(EngineVoltagePlot.ActualModel, fileName);
         }
 
         private void ControlErrorPlot_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            SavePlotAsImage(ControlErrorPlot.ActualModel);
+            var fileName = "ControlError[" + "TD=" + timeDelta + "XC=" + xCoordAngle + "YC=" + yCoordAngle + "RL=" + rodLength + "CM=" + cartMass + "PM=" + pendulumMass + "WP=" + windPower + "].png";
+            SavePlotAsImage(ControlErrorPlot.ActualModel, fileName);
         }
 
-        private void SavePlotAsImage(IPlotModel model)
+        private void SavePlotAsImage(IPlotModel model, string fileName)
         {
             var fileDialog = new SaveFileDialog
             {
-                FileName = "EngineVoltage.png",
+                FileName = fileName,
                 Filter = @"Image files (*.png)|*.png",
             };
 
@@ -97,6 +107,17 @@ namespace InvertedPendulumTransporter.Controls
                 var pngExporter = new PngExporter { Width = 800, Height = 400, Background = OxyColors.White };
                 pngExporter.ExportToFile(model, fileDialog.FileName);
             }
+        }
+
+        public void PassParameters(double timeDelta, double xCoordAngle, double yCoordAngle, double rodLength, double cartMass, double pendulumMass, double windPower)
+        {
+            this.timeDelta = timeDelta;
+            this.xCoordAngle = xCoordAngle;
+            this.yCoordAngle = yCoordAngle;
+            this.rodLength = rodLength;
+            this.cartMass = cartMass;
+            this.pendulumMass = pendulumMass;
+            this.windPower = windPower;
         }
     }
 }

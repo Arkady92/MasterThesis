@@ -212,6 +212,12 @@ namespace InvertedPendulumTransporter
             OnPropertyChanged("PendulumAngleY");
             OnPropertyChanged("PendulumAngularVelocityX");
             OnPropertyChanged("PendulumAngularVelocityY");
+            OnPropertyChanged("RodLength");
+            OnPropertyChanged("CartMass");
+            OnPropertyChanged("PendulumMass");
+            OnPropertyChanged("TimeDelta");
+            OnPropertyChanged("XCoordAngle");
+            OnPropertyChanged("YCoordAngle");
         }
 
         /// <summary>
