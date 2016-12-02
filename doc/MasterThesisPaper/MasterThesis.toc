@@ -22,48 +22,52 @@
 \contentsline {chapter}{\numberline {3}Opis rozwi\IeC {\k a}zania}{18}
 \contentsline {section}{\numberline {3.1}Podstawy matematyczno-fizyczne}{18}
 \contentsline {subsection}{\numberline {3.1.1}R\IeC {\'o}wnanie stanu}{18}
-\contentsline {subsection}{\numberline {3.1.2}Algorytm Rungego-Kutty}{18}
-\contentsline {subsection}{\numberline {3.1.3}Regulator PID}{18}
-\contentsline {subsection}{\numberline {3.1.4}Regulator podw\IeC {\'o}jny PID}{18}
-\contentsline {section}{\numberline {3.2}Mechanika systemu}{18}
-\contentsline {subsection}{\numberline {3.2.1}Model matematyczny ruchu}{18}
-\contentsline {subsection}{\numberline {3.2.2}Linearyzacja modelu}{18}
-\contentsline {subsection}{\numberline {3.2.3}Stabilizacja uk\IeC {\l }adu}{18}
-\contentsline {subsection}{\numberline {3.2.4}Wprowadzenie zak\IeC {\l }\IeC {\'o}ce\IeC {\'n} do modelu}{18}
-\contentsline {subsection}{\numberline {3.2.5}Wprowadzenie trajektorii ruchu}{18}
-\contentsline {subsection}{\numberline {3.2.6}Regulacja ruchu wzgl\IeC {\k e}dem zadanej trajektorii}{18}
-\contentsline {section}{\numberline {3.3}Rozwi\IeC {\k a}zywanie r\IeC {\'o}wna\IeC {\'n} mechaniki systemu}{18}
-\contentsline {subsection}{\numberline {3.3.1}Algorytmy}{18}
-\contentsline {chapter}{\numberline {4}Testy i por\IeC {\'o}wnanie przyj\IeC {\k e}tych rozwi\IeC {\k a}za\IeC {\'n}}{19}
-\contentsline {section}{\numberline {4.1}Stabilizacja uk\IeC {\l }adu}{19}
-\contentsline {section}{\numberline {4.2}Ruch po trajektorii}{19}
-\contentsline {section}{\numberline {4.3}Wp\IeC {\l }yw parametr\IeC {\'o}w uk\IeC {\l }adu na jego zachowanie}{19}
-\contentsline {section}{\numberline {4.4}Testowanie przypadk\IeC {\'o}w szczeg\IeC {\'o}lnych}{19}
-\contentsline {chapter}{\numberline {5}Architektura systemu}{20}
-\contentsline {section}{\numberline {5.1}Og\IeC {\'o}lny opis rozwi\IeC {\k a}zania}{20}
-\contentsline {section}{\numberline {5.2}Wykorzystane narz\IeC {\k e}dzia}{20}
-\contentsline {subsection}{\numberline {5.2.1}Windows Presentation Foundation}{20}
-\contentsline {subsection}{\numberline {5.2.2}HelixToolkit}{20}
-\contentsline {subsection}{\numberline {5.2.3}OxyPlot}{20}
-\contentsline {subsection}{\numberline {5.2.4}Pozosta\IeC {\l }e}{20}
-\contentsline {section}{\numberline {5.3}Wzorce projektowe}{20}
-\contentsline {section}{\numberline {5.4}Komponenty aplikacji}{20}
-\contentsline {subsection}{\numberline {5.4.1}Modele}{20}
-\contentsline {subsection}{\numberline {5.4.2}Kontrolery}{20}
-\contentsline {section}{\numberline {5.5}Zarz\IeC {\k a}dzanie aplikacj\IeC {\k a}}{20}
-\contentsline {chapter}{\numberline {6}Instrukcja u\IeC {\.z}ytkownika}{21}
-\contentsline {section}{\numberline {6.1}Panel kontrolny}{21}
-\contentsline {subsection}{\numberline {6.1.1}Modu\IeC {\l }y}{21}
-\contentsline {subsection}{\numberline {6.1.2}Opcje}{21}
-\contentsline {subsection}{\numberline {6.1.3}Sterowanie parametrami}{21}
-\contentsline {section}{\numberline {6.2}Wizualizacja}{21}
-\contentsline {subsection}{\numberline {6.2.1}Scena}{21}
-\contentsline {subsection}{\numberline {6.2.2}Wykresy}{21}
-\contentsline {subsection}{\numberline {6.2.3}Podgl\IeC {\k a}d stanu}{21}
-\contentsline {chapter}{\numberline {7}Podsumowanie pracy}{22}
-\contentsline {section}{\numberline {7.1}Ocena rozwi\IeC {\k a}zania}{22}
-\contentsline {subsection}{\numberline {7.1.1}Stopie\IeC {\'n} realizacji projektu}{22}
-\contentsline {subsection}{\numberline {7.1.2}Poprawno\IeC {\'s}\IeC {\'c} rozwi\IeC {\k a}zania}{22}
-\contentsline {section}{\numberline {7.2}Krytyczna refleksja}{22}
-\contentsline {section}{\numberline {7.3}Mo\IeC {\.z}liwo\IeC {\'s}ci rozszerzania projektu}{22}
+\contentsline {subsection}{\numberline {3.1.2}Algorytm Rungego-Kutty}{20}
+\contentsline {subsection}{\numberline {3.1.3}Regulator PID}{20}
+\contentsline {subsection}{\numberline {3.1.4}Regulator podw\IeC {\'o}jny PID}{21}
+\contentsline {section}{\numberline {3.2}Mechanika systemu}{23}
+\contentsline {subsection}{\numberline {3.2.1}Model matematyczny ruchu}{23}
+\contentsline {subsubsection}{Schemat}{23}
+\contentsline {subsubsection}{Ruch post\IeC {\k e}powy}{23}
+\contentsline {subsubsection}{Ruch obrotowy}{23}
+\contentsline {subsection}{\numberline {3.2.2}Linearyzacja modelu}{23}
+\contentsline {subsubsection}{Za\IeC {\l }o\IeC {\.z}enia}{23}
+\contentsline {subsubsection}{Wyznaczenie r\IeC {\'o}wna\IeC {\'n}}{23}
+\contentsline {subsubsection}{R\IeC {\'o}wnanie stanu}{23}
+\contentsline {subsection}{\numberline {3.2.3}Stabilizacja uk\IeC {\l }adu}{23}
+\contentsline {subsection}{\numberline {3.2.4}Wprowadzenie zak\IeC {\l }\IeC {\'o}ce\IeC {\'n} do modelu}{23}
+\contentsline {subsection}{\numberline {3.2.5}Wprowadzenie trajektorii ruchu}{23}
+\contentsline {subsection}{\numberline {3.2.6}Regulacja ruchu wzgl\IeC {\k e}dem zadanej trajektorii}{23}
+\contentsline {chapter}{\numberline {4}Testy i por\IeC {\'o}wnanie przyj\IeC {\k e}tych rozwi\IeC {\k a}za\IeC {\'n}}{24}
+\contentsline {section}{\numberline {4.1}Stabilizacja uk\IeC {\l }adu}{24}
+\contentsline {section}{\numberline {4.2}Ruch po trajektorii}{24}
+\contentsline {section}{\numberline {4.3}Wp\IeC {\l }yw parametr\IeC {\'o}w uk\IeC {\l }adu na jego zachowanie}{24}
+\contentsline {section}{\numberline {4.4}Testowanie przypadk\IeC {\'o}w szczeg\IeC {\'o}lnych}{24}
+\contentsline {chapter}{\numberline {5}Architektura systemu}{25}
+\contentsline {section}{\numberline {5.1}Og\IeC {\'o}lny opis rozwi\IeC {\k a}zania}{25}
+\contentsline {section}{\numberline {5.2}Wykorzystane narz\IeC {\k e}dzia}{25}
+\contentsline {subsection}{\numberline {5.2.1}Windows Presentation Foundation}{25}
+\contentsline {subsection}{\numberline {5.2.2}HelixToolkit}{25}
+\contentsline {subsection}{\numberline {5.2.3}OxyPlot}{25}
+\contentsline {subsection}{\numberline {5.2.4}Pozosta\IeC {\l }e}{25}
+\contentsline {section}{\numberline {5.3}Wzorce projektowe}{25}
+\contentsline {section}{\numberline {5.4}Komponenty aplikacji}{25}
+\contentsline {subsection}{\numberline {5.4.1}Modele}{25}
+\contentsline {subsection}{\numberline {5.4.2}Kontrolery}{25}
+\contentsline {section}{\numberline {5.5}Zarz\IeC {\k a}dzanie aplikacj\IeC {\k a}}{25}
+\contentsline {chapter}{\numberline {6}Instrukcja u\IeC {\.z}ytkownika}{26}
+\contentsline {section}{\numberline {6.1}Panel kontrolny}{26}
+\contentsline {subsection}{\numberline {6.1.1}Modu\IeC {\l }y}{26}
+\contentsline {subsection}{\numberline {6.1.2}Opcje}{26}
+\contentsline {subsection}{\numberline {6.1.3}Sterowanie parametrami}{26}
+\contentsline {section}{\numberline {6.2}Wizualizacja}{26}
+\contentsline {subsection}{\numberline {6.2.1}Scena}{26}
+\contentsline {subsection}{\numberline {6.2.2}Wykresy}{26}
+\contentsline {subsection}{\numberline {6.2.3}Podgl\IeC {\k a}d stanu}{26}
+\contentsline {chapter}{\numberline {7}Podsumowanie pracy}{27}
+\contentsline {section}{\numberline {7.1}Ocena rozwi\IeC {\k a}zania}{27}
+\contentsline {subsection}{\numberline {7.1.1}Stopie\IeC {\'n} realizacji projektu}{27}
+\contentsline {subsection}{\numberline {7.1.2}Poprawno\IeC {\'s}\IeC {\'c} rozwi\IeC {\k a}zania}{27}
+\contentsline {section}{\numberline {7.2}Krytyczna refleksja}{27}
+\contentsline {section}{\numberline {7.3}Mo\IeC {\.z}liwo\IeC {\'s}ci rozszerzania projektu}{27}
 \select@language {polish}

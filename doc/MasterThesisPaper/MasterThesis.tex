@@ -271,7 +271,7 @@ Układ będący przedmiotem zainteresowania pokazany został na schemacie \ref{S
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 300pt]{SystemScheme} 
-		\caption{\textit{Uproszczony schemat fizyki układu wahadła odwróconego na wózku \cite{LIMP} }}
+		\caption{\textit{Uproszczony schemat fizyki układu wahadła odwróconego na wózku \cite{LMIP} }}
 		\label{SytemSchemeImage}
 \end{figure}
 
@@ -293,7 +293,7 @@ Stan układu określany jest poprzez cztery parametry:
 \item Prędkość kątowa wahadła.
 \end{itemize}
 
-Parametry fizyczne układu (wraz z nominalnymi wartościami opracowanymi na podstawie literatury \cite{LIMP}) pokazane zostały w poniższej tabeli:
+Parametry fizyczne układu (wraz z nominalnymi wartościami opracowanymi na podstawie literatury \cite{LMIP}) pokazane zostały w poniższej tabeli:
 \begin{center}
 \begin{tabular}{|c|c|}
   \hline 
@@ -358,7 +358,7 @@ Przytoczone przykłady zostały zanalizowane pod kątem budowy, możliwości tec
 \item Sterowanie - modyfikacja parametrów symulacji powinna być intuicyjna dla każdego użytkownika.
 \end{itemize}
 \subsection{Dynamika i sterowanie}
-Zagadnienie stabilizacji dwuwymiarowego układu wahadła odwróconego na wózku zostało szeroko omówione w wielu pracach naukowych. Ze względu na prostotę podstawowego modelu temat ten często pojawia się jako materiał na laboratorium na studiach poświęconych automatyce i robotyce (przykładem jest instrukcja \cite{LIMP}).
+Zagadnienie stabilizacji dwuwymiarowego układu wahadła odwróconego na wózku zostało szeroko omówione w wielu pracach naukowych. Ze względu na prostotę podstawowego modelu temat ten często pojawia się jako materiał na laboratorium na studiach poświęconych automatyce i robotyce (przykładem jest instrukcja \cite{LMIP}).
 
 Dokładna analiza problemu opiera się na wyborze jednego z dwóch modeli: nieliniowego lub zlinearyzowanego. W pierwszym przypadku model wiernie odwzorowuje zachowanie wahadła niezależnie od jego wychylenia, w drugim pojawia się ograniczenie na nieznaczne wychylenia wahadła. Większość przeanalizowanych prac realizuje drugie założenie ze względu na znaczne uproszczenia obliczeń. Kolejnym wyróżnikiem jest sposób stabilizacji układu. Istnieje wiele narzędzi z zakresu teorii sterowania, które pozwalają na kontrolowanie układu. Najbardziej popularnymi są regulatory: PID i LQR. Szczegółowy przegląd i porównanie narzędzi zostało omówione w artykule \cite{OptimalControl}. Autor pracy skupił się wyłącznie na sterowaniu regulatorem PID, jednakże pozostawił możliwość zamiany kontrolera na dowolny inny.
 
@@ -441,19 +441,162 @@ W trakcie wstępnej analizy projektu przyjęto zestaw ograniczeń w celu zachowa
 \newpage
 \chapter{Opis rozwiązania}
 \section{Podstawy matematyczno-fizyczne}
+Dokładne omówienie rozwiązań przyjętych w pracy wymaga rozwinięcia kilku zasadniczych pojęć. Przytoczone zagadnienia zostały opracowane w oparciu o materiały z wykładów poświęconych projektowaniu środowiska wirtualnego: \cite{MarciniakControlSystems} oraz \cite{MarciniakClosedLoop}, a także tekst: \cite{RungeKutta}.
+
 \subsection{Równanie stanu}
+Stan układu jest to informacja umożliwiająca określenie zachowania układu w danej jednostce czasu. Zawiera w sobie zakumulowane dane z całego przebiegu ruchu od chwili początkowej do obecnej. Jest to tzw. własność pamięci układu. Istotnym zagadnieniem związanym ze stanem układu jest charakterystyka związków między jego zmiennymi. Związki te określane są mianem równania stanu. Równanie to przyjmuje postać równania różniczkowego pierwszego rzędu i stanowi matematyczny model układu fizycznego.
+
+Pojedynczy stan można określić jako wektor zmiennych będący punktem w n-wymiarowej przestrzeni stanów. Wówczas dynamikę układu można przedstawić poprzez n-wymiarową rozmaitość różniczkową \(N\) z powiązanym prostopadłym polem wektorowym \(\mathbf{v}(\mathbf{x},t)\). Trajektorie elementów układu dynamicznego wyrazić można poprzez równanie:
+\begin{equation} \label{eq_1}
+\dot{\mathbf{x}} = \mathbf{v}(\mathbf{x},t)
+\end{equation}
+z zadanym warunkiem początkowym:
+\begin{equation}
+\mathbf{x}(t_0) = \mathbf{x_0}
+\end{equation}
+W sytuacji gdy prawa strona równania \ref{eq_1} nie zależy od czasu przyjmuje się, że układ dynamiczny jest autonomiczny. Wówczas wyznaczenie punków stacjonarnych układu polega na rozwiązaniu równania:
+\begin{equation}
+\mathbf{0} = \mathbf{v}(\mathbf{x})
+\end{equation}
+
+Przedstawiony model jest jednoznacznie zdefiniowany przez warunek początkowy. Jednakże w rozwiązaniach praktycznych dużo korzystniejszym rozwiązaniem jest stworzenie rozwiązania, które oprócz obserwacji umożliwia również kontrolę. Aby to osiągnąć uzupełnia się model o dodatkowy wektor \(\mathbf{u}\) zawierający parametry modyfikujące trajektorie układu. Odpowiednie równanie trajektorii przybiera wówczas następującą postać:
+\begin{equation}
+\dot{\mathbf{x}} = \mathbf{v}(\mathbf{x},\mathbf{u})
+\end{equation}
+
+W większości przypadków aplikacje symulacyjne nie wymagają rozwiązywania skomplikowanego nieliniowego równania. Toteż często stosowaną praktyką jest upraszczanie poprzez linearyzację układu. W przypadku układu autonomicznego zmienność zostaje zastąpiona stałymi elementami: macierzą \(A\) związaną ze stanem układu oraz \(B\) związaną ze sterowaniem. Dodatkowo należy przyjąć, że w niektórych systemach zmienne stanu mogą być niedostępne w sposób bezpośredni, dlatego należy zdefiniować dodatkowe równanie pozwalające wyprowadzić zmienne wyjściowe układu.
+
+Ostatecznie równanie stanu dla systemu liniowego niezmienniczego w czasie (ang. Linear Time Invariant) wygląda w sposób następujący:
+\begin{gather}
+\dot{x}(t) = Ax(t) + Bu(t) \\
+y(t) = Cx(t) + Du(t)
+\end{gather}
+gdzie:
+\begin{itemize}
+\item \(x(t)\) - wektor stanu
+\item \(u(t)\) - wektor sterowania
+\item \(u(t)\) - wektor wyjściowy
+\item \(A^{qxn}\) - macierz stanu
+\item \(B^{qxm}\) - macierz sterowania
+\item \(C^{pxn}\) - macierz wyjścia
+\item \(D^{pxm}\) - macierz sterowania bezpośredniego
+\end{itemize}
+
+Parametry \(q\) i \(p\) są zwykle równe \(n\), toteż macierz stanu jest najczęściej macierzą kwadratową. Macierz \(D\) pojawia się tylko w przypadku układów właściwych, czyli takich które posiadają transmitancję właściwą.
+
+Model równań stanu dla układu ciągłego ilustruje schemat \ref{StateSpace}.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 300pt]{StateSpace} 
+		\caption{\textit{Schemat równań stanu dla układu ciągłego \cite{StateSpace}}}
+		\label{StateSpace}
+\end{figure}
+
 \subsection{Algorytm Rungego-Kutty}
+Algorytm Rungego-Kutty jest to iteracyjna metoda rozwiązywania równań i układów równań różniczkowych zwyczajnych. Określenie to stosuje się również do całej rodziny jawnych i niejawnych metod z uwzględnieniem pewnych modyfikacji. Zwyczajowo jednak przyjmuje się konkretną implementację w postaci metody czwartego rzędu. 
+
+Zadaniem algorytmu jest wyznaczenie rozwiązania \(y\) na podstawie równania postaci \(\dot{y} = f(x,y)\) oraz wartości początkowej  \(y(x_0) = y_0\). Ustalając krok całkowania \(h\) można wyznaczyć rozwiązanie w sposób iteracyjny:
+\begin{equation*}
+\begin{aligned}
+y_{n+1} &= y_{n} + \Delta y_n \\
+\Delta y_n &= \frac{1}{6}(k_1 + 2k_2 +2k_3 +k_4)
+\end{aligned}
+\end{equation*}
+Współczynniki \(k_{1...4}\) wyznaczane są następująco:
+\begin{equation*}
+\begin{aligned}
+k_1 &= hf(x_n, y_n) \\
+k_2 &= hf(x_n + \frac{h}{2}, y_n + \frac{k_1}{2}) \\
+k_3 &= hf(x_n + \frac{h}{2}, y_n + \frac{k_2}{2}) \\
+k_4 &= hf(x_n + h, y_n + k_3)
+\end{aligned}
+\end{equation*}
+
+Rezultatem działania metody jest zestaw kolejnych punków przybliżających rozwiązanie. W przypadku układu równań różniczkowych postępowanie jest analogiczne. 
+
+Rozwiązanie opracowane przez autora korzysta z modyfikacji bazowego algorytmu zwanej metodą Casha-Karpa, która pozwala na adaptacyjny dobór parametru kroku całkowania \(h\).
+
 \subsection{Regulator PID}
+Regulator PID (ang. proportional-integral-derivative controller) jest to element obwodu regulacji, którego głównym zadaniem jest generowanie odpowiedniego sygnału sterującego, zmuszającego układ do określonego zachowania. Narzędzie to jest bardzo często wykorzystywane w przemysłowych układach regulujących. Regulator ustawiony jest w pętli sprzężenia zwrotnego. W trakcie jednego cyklu wyznacza różnicę między wartością docelową i obecną (uchyb) oraz podaje na wejście regulowanego układu sygnał kompensujący uchyb.
+
+
+ Regulator PID składa się z trzech komponentów:
+\begin{itemize}
+\item człon proporcjonalny \textbf{P}, który reaguje na obecne wartości uchybu,
+\item człon całkujący \textbf{I}, który przechowuje informację na temat poprzednich wartości uchybu,
+\item człon różniczkujący \textbf{D}, który przewiduje następne wartości uchybu.
+\end{itemize}
+
+Schemat poglądowy regulatora PID zawarty został na ilustracji \ref{PID}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 200pt]{PID} 
+		\caption{\textit{Schemat blokowy idelnego regulatora PID \cite{PID}}}
+		\label{PID}
+\end{figure}
+
+Sygnał wyjściowy z regulatora jest sumą ważoną poszczególnych komponentów. Regulator wykonuje algorytm:
+\begin{equation} \label{PIDAlg}
+u(t) = K_p[e(t) + \frac{1}{T_i}\int_{0}^{t} e(\tau) d\tau + T_d \frac{de(t)}{dt}]
+\end{equation}
+gdzie:
+\begin{itemize}
+\item $u(t)$ - sygnał sterujący z regulatora
+\item $e(t)$ - uchyb regulacji
+\item $K_p$ - wzmocnienie członu proporcjonalnego
+\item $T_i$ - czas zdwojenia członu całkującego
+\item $T_d$ - czas wyprzedzenia członu różniczkującego
+\end{itemize}
+
+Algorytm \ref{PIDAlg} można poddać dyskretyzacji z krokiem całkowania $h$. Poszczególne iteracje będą wówczas wyznaczane w następujący sposób:
+\begin{equation}
+u(i) = K_p[e(i) + \frac{h}{T_i} \sum_{k=0}^{i} e(k) + T_d \frac{e(i) - e(i-1)}{h}]
+\end{equation}
+
+Uzyskanie poprawnego działania regulatora PID wymaga dobrania odpowiednich wartości nastaw. Optymalizacji parametrów dokonuje się poprzez ręczne strojenie lub wyznaczenie algorytmiczne (np. metodą Zieglera-Nicholsa). Warto przy okazji zwrócić uwagę na to, że regulator PID nie gwarantuje optymalnego sterowania ani stabilności układu. W celu uzyskania powyższych cech należy rozważyć zastosowanie innego typu regulacji np. regulatora LQR.
+
 \subsection{Regulator podwójny PID}
+Utrzymanie układu wahadła odwróconego na wózku w niestabilnym punkcie równowagi wymaga uzupełnienia systemu o mechanizm kontroli. Regulator PID może pełnić funkcję narzędzia utrzymującego zerowe odchylenie wahadła względem osi pionowej. Niestety, w sytuacji, gdy celem układu jest dodatkowo stabilizacja położenia, nie wystarczy pojedynczy regulator PID. Rozwiązaniem tego problemu jest rozbudowa struktury na dwa komponenty odpowiedzialne za poszczególne wielkości regulowane. W literaturze pojawia się kilka zagadnień, z których najbardziej popularne to:
+\begin{itemize}
+\item układ regulacji kaskadowej przedstawiony na rysunku \ref{DoublePIDCascade}. Jest to klasyczne podejście zbudowane na podstawie "szybkiej" pętli wewnętrznej i "wolnej" pętli zewnętrznej. Regulator nadrzędny odpowiada za sterowanie położeniem wózka. Wartość wyjściowa z regulatora staje się wartością zadaną dla wewnętrznego układu, który zajmuje się regulacją kąta odchylenia wahadła od pionu. Wyjście z regulatora wewnętrznego podawane jest ostatecznie do sterowanego układu. Koncepcja ta pozwala na utrzymanie stabilności wahadła z dodatkowym uwzględnieniem dostosowywania pozycji wózka.
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 300pt]{DoublePIDCascade} 
+		\caption{\textit{Schemat blokowy kaskadowego układu sterowania regulatorami PID\cite{LMIP}}}
+		\label{DoublePIDCascade}
+\end{figure}
+\item Układ regulacji równoległej pokazany na ilustracji \ref{DoublePIDParallel}. Działanie tego układu jest zbliżone do wariantu kaskadowego. Cechą odrębną jest fakt, że sterowanie podawane na układ wyznaczane jest jako różnica sterowań poszczególnych podukładów sterujących. Rozwiązanie to generuje problem wzajemnego zakłócania regulatorów, toteż należy uwzględnić w modelu, że regulator odchylenia wahadła musi być "szybszy" od regulatora położenia. Zabieg ten spowoduje, że tylko sterownik położenia potraktuje dodatkowe sterowanie jako zakłócenie.
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 300pt]{DoublePIDParallel} 
+		\caption{\textit{Schemat blokowy równoległego układu sterowania regulatorami PID\cite{LMIP}}}
+		\label{DoublePIDParallel}
+\end{figure}
+\end{itemize}
+
+Definicja oznaczeń na schematach \ref{DoublePIDCascade} i \ref{DoublePIDParallel}:
+\begin{itemize}
+\item S1, S2 - wartości zadanie
+\item E1, E2 - uchyby regulacji
+\item U1, U2 - wyjścia z regulatorów
+\item Y1, Y2 - wyjścia z układu sterowanego
+\end{itemize}  
+
 \section{Mechanika systemu}
 \subsection{Model matematyczny ruchu}
+\subsubsection{Schemat}
+\subsubsection{Ruch postępowy}
+\subsubsection{Ruch obrotowy}
 \subsection{Linearyzacja modelu}
+\subsubsection{Założenia}
+\subsubsection{Wyznaczenie równań}
+\subsubsection{Równanie stanu}
 \subsection{Stabilizacja układu}
 \subsection{Wprowadzenie zakłóceń do modelu}
 \subsection{Wprowadzenie trajektorii ruchu}
 \subsection{Regulacja ruchu względem zadanej trajektorii}
-\section{Rozwiązywanie równań mechaniki systemu}
-\subsection{Algorytmy}
 
 
 %% -------- chapter IV --------
@@ -506,11 +649,11 @@ W trakcie wstępnej analizy projektu przyjęto zestaw ograniczeń w celu zachowa
 
 \bibitem{MarciniakDynamicSystems} Marciniak K., \emph{Dynamic systems}, w: \emph{Modelling in state space}, Warszawa, 2003.
 
-\bibitem{MarciniakClosedLoop} Marciniak K., \emph{Design of Closed loop control}, w: \emph{Modelling in state space}, Warszawa, 2003.
-
 \bibitem{MarciniakControlSystems} Marciniak K., \emph{Control systems}, w: \emph{Modelling in state space}, Warszawa, 2003.
 
-\bibitem{LIMP} Robles R., Shardt Y., \emph{Linear motion inverted pendulum, derivation of the state-space model}
+\bibitem{MarciniakClosedLoop} Marciniak K., \emph{Design of Closed loop control}, w: \emph{Modelling in state space}, Warszawa, 2003.
+
+\bibitem{LMIP} Robles R., Shardt Y., \emph{Linear motion inverted pendulum, derivation of the state-space model}
 \\*
 http://www.jtjt.pl/www/pages/odwrocone-wahadlo/LMIP.pdf
 
@@ -525,6 +668,10 @@ http://sjp.pwn.pl
 \bibitem{WikiSymulacja} \emph{Symulacja komputerowa},
 \\*
 https://pl.wikipedia.org/wiki/Symulacja\_komputerowa
+
+\bibitem{RungeKutta} Neumann E., \emph{Runge-Kutta Algorithm}, 2016,
+\\*
+http://www.myphysicslab.com/explain/runge-kutta-en.html
 
 \bibitem{MeteorologySimulation} Hawkins E., Vidale P. \emph{Two tropical Atlantic hurricanes in a high-resolution atmospheric simulation with the HadGEM3 global climate model at a resolution of N512}, 27.07.2012,
 \\*
@@ -541,6 +688,14 @@ http://www.mne.k-state.edu/static/nlc/tiki-index.php?page=\\S\_H\_WirelessInvert
 \bibitem{3DimModel}  \emph{Project: Gait Pattern Generation},
 \\*
 http://www.wrighteagle.org/en/research/projgait.php
+
+\bibitem{StateSpace} \emph{State space model integral}, 2011
+\\*
+https://pl.wikipedia.org/wiki/Plik:State\_space\_model\_integral.PNG
+
+\bibitem{PID} \emph{Schemat blokowy idealnego regulatora PID}, 2010
+\\*
+https://pl.wikipedia.org/wiki/Plik:Schemat\_blokowy\_regulatora\_pid\_\\idealnego.svg
 
 \bibitem{BipedWalking} Kajita S., \emph{The 3D Linear Inverted Pendulum Mode: A simple modeling for a biped walking pattern generation}, 2001
 
