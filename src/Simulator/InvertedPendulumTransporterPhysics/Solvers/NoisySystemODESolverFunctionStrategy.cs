@@ -8,10 +8,10 @@ namespace InvertedPendulumTransporterPhysics.Solvers
         {
             // y: x, theta, dx, dtheta
             // dy: dx, dtheta, d2x, d2theta 
-            // A = [ 0       0       1    0 ]  B = [    0    ] Noise = [              0                ] NoiseMatrix = [ 0        0        0 0 ]
-            //     [ 0       0       0    1 ]      [    0    ]         [              0                ]               [ 0        0        0 0 ]
-            //     [ 0    -mG/M   -g_2/M  0 ]      [  g_1/M  ]         [    (F_x - F_y*theta) / M      ]               [ 0     -F_y/M      0 0 ]
-            //     [ 0 (M + m)g/Ml g_2/Ml 0 ]      [ -g_1/Ml ]         [ (F_y*theta - F_x)(M + m)/(Mm) ]               [ 0 F_y(M + m)/(Mm) 0 0 ]
+            // A = [ 0       0       1    0 ]  B = [    0    ] Noise = [              0                ]
+            //     [ 0       0       0    1 ]      [    0    ]         [              0                ]
+            //     [ 0    -mG/M   -g_2/M  0 ]      [  g_1/M  ]         [    (F_x - F_y*theta) / M      ]
+            //     [ 0 (M + m)g/Ml g_2/Ml 0 ]      [ -g_1/Ml ]         [ (F_y*theta - F_x)(M + m)/(Mm) ]
             var data = obj as SolverParameters;
             double Fw_X = data.HorizontalWindForce;
             double Fw_Z = data.VerticalWindForce;

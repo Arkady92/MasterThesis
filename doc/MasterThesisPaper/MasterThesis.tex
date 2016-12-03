@@ -254,6 +254,7 @@ Przygotowywana praca realizuje symulator z deterministyczną przewidywalnością
 Układ dynamiczny jest to matematyczny model zjawiska występującego w przyrodzie, określany poprzez funkcję zachowania układu w danym czasie. Model ten jest zwykle opisany poprzez układ równań różniczkowych, zwanych równaniem stanu. W danej jednostce czasowej system posiada stan wyrażony jako wektor liczb utożsamiany z punktem w przestrzeni stanu. Ewolucja układu polega na wyznaczaniu kolejnych stanów na podstawie poprzednich poprzez użycie funkcji przejścia. Funkcja ta może być deterministyczna lub stochastyczna. W pierwszym przypadku dla zadanego czasu stan wyznaczany jest jednoznacznie, w drugim przypadku na ewolucję układu wpływają dodatkowe zdarzenia losowe (przytoczone zagadnienie zostało szerzej omówione w \cite{MarciniakDynamicSystems}).
 
 \subsubsection{Wahadło odwrócone na wózku}
+\label{SubsectionPendulumIntro}
 Niniejsza praca skupia się na modelu dynamiki układu złożonego z wahadła odwróconego umieszczonego na ruchomej platformie. Wahadło odwrócone jest rodzajem wahadła, w którym środek masy znajduje się powyżej punktu zaczepienia. Wahadło połączone jest z wózkiem, który porusza się w płaszczyźnie poziomej za pomocą silnia napędowego. Przykładowy układ pokazany został na ilustracji \ref{SystemModelImage}.
 
 \begin{figure}[H]
@@ -444,6 +445,7 @@ W trakcie wstępnej analizy projektu przyjęto zestaw ograniczeń w celu zachowa
 Dokładne omówienie rozwiązań przyjętych w pracy wymaga rozwinięcia kilku zasadniczych pojęć. Przytoczone zagadnienia zostały opracowane w oparciu o materiały z wykładów poświęconych projektowaniu środowiska wirtualnego: \cite{MarciniakControlSystems} oraz \cite{MarciniakClosedLoop}, a także tekst: \cite{RungeKutta}.
 
 \subsection{Równanie stanu}
+\label{StateSpaceSubsection}
 Stan układu jest to informacja umożliwiająca określenie zachowania układu w danej jednostce czasu. Zawiera w sobie zakumulowane dane z całego przebiegu ruchu od chwili początkowej do obecnej. Jest to tzw. własność pamięci układu. Istotnym zagadnieniem związanym ze stanem układu jest charakterystyka związków między jego zmiennymi. Związki te określane są mianem równania stanu. Równanie to przyjmuje postać równania różniczkowego pierwszego rzędu i stanowi matematyczny model układu fizycznego.
 
 Pojedynczy stan można określić jako wektor zmiennych będący punktem w n-wymiarowej przestrzeni stanów. Wówczas dynamikę układu można przedstawić poprzez n-wymiarową rozmaitość różniczkową \(N\) z powiązanym prostopadłym polem wektorowym \(\mathbf{v}(\mathbf{x},t)\). Trajektorie elementów układu dynamicznego wyrazić można poprzez równanie:
@@ -476,10 +478,10 @@ gdzie:
 \item \(x(t)\) - wektor stanu
 \item \(u(t)\) - wektor sterowania
 \item \(u(t)\) - wektor wyjściowy
-\item \(A^{qxn}\) - macierz stanu
-\item \(B^{qxm}\) - macierz sterowania
-\item \(C^{pxn}\) - macierz wyjścia
-\item \(D^{pxm}\) - macierz sterowania bezpośredniego
+\item \(A^{q \times n}\) - macierz stanu
+\item \(B^{q \times m}\) - macierz sterowania
+\item \(C^{p \times n}\) - macierz wyjścia
+\item \(D^{p \times m}\) - macierz sterowania bezpośredniego
 \end{itemize}
 
 Parametry \(q\) i \(p\) są zwykle równe \(n\), toteż macierz stanu jest najczęściej macierzą kwadratową. Macierz \(D\) pojawia się tylko w przypadku układów właściwych, czyli takich które posiadają transmitancję właściwą.
@@ -494,6 +496,7 @@ Model równań stanu dla układu ciągłego ilustruje schemat \ref{StateSpace}.
 \end{figure}
 
 \subsection{Algorytm Rungego-Kutty}
+\label{Runge}
 Algorytm Rungego-Kutty jest to iteracyjna metoda rozwiązywania równań i układów równań różniczkowych zwyczajnych. Określenie to stosuje się również do całej rodziny jawnych i niejawnych metod z uwzględnieniem pewnych modyfikacji. Zwyczajowo jednak przyjmuje się konkretną implementację w postaci metody czwartego rzędu. 
 
 Zadaniem algorytmu jest wyznaczenie rozwiązania \(y\) na podstawie równania postaci \(\dot{y} = f(x,y)\) oraz wartości początkowej  \(y(x_0) = y_0\). Ustalając krok całkowania \(h\) można wyznaczyć rozwiązanie w sposób iteracyjny:
@@ -517,7 +520,18 @@ Rezultatem działania metody jest zestaw kolejnych punków przybliżających roz
 
 Rozwiązanie opracowane przez autora korzysta z modyfikacji bazowego algorytmu zwanej metodą Casha-Karpa, która pozwala na adaptacyjny dobór parametru kroku całkowania \(h\).
 
+\subsection{SLERP}
+\label{SLERP}
+SLERP (ang. spherical linear interpolation) jest to interpolacja wprowadzona przez Kena Shoemake w celach animacji rotacji trójwymiarowych. Technika zapewnia gładki ruch ze stałą prędkością między punktami końcowymi.
+
+SLERP bazuje na fakcie, że każdy punkt krzywej, po której porusza się obiekt jest kombinacją liniową punktów końcowych animacji: $p_0$ i $p_1$. Niech t będzie parametrem takim, że: $0 \leqslant t \leqslant 1$. Dodatkowo niech $\omega$ będzie kątem zakreślanym w trakcie przejścia, więc spełniającym równanie $cos(\omega) = p_0 \cdot p_1$.
+Wówczas formuła geometryczna interpolacji wygląda następująco:
+\begin{equation*}
+SLERP(p_0, p_1, t) = \frac{sin((1-t)\omega)}{sin(\omega)} p_0 + \frac{sin(t\omega)}{sin(\omega)} p_1
+\end{equation*}
+
 \subsection{Regulator PID}
+\label{PIDSection}
 Regulator PID (ang. proportional-integral-derivative controller) jest to element obwodu regulacji, którego głównym zadaniem jest generowanie odpowiedniego sygnału sterującego, zmuszającego układ do określonego zachowania. Narzędzie to jest bardzo często wykorzystywane w przemysłowych układach regulujących. Regulator ustawiony jest w pętli sprzężenia zwrotnego. W trakcie jednego cyklu wyznacza różnicę między wartością docelową i obecną (uchyb) oraz podaje na wejście regulowanego układu sygnał kompensujący uchyb.
 
 
@@ -564,14 +578,14 @@ Utrzymanie układu wahadła odwróconego na wózku w niestabilnym punkcie równo
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 300pt]{DoublePIDCascade} 
-		\caption{\textit{Schemat blokowy kaskadowego układu sterowania regulatorami PID\cite{LMIP}}}
+		\caption{\textit{Schemat blokowy kaskadowego układu sterowania regulatorami PID\cite{JTJT}}}
 		\label{DoublePIDCascade}
 \end{figure}
 \item Układ regulacji równoległej pokazany na ilustracji \ref{DoublePIDParallel}. Działanie tego układu jest zbliżone do wariantu kaskadowego. Cechą odrębną jest fakt, że sterowanie podawane na układ wyznaczane jest jako różnica sterowań poszczególnych podukładów sterujących. Rozwiązanie to generuje problem wzajemnego zakłócania regulatorów, toteż należy uwzględnić w modelu, że regulator odchylenia wahadła musi być "szybszy" od regulatora położenia. Zabieg ten spowoduje, że tylko sterownik położenia potraktuje dodatkowe sterowanie jako zakłócenie.
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 300pt]{DoublePIDParallel} 
-		\caption{\textit{Schemat blokowy równoległego układu sterowania regulatorami PID\cite{LMIP}}}
+		\caption{\textit{Schemat blokowy równoległego układu sterowania regulatorami PID\cite{JTJT}}}
 		\label{DoublePIDParallel}
 \end{figure}
 \end{itemize}
@@ -586,15 +600,389 @@ Definicja oznaczeń na schematach \ref{DoublePIDCascade} i \ref{DoublePIDParalle
 
 \section{Mechanika systemu}
 \subsection{Model matematyczny ruchu}
+\label{MathModel}
 \subsubsection{Schemat}
+Wykonanie poprawnej symulacji dowolnego zjawiska fizycznego wymaga na wstępie stworzenia odpowiedniego modelu matematycznego, który przybliży charakterystykę danego zjawiska. Niniejsza sekcja poświęcona jest omówieniu modelu ruchu wahadła odwróconego na wózku. Pełny model zrealizowany w projekcie zawiera w sobie dwa wspomniane układy, które są ze sobą połączone. Jednakże ich niezależność pozwala na swobodne rozpatrywanie pojedynczego układu. Wstępne informacje na temat zadania zostały przedstawione w sekcji \ref{SubsectionPendulumIntro}. Dalsze rozważania będą dotyczyły analizy rozkładu sił w modelu oraz wyprowadzenia równań ruchu na podstawie pracy \cite{LMIP}.
+
+W przyjętym rozwiązaniu skupiono się na podstawowych siłach rządzących światem rzeczywistym. Ruch układu odbywa się w obecności siły grawitacji o przyspieszeniu ziemskim $g$. Na wózek działają dodatkowo siły: tarcia $F_f$ i napędu pochodzącego od silnika $F_v$. Nacisk wózka $Mg$ równoważony jest przez siłę sprężystości podłoża $N$. Ponadto należy rozważyć siły wzajemnego oddziaływania między wózkiem a wahadłem: $F_x$ i $F_y$ bazując na trzeciej zasadzie dynamiki Newtona:
+\begin{quote}
+W inercjalnym układzie odniesienia siły wzajemnego oddziaływania dwóch ciał mają takie same wartości, taki sam kierunek, przeciwne zwroty i różne punkty przyłożenia.
+\end{quote}
+
+Pełny rozkład sił, wraz z wyznaczeniem odległości, przedstawiony został na schemacie \ref{SystemForces}.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 400pt]{SystemForces} 
+		\caption{\textit{Schemat rozkładu sił dla: a) wózka, b) wahadła, c) odległości między komponentami \cite{LMIP}}}
+		\label{SystemForces}
+\end{figure}
+
+Idealny model wahadła zakłada, że składa się ono z obiektu masowego zawieszonego na nierozciągliwej cienkiej nici o długości $l$. Wobec tego można przyjąć, że ogół sił pochodzących od wahadła skupiony jest w obrębie jego środka masy. Uwzględniając fakt, że punkt zaczepienia wahadła znajduje się na środku wózka, którego pozycja określona jest współrzędną $x$, lokację środka masy można wyznaczyć jako:
+\begin{equation} \label{MassCenter}
+\begin{aligned}
+x_g &= x + lsin(\theta)\\
+y_g &= lcos(\theta)
+\end{aligned}
+\end{equation}
+
+Siła napędowa pochodząca od silnika powoduje, że układ zyskuje zdolność do wymuszonego poruszania się po powierzchni. Siła ta regulowana jest poprzez napięcie przyłożone do silnika. Wzór na wyznaczenie tej siły wygląda następująco:
+\begin{equation} \label{Voltage}
+F_v = \gamma_v V
+\end{equation}
+gdzie $\gamma_f$ jest stałym współczynnikiem konwersji napięcia na siłę.
+
+Siła tarcia związana jest z oddziaływaniem między wózkiem a podłożem. W analizowanym modelu wykorzystano zjawisko tarcia kinetycznego zależnego od prędkości ruchu, które można wyznaczyć jako:
+\begin{equation} \label{Friction}
+F_f = \gamma_f \frac{dx}{dt}
+\end{equation}
+gdzie $\gamma_f$ jest stałym współczynnikiem tarcia wózka.
+
 \subsubsection{Ruch postępowy}
+Analiza ruchu postępowego została podzielona na dwa podproblemy związane z osiami głównymi układu oraz rozpatrzona oddzielnie dla wózka i wahadła. Umożliwia to przejrzyste zbadanie oddziaływań i łatwe wyprowadzenie równań ruchu. W przypadku wahadła można określić ruch w pionie i w poziomie, dla wózka tylko poziomy. 
+
+Zachowanie układu zostało scharakteryzowane w oparciu o drugie prawo dynamiki Newtona, które mówi:
+\begin{quote}
+W układzie inercjalnym, suma sił $F$ działających na ciało jest równa masie ciała $m$ pomnożonej przez jego przyspieszenie $a$:
+\end{quote}
+\begin{equation} \label{Newton}
+F = ma
+\end{equation}
+
+Korzystając z przytoczonego twierdzenia \ref{Newton} zależność dla wózka w poziomie wygląda następująco:
+\begin{equation}
+F_v - F_x - F_f = M \frac{d^2x}{dt^2}
+\end{equation}
+Po uwzględnieniu charakterystyki siły tarcia i napędu \ref{Friction}:
+\begin{equation} \label{CartX}
+\gamma_v V - F_x - \gamma_f \frac{dx}{dt} = M \frac{d^2x}{dt^2}
+\end{equation}
+
+Analogicznie dla wahadła ruch w poziomie można określić równaniem:
+\begin{equation} \label{PendulumX}
+F_x = m \frac{d^2x_g}{dt^2}
+\end{equation}
+
+Dalsze rozważania wymagają wyznaczenia pierwszej i drugiej pochodnej czasowej po poziomej trajektorii środka masy wahadła.
+
+Dla pierwszej pochodnej należy skorzystać z \ref{MassCenter}:
+\begin{equation} \label{FirstDerivative}
+\frac{dx_g}{dt} = \frac{d(x + lsin(\theta))}{dt} = \frac{dx}{dt} + lcos(\theta)\frac{d\theta}{dt}
+\end{equation}
+
+Wyznaczenie drugiej pochodnej można uzyskać poprzez różniczkowanie równania \ref{FirstDerivative}:
+\begin{equation} \label{Second}
+\begin{aligned}
+\frac{d^2x_g}{dt^2} &= \frac{d}{dt}(\frac{dx}{dt} + lcos(\theta)\frac{d\theta}{dt})\\
+&= \frac{d^2x}{dt^2} + l(\frac{dcos(\theta)}{dt} \frac{d\theta}{dt} + cos(\theta) \frac{d^2\theta}{dt^2})\\
+&= \frac{d^2x}{dt^2} - lsin(\theta)(\frac{d\theta}{dt})^2 + lcos(\theta) \frac{d^2\theta}{dt^2}
+\end{aligned}
+\end{equation}
+
+Wykorzystując wyznaczone pochodne oraz równanie \ref{PendulumX} można wyznaczyć poziomą siłę reakcji miedzy wózkiem a wahadłem:
+\begin{equation} \label{ReactionX}
+F_x = m (\frac{d^2x}{dt^2} - lsin(\theta)(\frac{d\theta}{dt})^2 + lcos(\theta) \frac{d^2\theta}{dt^2})
+\end{equation}
+
+Po wstawieniu uzyskanych wyprowadzeń do równania ruchu wózka w poziomie \ref{CartX} i dokonaniu uporządkowania zmiennych ostateczna postać równania wygląda następująco:
+\begin{equation} \label{CartFullX}
+(M + m) \frac{d^2}{dt^2} + \gamma_f \frac{dx}{dt} = \gamma_v V + mlsin(\theta)(\frac{d\theta}{dt})^2 - mlcos(\theta) \frac{d^2\theta}{dt^2}
+\end{equation}
+
+W przypadku ruchu w pionie należy rozważyć wyłącznie ruch wahadła. Bazując na twierdzeniu \ref{Newton} równanie ruchu można podać w postaci:
+\begin{equation} \label{PendulumY}
+F_y - mg = m \frac{d^2y_g}{dt^2}
+\end{equation}
+
+Podobnie jak dla ruchu w poziomie niezbędne będzie wyznaczenie pochodnych czasowych trajektorii środka masy.
+
+Pierwsza pochodna przybiera postać:
+\begin{equation}
+\frac{dy_g}{dt} = \frac{d(lcos(\theta))}{dt} = -lsin(\theta) \frac{d\theta}{dt}
+\end{equation}
+
+Druga pochodna:
+\begin{equation}
+\begin{aligned}
+\frac{d^2y_g}{dt^2} &= \frac{d}{dt}(-lsin(\theta) \frac{d\theta}{dt})\\
+&= -l(\frac{dsin(\theta)}{dt}\frac{d\theta}{dt} + sin(\theta) \frac{d^2\theta}{dt^2})\\
+&= -lcos(\theta)(\frac{d\theta}{dt})^2 - lsin(\theta) \frac{d^2\theta}{dt^2}
+\end{aligned}
+\end{equation}
+
+Łącząc wyznaczone pochodne z równaniem \ref{PendulumY} można wyprowadzić wzór na pionową siłę reakcji między wózkiem a wahadłem:
+\begin{equation} \label{ReactionY}
+F_y = mg + -mlcos(\theta) (\frac{d\theta}{dt})^2 - mlsin(\theta) \frac{d^2\theta}{dt^2}
+\end{equation}
+
+Wzór ten będzie niezbędny do dalszych rozważań poświęconych ruchowi obrotowemu.
+
 \subsubsection{Ruch obrotowy}
+Ruch obrotowy układu przejawia się w dynamice wahadła, które obraca się względem zadanego punktu zaczepienia.
+Analiza tego ruchu została przeprowadzona w oparciu o drugą zasadę dynamiki ruchu obrotowego:
+\begin{quote}
+Jeśli na ciało, o momencie bezwładności względem osi obrotu $I$, działają zewnętrzne siły o wypadkowym momencie siły $M$, to w rezultacie tego oddziaływania ciało będzie obracać się z przyspieszeniem kątowym $\epsilon$ takim, że:
+\end{quote}
+\begin{equation}
+M = I \epsilon
+\end{equation}
+Moment siły i przyspieszenie kątowe są pseudowektorami o zgodnych kierunkach i zwrotach. Poszczególne siły $\mathbf{F}$ o wektorach pozycji $\mathbf{r}$ generują momenty sił  zdefiniowane jako:
+\begin{equation}
+\overline{M} = \mathbf{F} \times \mathbf{r}
+\end{equation}
+
+Sumując wszystkie momenty sił działające na środek masy wahadła można uzyskać wzór:
+\begin{equation}
+F_y l sin(\theta) - F_x lcos(\theta) = I\frac{d^2\theta}{dt^2}
+\end{equation}
+
+Korzystając z wyznaczonych wcześniej sił reakcji \ref{ReactionX} i \ref{ReactionY} wzór przyjmie postać:
+\begin{equation}
+\begin{aligned}
+&(mg + -mlcos(\theta) (\frac{d\theta}{dt})^2 - mlsin(\theta) \frac{d^2\theta}{dt^2})lsin(\theta)\\
+&-m (\frac{d^2x}{dt^2} - lsin(\theta)(\frac{d\theta}{dt})^2 + lcos(\theta) \frac{d^2\theta}{dt^2})lcos(\theta) = I\frac{d^2\theta}{dt^2}
+\end{aligned}
+\end{equation}
+
+Po wymnożeniu i pogrupowaniu poszczególnych elementów wzór wygląda następująco:
+\begin{equation}
+mglsin(\theta) - ml^2(sin^2(\theta) + cos^2(\theta) \frac{d^2\theta}{dt^2} - mlcos(\theta) \frac{d^2x}{dt^2} = I\frac{d^2\theta}{dt^2}
+\end{equation}
+
+Korzystając z trywialnej równości trygonometrycznej
+\begin{equation}
+sin^2(\theta) + cos^2(\theta) = 1
+\end{equation}
+
+oraz dokonując kolejnego pogrupowania, ostateczną postać równania ruchu obrotowego wahadła można wyrazić jako:
+\begin{equation}
+(I + ml^2)\frac{d^2\theta}{dt^2} = mglsin(\theta) - mlcos(\theta)\frac{d^2x}{dt^2}
+\end{equation}
+
+Podsumowując powyższe rozważania, równania ruchu układu wahadła odwróconego na wózku to:
+\begin{equation} \label{Equations}
+\begin{aligned}
+(M + m) \frac{d^2x}{dt^2} + \gamma_f \frac{dx}{dt} &= \gamma_v V + mlsin(\theta)(\frac{d\theta}{dt})^2 - mlcos(\theta) \frac{d^2\theta}{dt^2}\\
+(I + ml^2)\frac{d^2\theta}{dt^2} &= mglsin(\theta) - mlcos(\theta)\frac{d^2x}{dt^2}
+\end{aligned}
+\end{equation}
+
 \subsection{Linearyzacja modelu}
 \subsubsection{Założenia}
-\subsubsection{Wyznaczenie równań}
+Opracowany w poprzedniej sekcji model ruchu jest modelem nieliniowym. W celu uzyskania rozwiązania wygodniejszego obliczeniowo, bez istotnych strat na dokładności, i pozwalającego na zastosowanie rozwiązań z zakresu teorii sterowania przeprowadzona została linearyzacja modelu. 
+
+Charakterystyka realizowanego problemu pozwoliła na przyjęcie założenia, że kąt odchylenia wahadła od osi pionowej jest stosunkowo niewielki. Uzasadnieniem tego stwierdzenia jest fakt, iż docelowy system będzie wyposażony w narzędzie stabilizujące wychylenie, wobec czego w stanie ustalonym kąt ten będzie bliski zeru. Powyższe założenie umożliwia dokonania kilku istotnych uproszczeń w modelu:
+\begin{equation}
+\begin{aligned}
+sin(\theta) &\approx \theta \\
+cos(\theta) &\approx 1 \\
+(\frac{d\theta}{dt})^2 &\approx 0
+\end{aligned}
+\end{equation}
+
+Jeśli dodatkowo przyjmiemy środek masy wahadła za środek ciężkości, wtedy moment bezwładności $I = 0$.
+
+\subsubsection{Konwersja równań}
+Uwzględniając powyższe rozważania, równania ruchu \ref{Equations} można zapisać na nowo:
+\begin{equation}
+\begin{aligned}
+(M + m) \frac{d^2x}{dt^2} + \gamma_f \frac{dx}{dt} &= \gamma_v V - ml \frac{d^2\theta}{dt^2}\\
+l \frac{d^2\theta}{dt^2} &= g\theta - \frac{d^2x}{dt^2}
+\end{aligned}
+\end{equation}
+
+Po uporządkowaniu zmiennych równania przyjmują postać:
+\begin{equation} \label{Linear}
+\begin{aligned}
+(M + m) \frac{d^2x}{dt^2} + ml \frac{d^2\theta}{dt^2} +  \gamma_f \frac{dx}{dt} &= \gamma_v V\\
+l \frac{d^2\theta}{dt^2} + \frac{d^2x}{dt^2} &= g\theta
+\end{aligned}
+\end{equation}
+
+Aby móc przeprowadzić dalsze rozważania niezbędne będzie wykonanie rozdzielenia równań w taki sposób, aby każde z nich zawierało relację między drugą pochodną po odpowiedniej zmiennej a pierwszymi pochodnymi i samymi zmiennymi. Dokonać tego można poprzez podstawienie jednego równania do drugiego i wyznaczenie odpowiednich zależności.
+
+\begin{equation} \label{2DerX}
+\begin{aligned}
+(M + m) \frac{d^2x}{dt^2} + ml (\frac{g\theta}{l} - \frac{1}{l} \frac{d^2x}{dt^2}) +  \gamma_f \frac{dx}{dt} &= \gamma_v V\\
+M \frac{d^2x}{dt^2} + mg \theta + \gamma_f \frac{dx}{dt} &= \gamma_v V\\
+\frac{d^2x}{dt^2} &= -\frac{mg \theta}{M} - \frac{\gamma_f}{M} \frac{dx}{dt} + \frac{\gamma_v V}{M}
+\end{aligned}
+\end{equation}
+
+Podstawiając wynik \ref{2DerX} do \ref{Linear} uzyskuje się:
+
+\begin{equation}
+\begin{aligned}
+l \frac{d^2\theta}{dt^2} -\frac{mg \theta}{M} - \frac{\gamma_f}{M} \frac{dx}{dt} + \frac{\gamma_v V}{M} &= g\theta\\
+\frac{d^2\theta}{dt^2} &= \frac{(M+m)g\theta}{Ml} + \frac{\gamma_f}{Ml}\frac{dx}{dt} - \frac{\gamma_vV}{Ml}
+\end{aligned}
+\end{equation}
+
+Ostatecznie równania ruchu w postaci rozdzielonej prezentują się następująco:
+\begin{equation} \label{SimpleEquation}
+\begin{aligned}
+\frac{d^2x}{dt^2} &= -\frac{mg \theta}{M} - \frac{\gamma_f}{M} \frac{dx}{dt} + \frac{\gamma_v V}{M}\\
+\frac{d^2\theta}{dt^2} &= \frac{(M+m)g\theta}{Ml} + \frac{\gamma_f}{Ml}\frac{dx}{dt} - \frac{\gamma_vV}{Ml}
+\end{aligned}
+\end{equation}
+
+Wyprowadzone w ten sposób równania pozwolą w łatwy sposób uzyskać zapis w formie równań stanu.
+
 \subsubsection{Równanie stanu}
+Wprowadzenie zagadnienia równań stanu zostało przedstawione w sekcji \ref{StateSpaceSubsection}. Dla problemu liniowego równanie stanu można zapisać w postaci:
+\begin{equation}
+\begin{aligned}
+\frac{d\mathbf{x}}{dt} = A\mathbf{x} + B\mathbf{u} \\
+\mathbf{y} = C\mathbf{x} + D\mathbf{u}
+\end{aligned}
+\end{equation}
+
+W przypadku układu wahadła odwróconego na wózku wektor stanu można skonstruować w następującej postaci:
+\begin{equation}
+\mathbf{x} = 
+\begin{bmatrix}
+x \\ 
+\theta \\ 
+\dfrac{dx}{dt} \\[8pt] 
+\dfrac{d\theta}{dt}
+\end{bmatrix}
+\end{equation}
+
+Ze względu na fakt, że sterowanie układem odbywa się wyłącznie przy pomocy regulacji napięcia na silniku, wektor sterowania będzie jednoelementowy:
+\begin{equation}
+\mathbf{u} = 
+\begin{bmatrix}
+V
+\end{bmatrix}
+\end{equation}
+
+W realizowanym problemie nie występuje macierz sterowania bezpośredniego $D$, natomiast ze względu na jawność wszystkich parametrów stanu, macierz $C$ jest macierzą jednostkową. Dlatego w dalszych rozważaniach będą uwzględniane wyłącznie macierze: stanu $A$ i sterowania $B$.
+
+Dysponując równaniami \ref{SimpleEquation} można w łatwy sposób ustalić postać macierzy dla równania stanu.
+
+Macierz stanu:
+\begin{equation}
+A = 
+\begin{bmatrix}
+    0 & 0                  & 1                    & 0 \\
+    0 & 0                  & 0                    & 1 \\
+    0 & -\dfrac{mg}{M}     & -\dfrac{\gamma_f}{M} & 0 \\[8pt]
+    0 & \dfrac{(M+m)g}{Ml} & \dfrac{\gamma_f}{Ml} & 0
+\end{bmatrix}
+\end{equation}
+
+Macierz sterowania (zredukowana do wektora):
+\begin{equation}
+B = 
+\begin{bmatrix}
+    0 \\
+    0 \\
+    \dfrac{\gamma_v}{M} \\[8pt]
+    -\dfrac{\gamma_v}{Ml}
+\end{bmatrix}
+\end{equation}
+
+Zbierając razem wszystkie wyznaczone elementy, finalna postać równania stanu określona jest w następujący sposób:
+\begin{equation}
+\begin{bmatrix}
+dx \\ 
+d\theta \\ 
+\dfrac{d^2x}{dt^2} \\[8pt] 
+\dfrac{d^2\theta}{dt^2}
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    0 & 0                  & 1                    & 0 \\
+    0 & 0                  & 0                    & 1 \\
+    0 & -\dfrac{mg}{M}     & -\dfrac{\gamma_f}{M} & 0 \\[8pt]
+    0 & \dfrac{(M+m)g}{Ml} & \dfrac{\gamma_f}{Ml} & 0
+\end{bmatrix}
+\begin{bmatrix}
+x \\ 
+\theta \\ 
+\dfrac{dx}{dt} \\[8pt] 
+\dfrac{d\theta}{dt}
+\end{bmatrix}
++
+\begin{bmatrix}
+    0 \\
+    0 \\
+    \dfrac{\gamma_v}{M} \\[8pt]
+    -\dfrac{\gamma_v}{Ml}
+\end{bmatrix}
+\begin{bmatrix}
+V
+\end{bmatrix}
+\end{equation}
+
+Otrzymana charakterystyka dynamiki może być w łatwy sposób rozwiązywana za pomocą algorytmu Rungego-Kutty przedstawionego w sekcji \ref{Runge}. Dodatkowo forma ta pozwala na określenie podstawowych cech układu dynamicznego jakimi są obserwowalność i kontrolowalność.
+
+
+Obserwowalność pozwala określić na ile dobrze informacja o stanie wewnętrznym układu jest osiągalna z poziomu jego wyjścia. Sprawdzenie tego parametru wymaga wyznaczenia macierzy obserwowalności i ustalenia jej rzędu. Warunek na obserwowalność dla układu o $n$ parametrach stanu wygląda następująco:
+\begin{equation}
+Rank(A^T|C^T) = n
+\end{equation}
+gdzie
+\begin{equation}
+X|Y := [X, XY, X^2Y, ..., X^{n-1}Y]
+\end{equation}
+Sprawdzenie warunku obserwowalności dla rozwiązywanego zadania pokazuje, iż układ dynamiczny spełnia kryterium obserwowalności.
+
+Kontrolowalność służy określeniu możliwości sterowania układem. Model jest kontrolowalny wtedy i tylko wtedy, gdy dowolny stan końcowy jest osiągalny z dowolnego stanu początkowego w skończonym czasie. Warunek pozwalający na sprawdzenie cechy dla układu o $n$ parametrach stanu wygląda następująco:
+\begin{equation}
+Rank(A|B) = n
+\end{equation}
+Sprawdzenie kryterium ustaliło, że zbudowany układ wykazuje cechy kontrolowalności.
+
 \subsection{Stabilizacja układu}
+Jednym z kluczowych zadań jakie zostały wyznaczone do zrealizowania w projekcie jest stabilizacja odchylenia wahadła od osi pionowej. Problem ten rozwiązywany jest poprzez sterowanie napięciem na silniku napędzającym wózek. W celu ocenienia poziomu trudności zagadnienia wykonano wstępnie kilka wariantów sterowania niezależnego od uchybu. Były to:
+\begin{itemize}
+\item Brak sterowania - do oceny zachowania zbudowanego modelu.
+\item Sterowanie losowe - generowanie losowych wartości napięcia.
+\item Sterowanie sinusoidalne - podawanie na wejście układu napięcia o charakterystyce wykresu funkcji sinus zależnego od czasu.
+\end{itemize}
+Docelową strategią kontroli nad układem było wprowadzenie regulatora PID. Opis narzędzia został podany w sekcji \ref{PIDSection}. Porównanie rozwiązań zostanie omówione w rozdziale poświęconym testom.
+
+Wynikiem zastosowania odpowiedniej regulacji powinna być stabilizacja układu w obrębie zerowego odchylenia wahadła od osi pionowej układu. Dodatkowo warto zauważyć, że omawiany problem wymaga zastosowania podwójnego kompletu sterowników, ze względu na trójwymiarowy charakter finalnego modelu. Jednakże podobne jak w przypadku samego układu, oba kontrolery będą działały niezależnie.
+
 \subsection{Wprowadzenie zakłóceń do modelu}
+Przygotowana praca obejmuje dodatkowe zagadnienie jakim są zakłócenia pochodzące od siły wiatru. Wiatr zdefiniowany został jako trójwymiarowy wektor kierunkowy oraz wartość określająca jego moc. W projekcie przyjęto, że siła wiatru oddziałuje jedynie na wahadło. Założenie to bierze swoją genezę z chęci wprowadzenia zaburzenia kąta odchylenia wahadła od osi pionowej i przeprowadzenia testów stabilizacji powstałych zakłóceń. Kierunek siły wiatru zrzutowany został na dwie płaszczyzny związane z wzajemnie prostopadłymi układami dwuwymiarowymi.  Wyznaczone w ten sposób siły przyłożone zostały w obydwu układach do środka masy wahadła, a następnie rozłożone na dwie składowe związane z osiami głównymi poszczególnych układów. 
+
+Powstały w ten sposób dwuwymiarowy rozkład sił przedstawiony został na schemacie \ref{WindForce}.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 200pt]{WindForce} 
+		\caption{\textit{Układ wahadła odwróconego na wózku w obecności siły wiatru}}
+		\label{WindForce}
+\end{figure}
+
+Uzyskane siły $F_x$ i $F_y$ uwzględnione zostały jako dodatkowe oddziaływania względem modelu podstawowego. Aby wyznaczyć ich wpływ na dynamikę układu przeprowadzono rozważania analogiczne do tych, przedstawionych w sekcji \ref{MathModel}. W rezultacie ustalono poprawkę, która będzie doliczana wyłącznie wtedy, gdy do układu wprowadzone zostanie zakłócenie:
+
+\renewcommand*{\arraystretch}{1.5}
+\begin{center}
+\begin{tabular}{|c|c|}
+  \hline 
+  Element równania stanu & Zakłócenie \\
+  \hline
+  Prędkość liniowa $\frac{dx}{dt}$ & 0 \\
+  \hline
+  Prędkość kątowa $\frac{d\theta}{dt}$ & 0 \\
+  \hline
+  Przyspieszenie liniowe $\frac{d^2x}{dt^2}$ & $\frac{F_x - F_y\theta}{M}$ \\
+  \hline
+  Przyspieszenie kątowe $\frac{d^2\theta}{dt^2}$ & $\frac{(F_y\theta - F_x)(M + m)}{Mm}$ \\
+  \hline
+\end{tabular} 
+\end{center}
+
+Omówiony model zakłóceń dotyczy pojedynczej pętli obliczeń, w której kierunek i moc wiatru są ustalone. Obsługa całego przebiegu symulacji wymaga rozważenia pełnej charakterystyki siły wiatru, w szczególności zmienności jej kierunku. W projekcie przyjęto, że wektor kierunku wiatru generowany będzie losowo z podprzestrzeni spełniającej nierówność: $|z| < 0.5$, natomiast moc wiatru i tempo jego zmiany będą dowolnie sterowalnymi parametrami. Dodatkowo opracowano kilka metod zmiany kierunku wiatru:
+\begin{itemize}
+\item Skoki losowe - przez zadany czas wiatr wieje z określonego kierunku, następnie generowany jest nowy losowy kierunek.
+\item Skoki naprzemienne - przez zadany czas wiatr wieje z określonego kierunku, następnie generowany jest nowy kierunek w taki sposób, by wektor kierunkowy należał do półprzestrzeni przeciwnej do tej, w której znajduje się obecnie wybrany kierunek.
+\item Gładkie przejścia - generowane są dwa kierunki podobnie jak w skokach naprzemiennych, które oznaczane są jako kierunek początkowy i końcowy. W trakcie przebiegu symulacji kierunek wiatru wyznaczany jest jako interpolacja wspomnianych dwóch wektorów. W celu uzyskania gładkiej zmiany kierunku wykorzystano interpolację SLERP omówioną w sekcji \ref{SLERP}. 
+\end{itemize}
+
 \subsection{Wprowadzenie trajektorii ruchu}
 \subsection{Regulacja ruchu względem zadanej trajektorii}
 
@@ -602,6 +990,7 @@ Definicja oznaczeń na schematach \ref{DoublePIDCascade} i \ref{DoublePIDParalle
 %% -------- chapter IV --------
 \chapter{Testy i porównanie przyjętych rozwiązań}
 \section{Stabilizacja układu}
+Brak jakiegokolwiek narzędzia sterującego powoduje, że symulacja układu ogranicza się do wizualizacji zachowania wahadła i wózka w zależności od wychylenia wahadła. Nawet niewielkie zaburzenia kąta powodują, że wahadło opuszcza niestabilny punkt równowagi o opada na wózek. W tym czasie wózek
 \section{Ruch po trajektorii}
 \section{Wpływ parametrów układu na jego zachowanie}
 \section{Testowanie przypadków szczególnych}
