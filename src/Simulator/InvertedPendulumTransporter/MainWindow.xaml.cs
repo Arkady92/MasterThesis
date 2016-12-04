@@ -110,7 +110,9 @@ namespace InvertedPendulumTransporter
 
             PlotsControl.PassParameters(TimeDelta, XCoordAngle, YCoordAngle, RodLength, CartMass, PendulumMass, WindPower);
             PlotsControl.UpdateVoltagePlots(systemState.Time, xCoordVoltage, yCoordVoltage);
-            PlotsControl.UpdateErrorPlots(systemState.Time, systemState.StateX.Angle, systemState.StateY.Angle);
+            PlotsControl.UpdateAngleErrorPlots(systemState.Time, systemState.StateX.Angle, systemState.StateY.Angle);
+            PlotsControl.UpdatePositionErrorPlots(systemState.Time, targetPosition.X - systemState.StateX.Position, 
+                targetPosition.Y - systemState.StateY.Position);
             systemState.UpdateTimer();
             UpdateGUI();
             SceneControl.UpdateFrame(systemState);

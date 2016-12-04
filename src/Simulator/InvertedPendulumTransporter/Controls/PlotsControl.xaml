@@ -15,8 +15,16 @@
         <Grid Grid.Column="0">
             <oxy:Plot Name="ControlErrorPlot" Title="Control Error" MouseRightButtonDown="ControlErrorPlot_MouseRightButtonDown" TitleFontSize="12" BorderBrush="Black" BorderThickness="2">
                 <oxy:Plot.Series>
-                    <oxy:LineSeries Title="X-Coord" ItemsSource="{Binding ErrorPointsX}"/>
-                    <oxy:LineSeries Title="Y-Coord" ItemsSource="{Binding ErrorPointsY}"/>
+                    <oxy:LineSeries Title="X-Coord" ItemsSource="{Binding AngleErrorPointsX}"/>
+                    <oxy:LineSeries Title="Y-Coord" ItemsSource="{Binding AngleErrorPointsY}"/>
+                </oxy:Plot.Series>
+            </oxy:Plot>
+        </Grid>
+        <Grid Grid.Column="0">
+            <oxy:Plot Name="PositionErrorPlot" Title="Position Error" MouseRightButtonDown="ControlErrorPlot_MouseRightButtonDown" TitleFontSize="12" BorderBrush="Black" BorderThickness="2" Visibility="Hidden">
+                <oxy:Plot.Series>
+                    <oxy:LineSeries Title="X-Coord" ItemsSource="{Binding PositionErrorPointsX}"/>
+                    <oxy:LineSeries Title="Y-Coord" ItemsSource="{Binding PositionErrorPointsY}"/>
                 </oxy:Plot.Series>
             </oxy:Plot>
         </Grid>

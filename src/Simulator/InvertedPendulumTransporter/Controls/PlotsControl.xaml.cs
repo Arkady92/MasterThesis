@@ -13,10 +13,16 @@ namespace InvertedPendulumTransporter.Controls
     /// </summary>
     public partial class PlotsControl : UserControl
     {
-        private ObservableCollection<DataPoint> errorPointsX;
-        public ObservableCollection<DataPoint> ErrorPointsX
+        private ObservableCollection<DataPoint> angleErrorPointsX;
+        public ObservableCollection<DataPoint> AngleErrorPointsX
         {
-            get { return errorPointsX; }
+            get { return angleErrorPointsX; }
+        }
+
+        private ObservableCollection<DataPoint> positionErrorPointsX;
+        public ObservableCollection<DataPoint> PositionErrorPointsX
+        {
+            get { return positionErrorPointsX; }
         }
 
         private ObservableCollection<DataPoint> voltagePointsX;
@@ -25,10 +31,16 @@ namespace InvertedPendulumTransporter.Controls
             get { return voltagePointsX; }
         }
 
-        private ObservableCollection<DataPoint> errorPointsY;
-        public ObservableCollection<DataPoint> ErrorPointsY
+        private ObservableCollection<DataPoint> angleErrorPointsY;
+        public ObservableCollection<DataPoint> AngleErrorPointsY
         {
-            get { return errorPointsY; }
+            get { return angleErrorPointsY; }
+        }
+
+        private ObservableCollection<DataPoint> positionErrorPointsY;
+        public ObservableCollection<DataPoint> PositionErrorPointsY
+        {
+            get { return positionErrorPointsY; }
         }
 
         private ObservableCollection<DataPoint> voltagePointsY;
@@ -54,9 +66,11 @@ namespace InvertedPendulumTransporter.Controls
 
         private void InitializeObjects()
         {
-            errorPointsX = new ObservableCollection<DataPoint>();
+            angleErrorPointsX = new ObservableCollection<DataPoint>();
+            positionErrorPointsX = new ObservableCollection<DataPoint>();
+            angleErrorPointsY = new ObservableCollection<DataPoint>();
+            positionErrorPointsY = new ObservableCollection<DataPoint>();
             voltagePointsX = new ObservableCollection<DataPoint>();
-            errorPointsY = new ObservableCollection<DataPoint>();
             voltagePointsY = new ObservableCollection<DataPoint>();
         }
 
@@ -66,17 +80,25 @@ namespace InvertedPendulumTransporter.Controls
             voltagePointsY.Add(new DataPoint(time, yCoordVoltage));
         }
 
-        public void UpdateErrorPlots(double time, double xCoordError, double yCoordError)
+        public void UpdateAngleErrorPlots(double time, double xCoordError, double yCoordError)
         {
-            errorPointsX.Add(new DataPoint(time, xCoordError));
-            errorPointsY.Add(new DataPoint(time, yCoordError));
+            angleErrorPointsX.Add(new DataPoint(time, xCoordError));
+            angleErrorPointsY.Add(new DataPoint(time, yCoordError));
+        }
+
+        public void UpdatePositionErrorPlots(double time, double xCoordError, double yCoordError)
+        {
+            positionErrorPointsX.Add(new DataPoint(time, xCoordError));
+            positionErrorPointsY.Add(new DataPoint(time, yCoordError));
         }
 
         public void ResetPlots()
         {
-            errorPointsX.Clear();
+            angleErrorPointsX.Clear();
+            angleErrorPointsY.Clear();
+            positionErrorPointsX.Clear();
+            positionErrorPointsY.Clear();
             voltagePointsX.Clear();
-            errorPointsY.Clear();
             voltagePointsY.Clear();
         }
 
@@ -88,8 +110,11 @@ namespace InvertedPendulumTransporter.Controls
 
         private void ControlErrorPlot_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var fileName = "ControlError[" + "TD=" + timeDelta + "XC=" + xCoordAngle + "YC=" + yCoordAngle + "RL=" + rodLength + "CM=" + cartMass + "PM=" + pendulumMass + "WP=" + windPower + "].png";
-            SavePlotAsImage(ControlErrorPlot.ActualModel, fileName);
+            var angleFileName = "ControlError[" + "TD=" + timeDelta + "XC=" + xCoordAngle + "YC=" + yCoordAngle + "RL=" + rodLength + "CM=" + cartMass + "PM=" + pendulumMass + "WP=" + windPower + "].png";
+            SavePlotAsImage(ControlErrorPlot.ActualModel, angleFileName);
+
+            var positionFileName = "PositionError[" + "TD=" + timeDelta + "XC=" + xCoordAngle + "YC=" + yCoordAngle + "RL=" + rodLength + "CM=" + cartMass + "PM=" + pendulumMass + "WP=" + windPower + "].png";
+            SavePlotAsImage(PositionErrorPlot.ActualModel, positionFileName);
         }
 
         private void SavePlotAsImage(IPlotModel model, string fileName)

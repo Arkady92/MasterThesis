@@ -40,7 +40,7 @@ namespace InvertedPendulumTransporter
             if (xCoordVoltageController.ControlType != ControlType.DoublePIDParallel
                 && xCoordVoltageController.ControlType != ControlType.DoublePIDCascade 
                 && xCoordVoltageController.ControlType != ControlType.DoublePDParallel)
-                SetMenuVoltage(DoublePIDParallelVoltageMenuItem, ControlType.DoublePIDParallel);
+                SetMenuVoltage(DoublePDParallelVoltageMenuItem, ControlType.DoublePDParallel);
             UpdateGUI();
         }
 
@@ -69,7 +69,7 @@ namespace InvertedPendulumTransporter
                 && xCoordVoltageController.ControlType != ControlType.DoublePIDCascade
                 && xCoordVoltageController.ControlType != ControlType.DoublePDParallel
                 && xCoordVoltageController.ControlType != ControlType.DoublePDParallel)
-                SetMenuVoltage(DoublePIDParallelVoltageMenuItem, ControlType.DoublePIDParallel);
+                SetMenuVoltage(DoublePDParallelVoltageMenuItem, ControlType.DoublePDParallel);
             UpdateGUI();
         }
 

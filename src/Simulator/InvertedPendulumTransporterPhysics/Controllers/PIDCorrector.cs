@@ -21,11 +21,13 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         private double TimeDelta;
         private bool firstAngleIteration;
         private bool firstPositionIteration;
+        private bool firstDoublePIDIteration;
 
         public PIDCorrector()
         {
             firstAngleIteration = true;
             firstPositionIteration = true;
+            firstDoublePIDIteration = true;
         }
 
         public void SetAngleError(double error)
@@ -62,6 +64,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             positionError = 0.0;
             firstAngleIteration = true;
             firstPositionIteration = true;
+            firstDoublePIDIteration = true;
         }
 
         public void Reset(double timeDelta)
@@ -91,6 +94,11 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             else
                 anglePIDCorrection = KpA * (angleError + TdA * (angleError - previousAngleError) / TimeDelta) * angleControlReductionFactor;
             var result = (anglePIDCorrection - positionPIDCorrection);
+            if(firstDoublePIDIteration)
+            {
+                firstDoublePIDIteration = false;
+                return 0;
+            }
             return (Math.Abs(result) > MaxVoltage) ? Math.Sign(result) * MaxVoltage : result;
         }
     }

@@ -11,6 +11,9 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         private double time;
         private PIDCorrector singlePIDCorrector;
         private PIDCorrector doublePIDCorrector;
+        private const int SwitchStep = 10;
+        private int counter = 0;
+        private double randomControlValue;
 
         public VoltageController()
         {
@@ -25,9 +28,15 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             switch (ControlType)
             {
                 case ControlType.Random:
-                    return (random.Next(300) - 150) / 1.0;
+                    counter--;
+                    if (counter <= 0)
+                    {
+                        counter = SwitchStep;
+                        randomControlValue = (random.Next(300) - 150) / 5.0;
+                    }
+                    return randomControlValue;
                 case ControlType.Sinusoidal:
-                    return Math.Sin(time * 10) * 2;
+                    return Math.Sin(time * 20) * 10;
                 case ControlType.PID:
                     return CalculateSinglePIDCorrection();
                 case ControlType.DoublePIDCascade:
@@ -51,12 +60,16 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         {
             singlePIDCorrector.Reset();
             doublePIDCorrector.Reset();
+            counter = 0;
+            randomControlValue = 0;
         }
 
         public void Reset(double timeDelta)
         {
             singlePIDCorrector.Reset(timeDelta);
             doublePIDCorrector.Reset(timeDelta);
+            counter = 0;
+            randomControlValue = 0;
         }
 
         public void SetControlError(double angleError, double positionError)
