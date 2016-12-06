@@ -36,7 +36,9 @@
 \usepackage{float}
 \usepackage{verbatim}
 \usepackage{setspace} 
-%\onehalfspacing
+\usepackage[]{appendix}
+\usepackage[nottoc]{tocbibind}
+\onehalfspacing
 \renewcommand*{\arraystretch}{1.5}
 
 
@@ -139,7 +141,7 @@ Przygotowane rozwiązanie nie posiada jeszcze odzwierciedlenia w technice, natom
 
 Celem pracy jest zbudowanie uniwersalnego symulatora z konkretną realizacją przedstawionego problemu. Dodatkowym elementem jest możliwość dokonania dogłębnej analizy procesu tworzenia symulacji i wypracowania optymalnego rozwiązania. Ponadto dokument ma na celu ilustrację architektury i ogólnego schematu działania programu, a także przedstawienie wyników przeprowadzonych testów.
 
-Pierwszy rozdział tekstu stanowi bazę teoretyczną dalszych rozważań. Zawiera on podstawowe definicje, przybliża istotę problemu oraz istniejące rozwiązania. Rozdział drugi opisuje logikę systemu. Rozdział trzeci skupia się na opisie rozwiązania. W czwartym rozdziale omówione zostają testy oraz porównanie użytych metod. Rozdział piąty prezentuje architekturę opracowanego systemu, natomiast rozdział szósty stanowi instrukcję obsługi dla użytkownika. Ostatni rozdział podsumowuje całość pracy, opisuje wnioski oraz przedstawia możliwe kierunki rozwoju systemu.
+%Pierwszy rozdział tekstu stanowi bazę teoretyczną dalszych rozważań. Zawiera on podstawowe definicje, przybliża istotę problemu oraz istniejące rozwiązania. Rozdział drugi opisuje logikę systemu. Rozdział trzeci skupia się na opisie rozwiązania. W czwartym rozdziale omówione zostają testy oraz porównanie użytych metod. Rozdział piąty prezentuje architekturę opracowanego systemu, natomiast rozdział szósty stanowi instrukcję obsługi dla użytkownika. Ostatni rozdział podsumowuje całość pracy, opisuje wnioski oraz przedstawia możliwe kierunki rozwoju systemu.
 \end{abstract}
 
 \selectlanguage{english}
@@ -152,7 +154,7 @@ The prepared solution has not yet reflected in the technique however it perfectl
 
 The aim of the thesis is to build a universal simulator with a concrete implementation of the presented problem. An additional element is the possibility of in-depth analysis of simulation to develop the optimal solution. Furthermore, the document was prepared to illustrate the architecture and a general scheme of the system, as well as present results of tests.
 
-The first chapter is a theoretical basis for further discussion. It includes basic definitions, shows the essence of the problem and discusses existing solutions. The second chapter describes the logic of the whole program. The third chapter focuses on the solution description. In the fourth chapter tests results and the comparison of the solutions adopted in the project are preseneted. The fifth and sixth chapters describe the system architecture and the user manual. The last chapter summarizes the whole work. It presents conclusions and future directions of development of the system.
+%The first chapter is a theoretical basis for further discussion. It includes basic definitions, shows the essence of the problem and discusses existing solutions. The second chapter describes the logic of the whole program. The third chapter focuses on the solution description. In the fourth chapter tests results and the comparison of the solutions adopted in the project are preseneted. The fifth and sixth chapters describe the system architecture and the user manual. The last chapter summarizes the whole work. It presents conclusions and future directions of development of the system.
 \end{abstract}
 
 \selectlanguage{polish}
@@ -995,9 +997,9 @@ Omówiony model zakłóceń dotyczy pojedynczej pętli obliczeń, w której kier
 \subsection{Wprowadzenie trajektorii ruchu}
 Zbudowany w dotychczasowy sposób system umożliwia stabilizację wahadła z uwzględnieniem zewnętrznych zakłóceń. Jednakże istotą projektu było przeniesienie układu do świata trójwymiarowego i swobodne poruszanie modelem po płaszczyźnie. Aby zapewnić ten warunek niezbędne jest rozszerzenie zagadnienia stabilizacji o zarządzanie pozycją wózka. Podobnie jak w przypadku regulacji kąta, zagadnienie można rozpatrywać w sytuacji dwuwymiarowej, ze względu na niezależne działanie podukładów. Ustalając pewne położenie $x$ jako punkt docelowy oraz $x_0$ jako miejsce startu problem można określić jako stabilizację układu w punkcie $x$ przy równoczesnym zadbaniu o utrzymanie wahadła w bezpiecznym wychyleniu. Ze względu na konieczność przebycia drogi $x - x_0$ przez pewien czas wahadło musi opuścić niestabilny punkt równowagi tak, by pokierować wózek do celu za pomocą wygenerowanej siły. Ponadto należy zwrócić uwagę na fakt, że wychylenie wahadła w kierunku docelowego punktu nie zapewni bezpośredniego ruchu podstawy w pożądaną stronę. Układ wykona kompensację wychylenia poprzez przesunięcie wózka w stronę przeciwną do zamierzonej i dopiero po pewnym czasie zacznie poruszać się z powrotem w pożądanym kierunku. Postawione komplikacje zmuszają do zastosowania specjalistycznego narzędzia umożliwiającego równoczesną kontrolę zachowania wahadła i wózka. W realizowanym projekcie skorzystano z podwójnego regulatora PID, którego charakterystykę przedstawiono w sekcji \ref{DoublePID}. Wybrany regulator możne być zaimplementowany na wiele sposobów. Autor pracy wybrał trzy metody, które zostały poddane gruntownym badaniom:
 \begin{itemize}
-\item Regulator kaskadowy PID
-\item Regulator równoległy PID
-\item Regulator równoległy PD (rezygnacja z członu całkującego)
+\item Podwójny regulator równoległy (dla kąta: PID, dla pozycji: PD).
+\item Zmodyfikowany podwójny regulator równoległy (dla kąta i pozycji: PD).
+\item Podwójny regulator kaskadowy (dla kąta: PID, dla pozycji PD).
 \end{itemize}
 
 Pożądana wersja kontrolera powinna w możliwie najkrótszym czasie ustabilizować pozycję wózka w zadanym punkcie docelowym, nie doprowadzając do utraty kontroli nad wahadłem. Porównanie rozwiązań zostało przedstawione w rozdziale poświęconym testom. 
@@ -1069,7 +1071,7 @@ Autor pracy skupił się na zbadaniu ogólnej pracy symulatora w zależności od
 \begin{itemize}
 \item Stabilizacja układu wahadła odwróconego na wózku za pomocą różnych metod regulacji.
 \item Ruch układu po zadanej trajektorii przy użyciu poszczególnych wariantów regulatora podwójnego PID.
-\item Wpływ poszczególnych parametrów początkowych na jakość stabilizacji.
+\item Wpływ parametrów początkowych na jakość stabilizacji.
 \item Wpływ zakłóceń pochodzących od siły wiatru na zachowanie układu.
 \end{itemize}
 
@@ -1090,15 +1092,17 @@ Konfiguracja parametrów początkowych została przeprowadzona zgodnie z przyję
 \end{itemize}
 
 \section{Stabilizacja układu}
+\subsubsection{Brak sterowania}
 Brak jakiegokolwiek narzędzia sterującego powoduje, że symulacja układu ogranicza się do wizualizacji zachowania wahadła i wózka w zależności od wychylenia wahadła. Nawet niewielkie zaburzenia kąta powodują, że wahadło opuszcza niestabilny punkt równowagi o opada na wózek. W tym czasie podstawa wykonuje ruch w stronę przeciwną do kierunku wychylenia wahadła. Omawiana sytuacja została pokazana na rysunku \ref{figure:ModelWithoutControl}.
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 300pt]{ModelWithoutControl} 
+		\includegraphics[width = 280pt]{ModelWithoutControl} 
 		\caption{\textit{Wizualizacja zachowania układu w przypadku braku sterowania}}
 		\label{figure:ModelWithoutControl}
 \end{figure}
 
+\subsubsection{Sterowanie niezależne od uchybu}
 Przeprowadzono sprawdzenie zachowania układu w obecności regulatora napięcia na silniku sterującym platformą. W pierwszym przypadku zastosowano sterowanie niezależne od uchybu w celu zbadania reakcji układu na dowolny moduł kontrolujący. Dla uproszczenia sytuacji zaniechano wstępnego wychylania wahadła. Wyniki testu pokazano na wykresach: \ref{plot:RandomEV}, \ref{plot:RandomCE}, \ref{plot:SinusoidalEV}, \ref{plot:SinusoidalCE}.
 
 \begin{figure}[H]
@@ -1114,6 +1118,8 @@ Przeprowadzono sprawdzenie zachowania układu w obecności regulatora napięcia 
 		\caption{\textit{Sterowanie losowym napięciem: wykres uchybu kąta}}
 		\label{plot:RandomCE}
 \end{figure}
+
+\newpage
 
 \begin{figure}[H]
 	\centering
@@ -1131,6 +1137,7 @@ Przeprowadzono sprawdzenie zachowania układu w obecności regulatora napięcia 
 
 Zgodnie z oczekiwaniami przyjęta regulacja nie spowodowała utrzymania wahadła w punkcie równowagi. Już po krótkim czasie trwania symulacji wahadło opada na platformę uniemożliwiając dalsze sterowanie. Wykonany test jednoznacznie stwierdził, że zadanie stabilizacji wahadła może być zrealizowane wyłącznie przez odpowiednio przygotowany kontroler.
 
+\subsubsection{Sterowanie regulatorem PID}
 Kolejny test dotyczył pracy regulatora PID, dedykowanego narzędzia służącego do stabilizacji układu. Przed przystąpieniem do wykonania symulacji należało zadbać o poprawny dobór nastaw regulatora. Autor pracy wykorzystał w tym celu parametry zaproponowane w pracy \cite{JTJT}. Są to:
 \begin{itemize}
 \item $K_p = -50.8$
@@ -1156,143 +1163,220 @@ Dla tak przygotowanego środowiska przeprowadzono test stabilizacji analogiczny 
 		\label{plot:PIDCE}
 \end{figure}
 
-Charakterystyka wykresów jednoznacznie wskazuje na stopniowe wygaszanie wychylenia wahadła wraz z narastającym czasem. Regulator PID podając odpowiednie napięcie do układu powodując kompensację ruchu obrotowego wahadła przez ruch postępowy wózka. W ostateczności wahadło stabilizuje swoje wychylenie w obydwu osiach układu.
+Charakterystyka wykresów jednoznacznie wskazuje na stopniowe wygaszanie wychylenia wahadła wraz z narastającym czasem. Regulator PID podając odpowiednie napięcie do układu kompensuje ruch obrotowy wahadła przez ruch postępowy wózka. W ostateczności wahadło stabilizuje swoje wychylenie w obydwu osiach układu.
 
 \section{Ruch po trajektorii}
-% SINGLE PID CAS
-\begin{figure}[H]
-	\centering
-		\includegraphics[width = 320pt]{LineCasPIDEV} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora kaskadowego PID: wykres napięcia na silniku}}
-		\label{plot:LineCasPIDEV}
-\end{figure}
+\subsection{Założenia}
+\label{Reqs}
+Kolejnym zagadnieniem wymagającym gruntownych testów była ocena jakości realizowania trajektorii ruchu układu przez poszczególne układy sterujące. W celu uzyskania efektu ruchu wykorzystano układ podwójnego regulatora PID. W oparciu o literaturę opracowano współczynniki nastaw poszczególnych kontrolerów. W przypadku regulatora kąta pozostawiono wartości opracowane w poprzedniej sekcji. Dla regulatora pozycji po zbadaniu transmitancji układu i stwierdzeniu jego całkującego charakteru zdecydowano się na skorzystanie z regulatora w wersji PD. Aby to osiągnąć przyjęto następujące nastawy:
+\begin{itemize}
+\item Dla regulatora kaskadowego:
+\begin{itemize}
+\item $K_p = 0.05$
+\item $T_i = \infty$
+\item $T_d = 0.7$
+\end{itemize}
+\item Dla regulatora równoległego:
+\begin{itemize}
+\item $K_p = 6$
+\item $T_i = \infty$
+\item $T_d = 1.5$
+\end{itemize}
+\end{itemize}
+
+W trakcie przeprowadzania pierwszych testów symulacji autor pracy zwrócił uwagę na negatywny wpływ członu całkującego regulatora kąta na szybkość wykonywania ruchu po trajektorii. Po zastanowieniu się nad istotą problemu, włączono do porównania trzeci układ sterowania, w którym zaniechano użycia wspomnianego członu.
+
+
+W celu uzyskania wiarygodnych wyników testy przeprowadzono dla trzech reprezentatywnych przypadków trajektorii:
+\begin{itemize}
+\item Trajektoria odcinka - możliwość sprawdzenia stabilizacji układu w pojedynczym punkcie kontrolnym.
+\item Trajektoria węzła koniczynowego (pokazanego na rysunku \ref{TrajectoryTrefoilKnot}) - zbadanie jakości ruchu w przypadku nietrywialnej złożonej trajektorii.
+\item Trajektoria krzyża - ocena zachowania układu wobec przypadku szczególnego, w którym kolejne punkty kontrolne są od siebie odległe i tworzą kąty proste.
+\end{itemize}
+
+Głównymi kryteriami porównawczymi były: 
+\begin{itemize}
+\item Dokładność odzwierciedlenia trajektorii.
+\item Czas wykonania ruchu.
+\item Stabilność wahadła w czasie transportu.
+\item Charakterystyka napięcia na silniku.
+\end{itemize}
+
+\subsection{Trajektoria prosta}
+W pierwszej kolejności zbadano zachowanie układu dla prostej trajektorii odcinka. Wózek ustawiony został w początku układu współrzędnych i jego zadaniem było przemieszczenie się do punktu $(2.5,-2.5)$.
+
+\subsubsection{Podwójny regulator równoległy}
+Wykresy napięcia na silniku oraz uchybów pozycji i kąta dla podwójnego regulatora równoległego przedstawiono na wykresach \ref{plot:LinePIDEV}, \ref{plot:LinePIDCEP} i \ref{plot:LinePIDCEA}.
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{LineCasPIDCEA} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora kaskadowego PID: wykres uchybu kąta}}
-		\label{plot:LineCasPIDCEA}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-		\includegraphics[width = 320pt]{LineCasPIDCEP} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora kaskadowego PID: wykres uchybu pozycji}}
-		\label{plot:LineCasPIDCEP}
-\end{figure}
-
-% SINGLE PID PAR
-\begin{figure}[H]
-	\centering
-		\includegraphics[width = 320pt]{LinePIDEV} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora równoległego PID: wykres napięcia na silniku}}
+		\includegraphics[width = 350pt]{LinePIDEV} 
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora równoległego: wykres napięcia na silniku}}
 		\label{plot:LinePIDEV}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{LinePIDCEP} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora równoległego PID: wykres uchybu kąta}}
+		\includegraphics[width = 350pt]{LinePIDCEP} 
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora równoległego: wykres uchybu pozycji}}
 		\label{plot:LinePIDCEP}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{LinePIDCEA} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora równoległego PID: wykres uchybu pozycji}}
+		\includegraphics[width = 350pt]{LinePIDCEA} 
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora równoległego: wykres uchybu kąta}}
 		\label{plot:LinePIDCEA}
 \end{figure}
 
-% SINGLE PD
+Wykresy jednoznacznie wskazują na poprawną stabilizację układu w docelowej lokacji. Kontroler dba o utrzymanie wahadła w bezpiecznym wychyleniu, przesuwając się powoli w kierunku punktu kontrolnego. Istotną cechą układu jest asymptotyczne zbieganie do poprawnej pozycji, toteż nie ma potrzeby wykonywania poprawki po osiągnięciu finalnej pozycji. Generowane napięcie na silniku jest akceptowalne. Testy ukazują, że jedyną wadą sterowania jest zbyt długi czas trwania ruchu (około 30 sekund do pełnej stabilizacji).
+
+\subsubsection{Zmodyfikowany podwójny regulator równoległy}
+Wykresy napięcia na silniku oraz uchybów pozycji i kąta dla zmodyfikowanego podwójnego regulatora równoległego przedstawiono na wykresach \ref{plot:LinePDEV}, \ref{plot:LinePDCEP} i \ref{plot:LinePDCEA}.
+
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{LinePDEV} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora równoległego PD: wykres napięcia na silniku}}
+		\includegraphics[width = 350pt]{LinePDEV} 
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą zmodyfikowanego podwójnego regulatora równoległego: wykres napięcia na silniku}}
 		\label{plot:LinePDEV}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{LinePDCEP} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora równoległego PD: wykres uchybu kąta}}
+		\includegraphics[width = 350pt]{LinePDCEP} 
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą zmodyfikowanego podwójnego regulatora równoległego PD: wykres uchybu pozycji}}
 		\label{plot:LinePDCEP}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{LinePDCEA} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora równoległego PD: wykres uchybu pozycji}}
+		\includegraphics[width = 350pt]{LinePDCEA} 
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą zmodyfikowanego podwójnego regulatora równoległego PD: wykres uchybu kąta}}
 		\label{plot:LinePDCEA}
 \end{figure}
 
+W przypadku układu sterowania z wyłączonym modułem całkującym dla regulacji kąta stabilizacja realizowana jest na podobnym poziomie jak w niezmodyfikowanym modelu. System cechują dużo większe wychylenia wahadła, jednakże zauważalna jest poprawa czasu wykonywania ruchu (redukcja do 5 sekund). Układ przy osiąganiu punktu docelowego wymaga wykonania drobnej poprawki pozycji. Charakterystyka napięcia wskazuje na większy udział napędu silnika w dynamikę układu. 
 
-% MULTIPLE
+\subsubsection{Podwójny regulator kaskadowy}
+Wykresy napięcia na silniku oraz uchybów pozycji i kąta dla podwójnego regulatora równoległego przedstawiono na wykresach \ref{plot:LineCasPIDEV}, \ref{plot:LineCasPIDCEP} i \ref{plot:LineCasPIDCEA}.
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{TrefoilKnotCascadeEV} 
-		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator kaskadowy PID: wykres napięcia na silniku}}
-		\label{plot:TrefoilKnotCascadeEV}
+		\includegraphics[width = 350pt]{LineCasPIDEV} 
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora kaskadowego: wykres napięcia na silniku}}
+		\label{plot:LineCasPIDEV}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{TrefoilKnotCascadeCE} 
-		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator kaskadowy PID: wykres uchybu kąta}}
-		\label{plot:TrefoilKnotCascadeCE}
+		\includegraphics[width = 350pt]{LineCasPIDCEP} 
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora kaskadowego PID: wykres uchybu pozycji}}
+		\label{plot:LineCasPIDCEP}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{TrefoilKnotParallelEV} 
-		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator równoległy PID: wykres napięcia na silniku}}
-		\label{plot:TrefoilKnotParallelEV}
+		\includegraphics[width = 350pt]{LineCasPIDCEA} 
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora kaskadowego PID: wykres uchybu kąta}}
+		\label{plot:LineCasPIDCEA}
+\end{figure}
+
+Podobnie jak w przypadku dwóch poprzednich sterowników, regulator kaskadowy potrafi ustabilizować układ w zadanym położeniu. Czas realizacji zadania jest zbliżony do niezmodyfikowanego sterowania równoległego. W trakcie trwania ruchu daje się zauważyć częste obustronne wychylenia wahadła. Po osiągnięciu pozycji docelowej układ wykonuje dalszy ruch w zadanym kierunku, przez co niezbędna jest kilkukrotna poprawka powrotna pozycji. Niestety charakterystyka napięcia na silniku wskazuje na nieregularne (często skokowe) wartości napięcia, szczególnie w początkowej fazie ruchu. Zachowanie to jest nieakceptowalne w przypadku rozwiązania wdrażanego do rzeczywistego układu. 
+
+\subsection{Trajektoria złożona}
+Celem finalnym symulatora było śledzenie trajektorii złożonej z wielu punktów kontrolnych. Algorytm pracy transportera wymagał osiągnięcia przez układ kolejnych punktów kontrolnych, nie zwracając uwagi na stabilizację wahadła w konkretnym punkcie, tzn. po dotarciu do określonego miejsca, układ ma natychmiastowo przystąpić do ruchu do kolejnej lokacji. 
+
+Przetestowanie funkcjonalności oparto na dwóch przykładach. Jeden z nich obejmował transport układu po gładkim łuku węzła koniczynowego. Jest to typowy odcinek trajektorii, który system powinien wykonać bez większych trudności. Drugim przykładem była trajektoria krzyża. Symulator w założeniu nie obejmował tego typu trajektorii, jednakże wykorzystanie go pozwala na porównanie cech poszczególnych kontrolerów. 
+
+\subsubsection{Fragment trajektorii węzła koniczynowego}
+Podobnie jak w przypadku prostej trajektorii układ został umieszczony na miejscu startowym, po czym symulator powinien przystąpić do przesuwania układu wzdłuż zadanej trajektorii. Podczas trwania symulacji na płaszczyźnie ruchu zaznaczano kolejne pozycje wózka, śledząc równocześnie zachowanie wahadła. Trajektoria wyrysowana przez obydwie wersje podwójnego regulatora równoległego pokazano na rysunku: \ref{TrajectoryTrefoilKnotGood}. Trajektorię pochodzącą od podwójnego regulatora kaskadowego przedstawia ilustracja \ref{TrajectoryTrefoilKnotWrong}.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 200pt]{TrajectoryTrefoilKnotGood} 
+		\caption{\textit{Ruch układu śledzącego trajektorię węzła koniczynowego w przypadku sterowania podwójnym regulatorem równoległym}}
+		\label{TrajectoryTrefoilKnotGood}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{TrefoilKnotParallelCE} 
-		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator równoległy PID: wykres uchybu kąta}}
-		\label{plot:TrefoilKnotParallelCE}
+		\includegraphics[width = 200pt]{TrajectoryTrefoilKnotWrong} 
+		\caption{\textit{Ruch układu śledzącego trajektorię węzła koniczynowego w przypadku sterowania podwójnym regulatorem kaskadowym}}
+		\label{TrajectoryTrefoilKnotWrong}
+\end{figure}
+
+Zarówno podwójny regulator równoległy jak i jego zmodyfikowana wersja poradziły sobie z zadanym ruchem bez większych problemów. Dodatkowym atutem drugiego z nich był znacznie mniejszy czas potrzebny do wykonania przesunięcia do celu. Niestety w przypadku regulatora kaskadowego przyjęta technika pokonywania drogi okazała się barierą do wykonania poprawnego ruchu. Regulator ten ze względu na długi czas stabilizacji pozycji często gubił odpowiednią trajektorię i był zmuszony wracać do punktu kontrolnego.
+
+Przeprowadzono dodatkowo ocenę wykresów parametrów sterowania umieszczonych w dodatku \ref{appenix:A}. Zgodnie z zachowaniem układu obserwowanym w wizualizacji wykresy: napięcia na silniku oraz uchybu kąta dla regulatora kaskadowego przedstawiają problemy w ustabilizowaniu układu i dynamiczne zmiany napięcia, które negatywnie wpływają na pracę systemu. Dla podwójnego regulatora równoległego można dostrzec drobne wychylenia inicjujące ruch, gaszone powoli poprzez sterowanie silnikiem. W przypadku zmodyfikowanego regulatora wykresy prezentują się najbardziej obiecująco. Przejścia między kolejnymi fazami są dość gładkie, a poziomy wychylenia wahadła akceptowalne.
+
+Badaniu poddano również trajektorie: okręgu, Lemniskaty Bernoulliego oraz krzywej sinusoidalnej. Uzyskane rezultaty w pełni odzwierciedlają wyprowadzone wnioski. Wobec powyższego należy przyjąć, że dla zadania ruchu po gładkiej trajektorii należy wykorzystać zmodyfikowany podwójny regulator równoległy.
+
+\subsubsection{Trajektoria krzyża}
+W opozycji do przykładów z poprzedniej sekcji przygotowano jeszcze jeden przykład testowy, w którym trajektoria składa się z odległych od siebie punktów kontrolnych tworzących kolejno kąty proste. Zadanie to zostało wybrane w celu zbadania, jak układ poradzi sobie w sytuacji, gdy użytkownik wymaga gwałtownego skrętu transportera (np. w sytuacji dojechania do przeszkody). Wyniki testów przedstawiono w formie wykresów trajektorii realizowanej przez wózek: \ref{TrajectoryCrossParallel}, \ref{TrajectoryCrossPD}, \ref{TrajectoryCrossCascade}.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 200pt]{TrajectoryCrossParallel} 
+		\caption{\textit{Ruch układu śledzącego trajektorię krzyża w przypadku sterowania podwójnym regulatorem równoległym}}
+		\label{TrajectoryCrossParallel}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{TrefoilKnotPDEV} 
-		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator równoległy PD: wykres napięcia na silniku}}
-		\label{plot:TrefoilKnotPDEV}
+		\includegraphics[width = 200pt]{TrajectoryCrossPD} 
+		\caption{\textit{Ruch układu śledzącego trajektorię krzyża w przypadku sterowania zmodyfikowanym podwójnym regulatorem równoległym}}
+		\label{TrajectoryCrossPD}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{TrefoilKnotPDCE} 
-		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator równoległy PD: wykres uchybu kąta}}
-		\label{plot:TrefoilKnotPDCE}
+		\includegraphics[width = 200pt]{TrajectoryCrossCascade} 
+		\caption{\textit{Ruch układu śledzącego trajektorię krzyża w przypadku sterowania podwójnym regulatorem kaskadowym}}
+		\label{TrajectoryCrossCascade}
 \end{figure}
+
+Zgodnie z początkowymi przypuszczeniami, jedynie podwójny regulator równoległy był w stanie w pełni odtworzyć zadaną trajektorię. Rezultat ten bierze się z faktu, że wspomniany kontroler jako jedyny zbiega dokładnie do docelowego punktu, bez konieczności wykonywania poprawki wstecznej. W przypadku pozostałych regulatorów trudność zadania sprawiła, że w pewnych miejscach regulator nie był w stanie w pełni ustabilizować układu, a był zmuszony do dalszego ruchu. Gdyby przyjęta została inna koncepcja ruchu, prawdopodobnie uzyskane przemieszczenia byłyby dokładniejsze, jednakże w zrealizowanym rozwiązaniu postawiono na ciągłość ruchu.
 
 
 \section{Wpływ parametrów układu}
+W celu określenia wpływu parametrów początkowych układu na szybkość stabilizacji za pomocą regulatora PID ustawiono konfigurację systemu w sposób opisany w sekcji \ref{Reqs}. Następnie modyfikowano wartości poszczególnych parametrów i sprawdzano po jakim czasie wychylenie wahadła i jego prędkość kątowa będą odpowiednio małe. Test ten zapewni jednoznaczne określenie czy układ ustabilizował się w punkcie równowagi. 
+
+\subsubsection{Masa wózka}
+Charakterystykę wpływu masy wózka na czas trwania stabilizacji przedstawiono na wykresie \ref{plot:CartMassQuality}.
+
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{CartMassQuality} 
+		\includegraphics[width = 350pt]{CartMassQuality} 
 		\caption{\textit{Wykres wpływu masy wózka na czas trwania stabilizacji układu}}
 		\label{plot:CartMassQuality}
 \end{figure}
 
+Wraz ze zwiększaniem masy podstawy czas regulacji ulegał znacznemu wydłużeniu. Dla masy 1 kg stabilizacja trwała około 5 sekund, a dla zdwojonej masy, czas ten był niemalże potrojony. Wykres jednoznacznie sugeruje, że masa wózka jest bardzo istotnym czynnikiem wpływającym na stabilizację. Dodatkowe testy przeprowadzone dla mas powyżej 3 kg pokazały, że regulator nie jest już w stanie poradzić sobie ze stabilizacją. Uzyskane wyniki są zgodne z oczekiwaniami, gdyż sterowanie cięższym wózkiem wymaga coraz więcej mocy od silnika napędowego, a wykonanie jakiegokolwiek ruchu platformą staje się coraz trudniejsze. Ponadto masa wózka jest istotnym parametrem przy wyznaczaniu sterowania układem w równaniu ruchu. 
+
+\subsubsection{Masa wahadła}
+Charakterystykę wpływu masy wózka na czas trwania stabilizacji przedstawiono na wykresie \ref{plot:PendulumMassQuality}.
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{PendulumMassQuality} 
+		\includegraphics[width = 350pt]{PendulumMassQuality} 
 		\caption{\textit{Wykres wpływu masy wahadła na czas trwania stabilizacji układu}}
 		\label{plot:PendulumMassQuality}
 \end{figure}
 
+W przeciwieństwie do masy wózka, masa wahadła nie wpływa w aż tak znaczącym stopniu na jakość stabilizacji układu. Wykres wskazuje na przyrost czasu wraz ze wzrostem masy, jednakże regulator jest w stanie kompensować wychylenia nawet w przypadku znacznej masy wahadła. Charakterystykę tę można powiązać z zależnością wartości momentu siły przyłożonego do wahadła od jego masy, co przekłada się na większe przyspieszenie kątowe i większe wychylenia wahadła.
+
+\subsubsection{Długość wahadła}
+Charakterystykę wpływu masy wózka na czas trwania stabilizacji przedstawiono na wykresie \ref{plot:PendulumLengthQuality}.
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{PendulumLengthQuality} 
+		\includegraphics[width = 350pt]{PendulumLengthQuality} 
 		\caption{\textit{Wykres wpływu długości wahadła na czas trwania stabilizacji układu}}
 		\label{plot:PendulumLengthQuality}
 \end{figure}
 
+Podobnie jak dla masy wahadła jego długość wpływa na stabilizację w sposób liniowo rosnący. Współczynnik kierunkowy prostej przybliżającej wykres jest większy niż dla poprzedniego wykresu, toteż można wnioskować, że długość wahadła ma większy wpływ na jakość regulacji układu. Obserwacja ta jest zgodna z intuicją, gdyż trudniej jest utrzymać poprawne wychylenie obiektu, który jest dłuższy. Ponadto długość wahadła jest istotnym parametrem przy wyznaczaniu sterowania układem w równaniu ruchu. 
+
+\subsubsection{Wychylenie początkowe}
+Charakterystykę wpływu masy wózka na czas trwania stabilizacji przedstawiono na wykresie \ref{plot:PendulumAngleQuality}.
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 320pt]{PendulumAngleQuality} 
@@ -1300,31 +1384,10 @@ Charakterystyka wykresów jednoznacznie wskazuje na stopniowe wygaszanie wychyle
 		\label{plot:PendulumAngleQuality}
 \end{figure}
 
+Zgodnie z oczekiwaniami większe wychylenie początkowe wymaga dłuższego czasu stabilizacji. Ciekawym spostrzeżeniem jest fakt, iż wraz ze wzrostem wychylenia jego wpływ na jakość stabilizacji jest coraz mniejszy. Dla kątów powyżej 0.7 rad różnica ta jest minimalna.
 
 \section{Wpływ zakłóceń pochodzących od siły wiatru}
-
-\begin{figure}[H]
-	\centering
-		\includegraphics[width = 320pt]{WindPIDEV} 
-		\caption{\textit{Wpływ siły wiatru na układ sterowany regulatorem PID: wykres napięcia na silniku}}
-		\label{plot:WindPIDEV}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-		\includegraphics[width = 320pt]{WindPIDCEA} 
-		\caption{\textit{Wpływ siły wiatru na układ sterowany regulatorem PID: wykres uchybu kąta}}
-		\label{plot:WindPIDCEA}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-		\includegraphics[width = 320pt]{WindPIDCEP} 
-		\caption{\textit{Wpływ siły wiatru na układ sterowany regulatorem PID: wykres uchybu pozycji}}
-		\label{plot:WindPIDCEP}
-\end{figure}
-
-% PD
+Ostatnim zagadnieniem poddanym testom był wpływ zakłóceń na pracę układu. Ze względu na losowy charakter siły wiatru nie skupiano się na dokładnej charakterystyce pracy układu, a jedynie na zmianach zachodzących podczas modyfikacji mocy i kierunku zakłócenia. Badania przeprowadzono dla stabilizacji regulatorem podwójnym równoległym z pozycją docelową w początku układu współrzędnych (wyniki umieszczone na wykresach \ref{plot:WindPDEV}, \ref{plot:WindPDCEP}, ref{plot:WindPDCEA}) oraz prostym regulatorem PID (wykresy zaprezentowane w dodatku \ref{appendix:B}).
 
 \begin{figure}[H]
 	\centering
@@ -1335,17 +1398,21 @@ Charakterystyka wykresów jednoznacznie wskazuje na stopniowe wygaszanie wychyle
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{WindPDCEA} 
-		\caption{\textit{Wpływ siły wiatru na układ sterowany podwójny regulator równoległy PD: wykres uchybu kąta}}
-		\label{plot:WindPDCEA}
+		\includegraphics[width = 320pt]{WindPDCEP} 
+		\caption{\textit{Wpływ siły wiatru na układ sterowany podwójny regulator równoległy: wykres uchybu pozycji}}
+		\label{plot:WindPDCEP}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{WindPDCEP} 
-		\caption{\textit{Wpływ siły wiatru na układ sterowany podwójny regulator równoległy PD: wykres uchybu pozycji}}
-		\label{plot:WindPDCEP}
+		\includegraphics[width = 320pt]{WindPDCEA} 
+		\caption{\textit{Wpływ siły wiatru na układ sterowany podwójny regulator równoległy: wykres uchybu kąta}}
+		\label{plot:WindPDCEA}
 \end{figure}
+
+W przypadku regulatora podwójnego konieczność utrzymania stałej pozycji powoduje znaczne wychylenia wahadła. Wraz ze wzrostem mocy wiatru układ wymaga coraz większej ingerencji ze strony kontrolera. W celu przeciwstawienia się zakłóceniu regulator nakazuje układowi utrzymywanie wychylenia w kierunku przeciwnym do kierunku siły wiatru. Usunięcie zakłócenia pozwala układowi na powrót do stabilnej pozycji początkowej. 
+
+Dla symulacji z prostym regulator PID sytuacja wygląda zupełnie inaczej. Układ nie potrzebuje utrzymania stałej pozycji, wobec czego poddaje się sile wiatru poruszając się w zadanym przez nią kierunku. Regulator pozwala na utrzymanie bezpiecznego wychylenia niezależnie od mocy zakłócenia. Po zakończeniu oddziaływania zewnętrznego układ nie wraca do punktu startowego, stabilizowane jest jedynie odchylenie wahadła od osi pionowej.
 
 
 %% -------- chapter V --------
@@ -1382,7 +1449,6 @@ Charakterystyka wykresów jednoznacznie wskazuje na stopniowe wygaszanie wychyle
 \subsection{Poprawność rozwiązania}
 \section{Krytyczna refleksja}
 \section{Możliwości rozszerzania projektu}
-
 	
 %% -------- bibliography --------
 \pagestyle{plain}
@@ -1443,6 +1509,82 @@ https://pl.wikipedia.org/wiki/Plik:Schemat\_blokowy\_regulatora\_pid\_\\idealneg
 \bibitem{OptimalControl} Prasad L., \emph{Optimal Control of Non linear Inverted Pendulum Dynamical System with Disturbance Input using PID Controller \& LQR}, 2011
 
 \end{thebibliography}
+
+\appendix
+\begin{appendices}
+  \chapter{Wykresy parametrów sterowania dla ruchu po złożonej trajektorii}
+\label{appenix:A}
+  
+\section{Podwójny regulator kaskadowy}
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 400pt]{TrefoilKnotCascadeEV} 
+		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator kaskadowy: wykres napięcia na silniku}}
+		\label{plot:TrefoilKnotCascadeEV}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 400pt]{TrefoilKnotCascadeCE} 
+		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator kaskadowy: wykres uchybu kąta}}
+		\label{plot:TrefoilKnotCascadeCE}
+\end{figure}
+
+\section{Podwójny regulator równoległy}
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 400pt]{TrefoilKnotParallelEV} 
+		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator równoległy: wykres napięcia na silniku}}
+		\label{plot:TrefoilKnotParallelEV}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 400pt]{TrefoilKnotParallelCE} 
+		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator równoległy: wykres uchybu kąta}}
+		\label{plot:TrefoilKnotParallelCE}
+\end{figure}
+
+\section{Zmodyfikowany podwójny regulator równoległy}
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 400pt]{TrefoilKnotPDEV} 
+		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez zmodyfikowany podwójny regulator równoległy: wykres napięcia na silniku}}
+		\label{plot:TrefoilKnotPDEV}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 400pt]{TrefoilKnotPDCE} 
+		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez zmodyfikowany podwójny regulator równoległy: wykres uchybu kąta}}
+		\label{plot:TrefoilKnotPDCE}
+\end{figure}
+
+  \chapter{Wykresy parametrów sterowania dla układu z zakłóceniami}
+\label{appendix:B}
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 400pt]{WindPIDEV} 
+		\caption{\textit{Wpływ siły wiatru na układ sterowany regulatorem PID: wykres napięcia na silniku}}
+		\label{plot:WindPIDEV}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 400pt]{WindPIDCEP} 
+		\caption{\textit{Wpływ siły wiatru na układ sterowany regulatorem PID: wykres uchybu pozycji}}
+		\label{plot:WindPIDCEP}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 400pt]{WindPIDCEA} 
+		\caption{\textit{Wpływ siły wiatru na układ sterowany regulatorem PID: wykres uchybu kąta}}
+		\label{plot:WindPIDCEA}
+\end{figure}
+
+  
+\end{appendices}
 
 
 %% -------- statement --------
