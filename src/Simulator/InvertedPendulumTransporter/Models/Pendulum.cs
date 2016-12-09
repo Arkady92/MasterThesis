@@ -23,6 +23,11 @@ namespace InvertedPendulumTransporter.Models
 
         public Pendulum()
         {
+            Initialize();
+        }
+
+        public void Initialize()
+        {
             RodLength = defaultRodLength;
             CartLinkPoint = new Point3D(0.0, 0.0, platformHeight);
             MassLinkPoint = new Point3D(0.0, 0.0, platformHeight + RodLength);
@@ -87,7 +92,7 @@ namespace InvertedPendulumTransporter.Models
             massModel.Center = MassLinkPoint;
         }
 
-        public void SetupHighGradeTextures()
+        public void SetupHighLevelGraphics()
         {
             ImageBrush pendulumImageBrush = new ImageBrush();
             pendulumImageBrush.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/Resources/Pendulum.jpg"));
@@ -95,7 +100,7 @@ namespace InvertedPendulumTransporter.Models
             rodModel.Fill = pendulumImageBrush;
         }
 
-        public void SetupLowGradeTextures()
+        public void SetupLowLevelGraphics()
         {
             massModel.Fill = Brushes.Gold;
             rodModel.Fill = Brushes.Gold;

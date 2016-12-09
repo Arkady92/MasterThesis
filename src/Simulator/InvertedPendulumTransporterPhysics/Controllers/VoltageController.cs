@@ -14,6 +14,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         private const int SwitchStep = 10;
         private int counter = 0;
         private double randomControlValue;
+        private double userAngle;
 
         public VoltageController()
         {
@@ -46,7 +47,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
                 case ControlType.DoublePDParallel:
                     return CalculateDoublePDParallelCorrection();
                 case ControlType.None:
-                    return 0.0;
+                    return userAngle;
             }
             return 0.0;
         }
@@ -100,6 +101,11 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         private double CalculateSinglePIDCorrection()
         {
             return singlePIDCorrector.CalculateAnglePIDCorrection();
+        }
+
+        public void SetUserAngle(double userAngle)
+        {
+            this.userAngle = userAngle;
         }
     }
 

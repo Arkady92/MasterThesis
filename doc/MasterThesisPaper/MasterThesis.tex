@@ -95,7 +95,8 @@
 
 \begin{center}
 \Large
-\textbf{Development of the simulator for the transporter \\of an inverted pendulum on a cart}
+\textbf{The simulator of the inverted pendulum transporter}
+%\textbf{Development of the simulator for the transporter \\of an inverted pendulum on a cart}
 \end{center}
 
 
@@ -148,7 +149,7 @@ Celem pracy jest zbudowanie uniwersalnego symulatora z konkretną realizacją pr
 \begin{abstract}
 Development of new technologies is based mainly on the analysis, improvement of existing resources and finding innovative solutions. Unfortunately, due to financial constraints, as well as the risk of adverse effects it is not recommended to implement the idea without special preparation. In order to significantly reduce the risks using the tools offered by simulation environments should be considered. The computer is able to forgive the mistakes made at the design stage, as well as it can investigate the matter with great precision and answer most of the questions asked by the user. In addition it has the possibility of optimizing processes, so as to obtain the final effect maximized.
 
-The thesis is devoted to the development of the simulator for the transporter of an inverted pendulum on a cart. The project is based on well-known problem of two-dimensional system consisting of an inverted pendulum mounted on a movable platform. The main task of the system is to keep the pendulum in an unstable equilibrium and respond to noises from the environment through the special voltage controller of the platform's engine. In this project the system is transferred to a three-dimensional world in which two independent systems associated with the horizontal directions of the principal axes are integrated into a unit. As a result, the movement trajectory can be applied to the system and the pendulum should be transported according to a given trajectory. An additional element of the project is dealing with the wind force. The transporter have to respond on the noise so as to minimize the risk of losing control of the pendulum. 
+The thesis is devoted to the development of the simulator for the transporter of an inverted pendulum on a cart. The project is based on well-known problem of two-dimensional system consisting of an inverted pendulum mounted on a movable platform. The main task of the system is to keep the pendulum in an unstable equilibrium and respond to interferences from the environment through the special voltage controller of the platform's engine. In this project the system is transferred to a three-dimensional world in which two independent systems associated with the horizontal directions of the principal axes are integrated into a unit. As a result, the movement trajectory can be applied to the system and the pendulum should be transported according to a given trajectory. An additional element of the project is dealing with the wind force. The transporter have to respond on the interference so as to minimize the risk of losing control of the pendulum. 
 
 The prepared solution has not yet reflected in the technique however it perfectly finds itself in the world of simulation. The project allows for in-depth analysis of system's dynamics, as well as it can be used in computer games as a virtual vehicle with a non-trivial control.
 
@@ -177,7 +178,29 @@ Regulator PID\\
 Zakłócenia siłą wiatru \\
 Równanie stanu\\
 Linearyzacja\\
-Algorytm Runge-Kutta
+Algorytm Rungego-Kutty
+\end{center}
+\vspace{\fill}
+
+%% Key words
+\newpage
+\pagestyle{empty}
+\vspace*{\fill}
+\begin{center}
+\LARGE\textbf{Keywords}\\
+\end{center}
+\begin{center}
+Simulation\\
+Transporter\\
+Inverted pendulum on a cart\\
+System dynamics\\
+Trajectory\\
+Stabilization\\
+PID controller\\
+Wind force interferences\\
+State-space equations\\
+Linearization\\
+Runge–Kutta methods
 \end{center}
 \vspace{\fill}
 
@@ -242,12 +265,11 @@ Kilka przykładów zastosowań symulacji komputerowej przedstawiono na ilustracj
 \end{figure}
 
 \newpage
-Bazując na \cite{WikiSymulacja} symulacje komputerowe można podzielić ze względu na:
+Symulacje komputerowe można podzielić ze względu na:
 \begin{itemize}
-\item Przewidywalność zdarzeń - deterministyczne, gdzie wyniki są powtarzalne i zależne tylko od zadanych parametrów i i interakcji oraz stochastyczne - generowane losowo. 
+\item Charakter zdarzeń - deterministyczne, gdzie wyniki są powtarzalne i zależne tylko od zadanych parametrów i interakcji oraz stochastyczne - generowane losowo. 
 \item Upływ czasu - ciągły, w którym chwile pośrednie są interpolowane brzegowymi lub dyskretny, gdzie czas zwiększa się przyrostowo.
-\item Dane wyjściowe - statyczne, w których wynikiem jest zbiór danych lub dynamiczne, które ukazują cały proces przebiegający w czasie, np. animacja.
-\item Zasób komputerów - lokalny lub rozproszony.
+\item Dane wyjściowe - statyczne, w których wynikiem jest konkretny zbiór danych lub dynamiczne, które ukazują cały proces trwający w czasie, np. animacja.
 \end{itemize}
 
 Przygotowywana praca realizuje symulator z deterministyczną przewidywalnością zdarzeń, czas zwiększa się stałymi przyrostami z możliwością ich modyfikowania. Przetwarzanie systemu odbywa się na pojedynczym komputerze, natomiast dane wyjściowe prezentowane są w postaci dynamicznej animacji.
@@ -1069,7 +1091,7 @@ Testowanie poprawności działania jest niezbędnym elementem w procesie tworzen
 
 Autor pracy skupił się na zbadaniu ogólnej pracy symulatora w zależności od zadanej interakcji użytkownika, jak również wykorzystał fazę testów do analizy porównawczej kilku aspektów projektu, w szczególności:
 \begin{itemize}
-\item Stabilizacja układu wahadła odwróconego na wózku za pomocą różnych metod regulacji.
+\item Stabilizacja układu za pomocą różnych metod regulacji.
 \item Ruch układu po zadanej trajektorii przy użyciu poszczególnych wariantów regulatora podwójnego PID.
 \item Wpływ parametrów początkowych na jakość stabilizacji.
 \item Wpływ zakłóceń pochodzących od siły wiatru na zachowanie układu.
@@ -1077,12 +1099,13 @@ Autor pracy skupił się na zbadaniu ogólnej pracy symulatora w zależności od
 
 Każde z zagadnień zostało dokładnie omówione w poszczególnych sekcjach wraz z prezentacją wykresów i wypracowanych wniosków. 
 
-Doświadczalnie stwierdzono, że najbardziej reprezentatywnymi rodzajami wykresów będą:
+W celach porównawczych wybrano kilka rodzajów wykresów:
 \begin{itemize}
 \item Wykres zależności uchybu (kąta bądź pozycji) od czasu.
 \item Wykres zależności napięcia na silniku od czasu.
 \item Wykres trajektorii ruchu (dla trybu śledzenia trajektorii).
 \end{itemize}
+Pojedynczy wykres zawiera informacje dostarczane przez poszczególne układy dwuwymiarowe. W celu uniknięcia nieczytelności, każdy zestaw danych zaznaczony został innym kolorem.
 
 Konfiguracja parametrów początkowych została przeprowadzona zgodnie z przyjętymi wartościami nominalnymi przedstawionymi w tabeli \ref{table:NominalParameters}. Pozostałe nieokreślone parametry ustawiono na następujące wartości:
 \begin{itemize}
@@ -1097,7 +1120,7 @@ Brak jakiegokolwiek narzędzia sterującego powoduje, że symulacja układu ogra
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 280pt]{ModelWithoutControl} 
+		\includegraphics[width = 250pt]{ModelWithoutControl} 
 		\caption{\textit{Wizualizacja zachowania układu w przypadku braku sterowania}}
 		\label{figure:ModelWithoutControl}
 \end{figure}
@@ -1118,8 +1141,6 @@ Przeprowadzono sprawdzenie zachowania układu w obecności regulatora napięcia 
 		\caption{\textit{Sterowanie losowym napięciem: wykres uchybu kąta}}
 		\label{plot:RandomCE}
 \end{figure}
-
-\newpage
 
 \begin{figure}[H]
 	\centering
@@ -1418,95 +1439,341 @@ Dla symulacji z prostym regulator PID sytuacja wygląda zupełnie inaczej. Ukła
 %% -------- chapter V --------
 \chapter{Architektura systemu}
 \section{Ogólny opis rozwiązania}
-\section{Wykorzystane narzędzia}
-\subsection{Windows Presentation Foundation}
-\subsection{HelixToolkit}
-\subsection{OxyPlot}
-\subsection{Pozostałe}
-\section{Wzorce projektowe}
-\section{Komponenty aplikacji}
-\subsection{Modele}
-\subsection{Kontrolery}
-\section{Zarządzanie aplikacją}
 
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 300pt]{SystemVisual} 
+		\caption{\textit{Diagram komponentów wizualnych aplikacji}}
+		\label{SystemVisual}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 350pt]{Library} 
+		\caption{\textit{Diagram komponentów biblioteki fizyki}}
+		\label{Library}
+\end{figure}
+
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 400pt]{Interaction} 
+		\caption{\textit{Diagram interakcji między modułami}}
+		\label{Interaction}
+\end{figure}
+
+\section{Wykorzystane narzędzia}
+Niniejsza sekcja poświęcona jest opisowi narzędzi wykorzystanych do realizacji projektu. Autor dołożył starań, by wybrane technologie umożliwiły sprawną implementację systemu, gwarantując uniwersalność i łatwą przenośność rozwiązania. Istotnym  celem było stworzenie biblioteki fizyki, której użycie nie wymagałoby instalacji dodatkowego oprogramowania matematycznego. Głównym celem wobec wizualizacji było wybranie narzędzi pozwalających na wykonanie rozwiązania prostego w obsłudze, przejrzystego oraz możliwego do uruchomienia przez wielu użytkowników.
+
+\subsection{Windows Presentation Foundation}
+
+Windows Presentation Foundation (WPF) jest to platforma służąca do wytwarzania aplikacji przeznaczonych na systemy okienkowe. Technologia wchodzi w skład pakietu oprogramowania .NET Framework dostarczanego przez firmę Microsoft. Narzędzie pozwala na budowanie zaawansowanych programów wykorzystujących interfejs użytkownika, multimedia oraz grafikę trójwymiarową. WPF korzysta z języka XAML, będącego implementacją języka XML. Język ten umożliwia realizację deklaratywnego modelu programowania. Technologia wykorzystuje zaawansowany sprzęt graficzny poprzez odpowiedni silnik wyświetlania, który cechuje się niezależnością od rozdzielczości ekranu oraz wykorzystaniu techniki wektorowej i akceleracji grafiki 3D. Dodatkowe informacje oraz poradniki użytkowania można znaleźć pod adresem: \cite{WPF}.
+
+Technologia umożliwia łatwą separację graficznego interfejsu użytkownika od logiki biznesowej poprzez implementację wzorca architektonicznego MVVM. Powala to na definiowanie modelu danych za pomocą kodu w języku C\# oraz wyświetlanie graficznej reprezentacji danych przy użyciu języka znaczników. Niezbędny w tym procesie jest konwerter danych zwany widokiem dla danego modelu. WPF upraszcza wykonanie wzorca poprzez wbudowane narzędzie dowiązań.
+
+Autor pracy chcąc uzyskać separację modelu układu od jego graficznego wyglądu wykorzystał przedstawione wyżej funkcjonalności. Ponadto użycie technologii WPF pozwoliło na stworzenie symulatora prostego w obsłudze, intuicyjnego i wyposażonego w zaawansowany moduł wizualizacji.
+
+\subsection{HelixToolkit}
+Helix Toolkit to otwarta biblioteka grafiki 3D przeznaczona na platformę Windows Presentation Foundation. Narzędzie pozwala na zaawansowaną pracę z grafiką trójwymiarową, w tym: generowanie i wyświetlanie podstawowych modeli, intuicyjna manipulacja kamerą, dynamiczne wyświetlanie animacji. Dokładny opis technologii wraz z dokumentacją techniczną dostępne są na stronie: \cite{HelixToolkit}.
+
+Decyzja o wyborze wspomnianego narzędzia została oparta o doświadczenie w pracy z biblioteką oraz wykorzystanie jej w projekcie obejmującym zbliżoną tematykę.
+
+\subsection{OxyPlot}
+OxyPlot jest to otwarta biblioteka przeznaczona na platformę .NET służąca do generowania wykresów. Technologia umożliwia dynamiczne tworzenie zaawansowanych wykresów, modyfikację sposobu wyświetlania danych oraz eksport rezultatów do pliku. OxyPlot współpracuje z platformą WPF i umożliwia tworzenie dowiązań danych do konkretnego graficznego okna wykresu. Wszystkie niezbędne informację na temat biblioteki dostępne są pod adresem: \cite{OxyPlot}.
+
+Podobnie jak w przypadku poprzedniej technologii wybór rozwiązania podyktowany był dobrą znajomością oraz użyciem w wielu projektach poświęconych symulacji. 
+
+
+\subsection{Pozostałe}
+W projekcie wykorzystano dodatkowe narzędzia realizujące pojedyncze funkcjonalności. Część rozwiązań mogłaby być zrealizowana samodzielnie przez autora, jednakże na etapie analizy wstępnej przyjęto, że zadania te nie są głównym celem pracy i do zrealizowania ich należy użyć gotowych narzędzi. Są to:
+\begin{itemize}
+\item ALGLIB - wieloplatformowa, otwarta biblioteka obliczeń numerycznych. Narzędzie pozwala na analizę danych, optymalizację oraz rozwiązywanie problemów z zakresu algebry liniowej. Autor skorzystał z pakietu obliczeń układów równań różniczkowych metodami Rungego-Kutty z adaptacyjnym krokiem całkowania (algorytm opisany w sekcji \ref{Runge}). 
+\item FParsec - otwarta biblioteka przeznaczona na platformę .NET, służąca do analizy tekstów pod kątem konkretnych gramatyk formalnych. Pakiet umożliwia rozpoznawanie matematycznych wyrażeń symbolicznych. Narzędzie to było pomocne przy analizie parametryzacji krzywej w module tworzenia nowych trajektorii.
+\item Math.NET Symbolics - otwarta biblioteka obliczeń symbolicznych dedykowana dla platformy .NET. Narzędzie pozwala na rozwiązywanie równań symbolicznych. Autor użył pakietu do wyznaczania punktów kontrolnych krzywych nowo generowanych trajektorii.
+\end{itemize}
+
+\section{Wzorce projektowe}
+Implementacja systemu realizowana była w zgodzie ze standardami inżynierii oprogramowania. Jednym z kluczowym elementów analizy konstrukcji programu jest zapewnienie łatwej rozszerzalności poszczególnych komponentów. Aby osiągnąć postawiony cel należy dokładnie odseparować poszczególne funkcjonalności oraz zbudować narzędzie zarządzające pracą całej aplikacji. Podział programu na moduły upraszcza kontrolę działania systemu oraz pozwala na dowolne modyfikacje konkretnych elementów bez utraty ogólnej funkcjonalności. Użytecznym rozwiązaniem pomagającym uschematyzować budowę systemu są wzorce projektowe czyli uniwersalne i sprawdzone techniki rozwiązywania określonych problemów projektowych. 
+
+Ze względu na ograniczoną objętość systemu jak również zgromadzenie całej funkcjonalności układu dynamiki w jednej bibliotece, autor nie był zmuszony do rozwiązywania skomplikowanych problemów projektowych wymagających użycia rozbudowanych wzorców. Budowa aplikacji okienkowej realizowana była w zgodzie ze standardami wzorca architektonicznego MVVM. Projekt systemu zakładał łatwy dostęp do wszystkich modeli i ich kontroli, wobec czego nie było potrzeby wprowadzania dodatkowych schematów. W przypadku samej biblioteki fizyki skupiono się na stworzeniu modelu z możliwością modyfikacji dynamiki układu. W celu zapewnienia wymienności definicji równania stanu i jego wyznaczania poprzez matematyczne algorytmy skorzystano z czynnościowego wzorca projektowego strategii.
+
+Strategia jest to wzorzec definiujący grupę wymiennych algorytmów zebranych w postaci klas. Technika pozwala na łatwą zamianę realizacji problemu w zależności od zaistniałych potrzeb. Diagram opisujący strukturę wzorca przedstawia schemat \ref{StrategyPattern}.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 275pt]{StrategyPattern} 
+		\caption{\textit{Diagram klas UML wzorca projektowego Strategia}}
+		\label{StrategyPattern}
+\end{figure}
+
+Strategia deklaruje interfejs wspólny dla wszystkich sposobów rozwiązania problemu, który gromadzi niezbędne operacje. Każdy z konkretnych algorytmów implementowany jest w postaci klasy realizującej wspomniany interfejs. Dodatkowo definiowany jest klient, którego zadaniem jest wybór i przechowywanie konkretnej strategii. 
+
+Wzorzec pozwala na definiowanie dowolnej grupy algorytmów i swobodną wymianę ich, w zależności od potrzeb. Ponadto technika ta pozwala na ograniczenie ilości instrukcji warunkowych i łatwe porównanie wyników poszczególnych metod. Wadą rozwiązania jest zwiększenie narzutu na komunikację i zwiększenie ilości obiektów w systemie.
+
+W stworzony projekcie rolę klienta pełni moduł obliczeniowy, który ustala strategię kształtu i sposobu rozwiązywania równań stanu układu. Konkretnymi strategiami są: układ dynamiki w wersji podstawowej oraz zmodyfikowanej o wpływ zakłóceń. 
+
+\section{Komponenty aplikacji}
+W celu uporządkowania struktury systemu oraz zapewnienia stabilnego zarządzania komponentami opracowano uniwersalne własności zrealizowane w postaci interfejsów. Rozszerzenie systemu o kolejne elementy osiągalne jest poprzez realizację poszczególnych interfejsów oraz stworzenie konkretnej implementacji funkcjonalności. Podejście do zapewnia dodatkowo kontrolę nad cyklem wykonywania operacji oraz pomaga ustalić w jakich sytuacjach powinny być wywoływane określone metody.
+\subsection{Modele}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 400pt]{IModel} 
+		\caption{\textit{Diagram klas UML dla zarządzania modelami}}
+		\label{IModel}
+\end{figure}
+
+\subsection{Kontrolery}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 400pt]{IController} 
+		\caption{\textit{Diagram klas UML dla zarządzania kontrolerami}}
+		\label{IController}
+\end{figure}
 
 %% -------- chapter VI --------
 \chapter{Instrukcja użytkownika}
-\section{Panel kontrolny}
+\section{Ogólny wygląd aplikacji}
+Symulator został wykonany jako aplikacja okienkowa na urządzenia z systemem Windows. Okno podzielone zostało na trzy sekcje:
+\begin{itemize}
+\item Panel kontrolny - służący do konfiguracji ustawień programu i modyfikacji parametrów układu.
+\item Okno wizualizacji - obejmuje trójwymiarową scenę z umieszczonym w niej modelem układu. Wyświetla zachowanie układu w zadanych warunkach.
+\item Panel wykresów i informacja o stanie układu - umożliwia śledzenie aktualny parametrów układu oraz przyłożonego sterowania.
+\end{itemize}
+
+Przykładowe podglądy aplikacji w trakcie wykonywania poszczególnych symulacji zaprezentowano na ilustracjach \ref{Application} i \ref{Simulation}.
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 400pt]{Application} 
+		\caption{\textit{Podgląd aplikacji w trakcie wykonywania symulacji z manualnym sterowaniem}}
+		\label{Application}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 400pt]{Simulation} 
+		\caption{\textit{Podgląd aplikacji w trakcie wykonywania symulacji śledzenia trajektorii}}
+		\label{Simulation}
+\end{figure}
+
+Wszystkie najistotniejsze informacje odnośnie systemu, wraz z wygodnym trybem pomocy znajdują się w zakładce \texttt{About} w panelu górnym aplikacji. Dokładny opis poszczególnych funkcjonalności przedstawiony zostanie w kolejnych sekcjach dokumentu.
+
+\section{Konfiguracja}
 \subsection{Moduły}
+W panelu górnym w zakładce \texttt{Mode} zebrane zostały wszystkie tryby pracy aplikacji:
+\begin{itemize}
+\item Stabilizacja wychylenia wahadła. Jest to tryb domyślny. Umożliwia podgląd pracy układu w warunkach określonego sterowania z możliwością uwzględnienia zakłóceń. W przypadku wyboru innego trybu i chęci powrotu do domyślnego należy wybrać opcję \texttt{Clear Trajectory} lub \texttt{Clear Game} w zależności od wybranego trybu.
+\item Śledzenie trajektorii. Tryb dostępny po wybraniu opcji \texttt{Load Trajectory}. Pozwala na wczytanie dowolnego pliku w formacie \texttt{".trj"} zawierającego kolejne punkty kontrolne docelowej trajektorii. Po uruchomieniu symulacji układ rozpoczyna śledzenie zadanej drogi. Autor pracy przygotował kilka gotowych trajektorii dostępnych w folderze \texttt{Trajectories}. Dodatkowo użytkownik ma możliwość stworzenia nowej trajektorii poprzez wybór opcji \texttt{CreateTrajectory}. W nowo otwartym oknie (pokazanym na ilustracji \ref{CreateTrajectory}) pojawia się możliwość podania parametrycznego opisu krzywej (zależnego od parametru \texttt{"t"}), wartości brzegowych oraz ilości punktów kontrolnych. Po wypełnieniu wszystkich pól, kliknięcie przycisku \texttt{Create Trajectory} stworzy nową trajektorię z możliwością zapisania jej na stałe. Nowo utworzona trajektoria zostanie automatycznie wczytana do programu.
+\item Sterowanie manualne. Tryb dostępny po wybraniu opcji \texttt{Load Game}. Podobnie jak w przypadku trybu trajektorii na początku należy wybrać plik z gotową trajektorią. Po uruchomieniu symulacji użytkownik zyskuje możliwość ręcznego sterowania układem. Kontrola odbywa się poprzez klikanie odpowiednich przycisków umieszczonych w dolnej części ekranu wizualizacji lub bezpośrednio z klawiatury za pomocą klawiszy wskazanych na poszczególnych przyciskach.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics[width = 175pt]{CreateTrajectory} 
+		\caption{\textit{Okno tworzenia nowej trajektorii}}
+		\label{CreateTrajectory}
+\end{figure}
 \subsection{Opcje}
+Symulator umożliwia dostosowywanie ustawień do potrzeb użytkownika. Wszystkie najważniejsze opcje zostały zgromadzone w zakładce \texttt{Options} w panelu górnym aplikacji:
+\begin{itemize}
+\item Kontroler napięcia na silniku. W zależności od wybranego trybu pracy aplikacja umożliwia ustawienie dowolnego regulatora dla układu:
+\begin{itemize}
+\item Dla trybu śledzenia trajektorii: regulatory podwójne: równoległe i kaskadowy.
+\item Dla trybu stabilizacji: regulator PID oraz regulatory niezależne od uchybu: losowy i sinusoidalny.
+\item Dla trybu gry: dowolny regulator.
+\end{itemize}
+\item Generator siły wiatru. Aplikacja umożliwia wybór jednej z metod losowych wytwarzania zakłócenia dla układu: skokowe lub gładkie.
+\item Wyświetlanie trajektorii. Użytkownik ma możliwość włączania i wyłączania wyświetlania w wizualizacji poszczególnych trajektorii: ruchu wózka, ruchu wahadła oraz docelowej trajektorii z pliku.
+\item Dokładność śledzenia trajektorii. W zależności od potrzeb algorytm poruszania wzdłuż zadanej drogi będzie pracował z wybraną dokładnością: \texttt{Ultra}, \texttt{High}, \texttt{Medium} lub \texttt{Low}. Domyślną wartością jest: \texttt{Medium}.
+\item Jakość wizualizacji. W trakcie trwania symulacji można przełączać tryb wyświetlania między: \texttt{Solid Colors} (dedykowany do obserwacji zachowania układu) a \texttt{Textures} (bardziej atrakcyjny wizualnie, do prezentacji symulatora).
+\end{itemize}
+
 \subsection{Sterowanie parametrami}
+Symulacja wyróżnia dwa typy parametrów systemu:
+\begin{itemize}
+\item Parametry startowe. Są to wartości określające stan początkowy układu, takie jak: masy i długości komponentów, początkowe wychylenia oraz krok czasowy animacji. Aplikacja umożliwia sterowanie wartościami parametrów poprzez odpowiednie suwaki. Aktualna wartość wyświetlana jest obok poszczególnego parametru. Po rozpoczęciu symulacji zmiana parametrów jest zablokowana, aż do czasu jej zakończenia. W każdej chwili można przywrócić parametry domyślne poprzez przycisk \texttt{Reset} umieszczony obok zakładki \texttt{System Parameters}.
+\item Parametry dynamiczne. Wartości odpowiedzialne za kontrolę zakłóceniami dla układu. Użytkownik ma możliwość zmiany parametrów w trakcie trwania symulacji, w szczególności pojawia się opcja włączenia i wyłączenia siły wiatru poprzez przesunięcie suwaka \texttt{Wind Power} z pozycji 0 na inną wybraną dowolnie. Włączenie zakłócenia sygnalizowane jest pojawieniem się na ekranie wizualizacji strzałki oznaczającej aktualny kierunek wiatru. Dodatkowo regulacja suwaka \texttt{Wind Change Speed} wpływa na szybkość zmiany kierunku, z którego wieje wiatr.
+\end{itemize}
+
 \section{Wizualizacja}
+\subsection{Kontrola animacji}
+Kontrola przebiegu symulacji odbywa się poprzez specjalnie przygotowany panel zarządzania animacją. Panel ten znajduje się w górnej lewej części okna programu. Użytkownik może kontrolować postęp wizualizacji poprzez trzy przyciski:
+\begin{itemize}
+\item Przycisk \texttt{Play}. Pozwala na uruchomienie symulacji i wznowienie jej po zatrzymaniu.
+\item Przycisk \texttt{Pause}. Umożliwia zatrzymanie animacji w dowolnym momencie.
+\item Przycisk \texttt{Reset}. Przywraca symulację do stanu początkowego, czyści wykresy i stan układu.
+\end{itemize}
 \subsection{Scena}
+Okno sceny odpowiedzialne jest za prezentację wizualną zachowania układu dynamicznego. Transporter został zbudowany z platformy posiadającej cztery koła (w postaci kul) oraz odwróconego wahadła zaczepionego w środku platformy. Obszar symulacji został ograniczony do odpowiednio dużej powierzchni. W przypadku osiągnięcia brzegu przez układ, transporter zatrzymuje się na krawędzi, aby nie spaść z zadanego podłoża. W celu ułatwienia oceny ruchu układu podłoże zostało pokryte gęstą siatką.
+
+Dodatkowymi elementami na ekranie symulacji są osie układu współrzędnych znajdujące się w lewym dolnym rogu okna, kostka rotacji umieszczona w prawym dolnym rogu oraz licznik klatek na sekundę w górnym prawym rogu.
+
+Użytkownik może dowolnie manipulować umieszczoną w symulacji kamerą. Podstawowe funkcjonalności obejmują:
+\begin{itemize}
+\item \texttt{Prawy przycisk myszy + przesunięcie} - obrót kamery wokół transportera.
+\item \texttt{Środkowy przycisk myszy + przesunięcie} - zmiana kierunku widoku kamery (w czasie przebiegu animacji cel kamery zablokowany jest na pozycji transportera).
+\item \texttt{Obrót rolką myszy} - przybliżenie lub oddalenie widoku.
+\item \texttt{Kliknięcie kostki rotacji} - obrót kamery do osi głównych związanych z wybraną ścianą kostki.
+\end{itemize}
+
 \subsection{Wykresy}
-\subsection{Podgląd stanu}
-	
+W trakcie trwania symulacji niektóre istotne dane związane z mechanizmem sterowania prezentowane są w formie wykresów. Równocześnie na dwóch wykresach wyrysowywane są informacje na temat napięcia na silniku oraz uchybu kąta dla dwóch podukładów sterujących modelem. Użytkownik w każdej chwili ma możliwość zapisania aktualnie wygenerowanego wykresu poprzez kliknięcie prawym przyciskiem myszy obok tytułu wykresu. Dodatkowo pojawia się możliwość zapisania charakterystyki uchybu pozycji, szczególnie przydatnej przy ocenie jakości ruchu układu do zadanego punktu docelowego.
+
 %% -------- chapter VII --------
 \newpage
 \chapter{Podsumowanie pracy}
 \section{Ocena rozwiązania}
+Niniejszy rozdział stanowi podsumowanie całości pracy włożonej w przygotowanie omawianego rozwiązania. Głównym celem projektu było stworzenie symulacji pewnego modelu fizycznego wraz z narzędziem umożliwiającym jego stabilizację i swobodę ruchu. Realizowanie zadania było doskonałą okazją do zapoznania się z metodyką tworzenia oprogramowania symulacyjnego, jak również pozwalało na pogłębienie wiedzy z zakresu rzeczywistości wirtualnej, modelowania układów dynamicznych oraz teorii sterowania. Autor pracy uważa, że czas poświęcony na wykonanie projektu był dobrą inwestycją w rozwój wiedzy i doświadczenia. Istotnym atutem pracy była zbieżność tematyki z zainteresowaniami autora, dzięki czemu ukończenie jej przyniosło dużą satysfakcję. 
+
+Podsumowanie jakościowe pracy rozpatrzono pod kątem stopnia realizacji oraz poprawności wykonania. Każde z kryteriów zostało omówione w poszczególnych sekcjach.
+
 \subsection{Stopień realizacji projektu}
+Symulacja spełnia wszystkie kluczowe wygania wypracowane w trakcie analizy wstępnej. Użytkownik końcowy otrzymuje oprogramowanie umożliwiające wnikliwy podgląd pracy układu, wraz z możliwością dowolnego konfigurowania parametrów. Przygotowane narzędzia dają możliwość wprowadzenia różnych trajektorii ruchu, które układ będzie w stanie odwzorować. Dodatkowym atutem jest możliwość nawiązania bezpośredniej interakcji z modelem poprzez moduł ręcznego sterowania. Program pozwala również na badanie zachowania układu w obecności zewnętrznego zakłócenia. Całość pracy, wraz z bazą matematyczno-fizyczną, opisem rozwiązań i testów oraz kwestiami programistycznymi została zebrana w niniejszym dokumencie.
+
 \subsection{Poprawność rozwiązania}
+W celu weryfikacji poprawności rozwiązania przeprowadzono gruntowne testy obejmujące zarówno zachowanie układu, jak i pracę całego narzędzia symulacyjnego. W obydwu przypadkach rezultaty były pozytywne, jednoznacznie wskazujące na poprawne zrealizowanie przyjętych zadań.
+
+Opracowane narzędzia pozwoliły dodatkowo na przeprowadzenie dokładnych testów rozpatrywanych koncepcji stabilizacji układu. Wyniki badań jednoznacznie wskazały poziomy użyteczności poszczególnych pomysłów i pozwoliły na wybór najlepszych.
+
+Istotnym sukcesem projektu jest spełnienie przyjętych wymagań niefikcjonalnych. Aplikacja została przetestowana przez grupę użytkowników końcowych. Opinie na temat programu podkreślały jego stabilność, łatwość w obsłudze i interesującą formę prezentacji danych.
+
 \section{Krytyczna refleksja}
+W poniższe sekcji autor pragnie podzielić się spostrzeżeniami na temat ewentualnych zmian koncepcji realizacji projektu w sytuacji, gdyby praca miała zostać wykonana ponownie. Charakterystyka ta pozwoli na określenie jak bardzo zdobyta w trakcie wykonywania projektu wiedza przyczyniłaby się do poprawy finalnego kształtu pracy. 
+
+Analiza wstępna projektu skupiła się głównie na pełnej analizie modułu fizyki układu i sterowaniu nim. Pozwoliło to na wypracowanie kompletnej biblioteki fizyki, która może być użyta w dowolnej aplikacji. Niestety, przyjęty rozkład działań pominął przemyślenia na temat samego narzędzia symulatora. Dopiero w trakcie realizacji aplikacji, autor zdał sobie sprawę, iż narzędzie to powinno być uniwersalnym środowiskiem, umożliwiającym prezentacje zachowania dowolnego modelu dynamiki. W dalszej części projektu postarano się o wypracowanie możliwie uniwersalnego rozwiązania, jednakże dużo łatwiej byłoby osiągnąć pełen efekt, gdyby koncepcja została rozpatrzona na początku prac. 
+
+Kolejną kwestią jest jakość stabilizacji układu dla problemu śledzenia trajektorii. W początkowej fazie projektu autor nie dysponował wystarczającą wiedzą pozwalającą na trafny dobór rozwiązań. Gdyby była możliwość ponownego stworzenia projektu, w pierwszej kolejności dokonano by porównania różnych technik regulacji układu za pomocą narzędzi oferowanych przez pakiety symulacyjne. Prawdopodobnie przyczyniłoby się to do wyboru dodatkowych kontrolerów, m.in. regulatora LQR. Ponadto postawiono by większy nacisk na optymalizację parametrów użytych metod. Modyfikacja obejmowałaby również samą ideę algorytmu realizowania trajektorii przez układ. Testy wykazały, że niektóre rozwiązania wymagają nieco innego podejścia, by móc uzyskać zmaksymalizowany efekt. 
+
+Ostatnia sprawa dotyczy jakości zrealizowanej wizualizacji. Autor pracy uznał, że nadmiar efektów graficznych przyczyni się do zakrycia istoty realizowanego problemu. Jednakże w trakcie implementacji programu pojawiła się koncepcja podwójnego trybu wyświetlania. Jeden z nich pozwalałby na wnikliwą obserwację dynamiki układu. Drugi natomiast prezentowałby symulację w sposób atrakcyjny dla oka użytkownika końcowego. Brak rozpatrzenia drugiego pomysłu na etapie analizy projektu spowodował, że funkcjonalność ta została zrealizowana jedynie w niewielkim stopniu.
+
 \section{Możliwości rozszerzania projektu}
+Zrealizowany projekt obejmuje kilka zagadnień z zakresu modelowania dynamiki, sterowania układem oraz tworzenia symulacji. Dodatkowo zawiera niesztandarową koncepcję łączenia prostych dwuwymiarowych układów w jeden duży trójwymiarowy model. Mnogość poruszanych tematów pozwala na szeroką gamę rozszerzeń w zakresie zarówno matematyczno-fizycznym, jak i programistycznym.
+
+Najciekawsze pomysły na wzbogacenie symulatora opracowane przez autora pracy przedstawiono poniżej:
+\begin{itemize}
+\item Modyfikacja modelu układu - wprowadzenie możliwości definiowania dowolnego obiektu trójwymiarowego, który zastąpiłby model wahadła. Zabieg ten pozwoliłby na zbadanie jakości sterowania dla nietrywialnego modelu. Istotnym zagadnieniem związanym z przedstawionym pomysłem jest konieczność wyznaczania tensora bezwładności dla wybranej bryły. Autor pracy sugeruje wykorzystanie szeroko stosowanej metody Monte-Carlo.
+\item Analiza większej ilości regulatorów - autor pracy skupił się na różnych odmianach regulatora PID. Literatura wskazuje na użyteczność innych narzędzi, szczególnie optymalnego regulatora LQR. Porównanie skuteczności wspomnianych kontrolerów dostarczyłoby cennej wiedzy z zakresu teorii sterowania.
+\item Rozbudowa modułu zakłóceń - obecna wersja modułu obejmuje gładkie ruchy wiatru w losowych kierunkach. Model ten można zastąpić przez inny bardziej wierny rzeczywistemu. Warto również zwrócić uwagę na zagadnienie prądów powietrznych, których wpływ na układ byłby okazją do zbadania jakości stabilizacji. Ponadto moduł można wzbogacić o inne rodzaje zakłóceń, np. wywołane oddziaływaniami magnetycznymi.
+\item Wprowadzanie powierzchni ruchu - symulator prezentuje ruch układu po płaszczyźnie. Interesującym zadaniem byłoby stworzenie nieregularnej powierzchni, z którą układ musiałby się zmierzyć w trakcie wykonywania zadanej trajektorii.
+\item Wzbogacenie wizualizacji - rozszerzenie wizualizacji w trybie teksturowym o dodatkowe efekty graficzne. Pomysł nie wnosi istotnego pożytku dla analizy zachowania układu, natomiast stanowi atrakcyjny dodatek dla użytkownika.
+\end{itemize} 
+
+Przytoczone koncepcje znajdują uzasadnienie w technice i inżynierii oprogramowania. Jeśli temat miałby być kontynuowany prawdopodobnie wymienione pomysły zostałyby wprowadzone do systemu.
 	
 %% -------- bibliography --------
 \pagestyle{plain}
 \begin{thebibliography}{11}
 
-\bibitem{MarciniakDynamicSystems} Marciniak K., \emph{Dynamic systems}, w: \emph{Modelling in state space}, Warszawa, 2003.
+\bibitem{BipedWalking} 
+Kajita S., 
+\emph{The 3D Linear Inverted Pendulum Mode: A simple modeling for a biped walking pattern generation}, 
+2001.
 
-\bibitem{MarciniakControlSystems} Marciniak K., \emph{Control systems}, w: \emph{Modelling in state space}, Warszawa, 2003.
+\bibitem{MarciniakControlSystems} 
+Marciniak K., 
+\emph{Control systems}, 
+w: \emph{Modelling in state space}, 
+Warszawa, 2003.
 
-\bibitem{MarciniakClosedLoop} Marciniak K., \emph{Design of Closed loop control}, w: \emph{Modelling in state space}, Warszawa, 2003.
+\bibitem{MarciniakClosedLoop} 
+Marciniak K., 
+\emph{Design of Closed loop control}, 
+w: \emph{Modelling in state space}, 
+Warszawa, 2003.
 
-\bibitem{LMIP} Robles R., Shardt Y., \emph{Linear motion inverted pendulum, derivation of the state-space model}
+\bibitem{MarciniakDynamicSystems} 
+Marciniak K., 
+\emph{Dynamic systems}, 
+w: \emph{Modelling in state space}, 
+Warszawa, 2003.
+
+\bibitem{RungeKutta} 
+Neumann E., 
+\emph{Runge-Kutta Algorithm}, 
+2016,
 \\*
-http://www.jtjt.pl/www/pages/odwrocone-wahadlo/LMIP.pdf
+http://www.myphysicslab.com/explain/runge-kutta-en.html.
 
-\bibitem{JTJT} Tyma J., \emph{Odwrócone wahadło}
-\\*
-http://www.jtjt.pl/odwrocone-wahadlo
+\bibitem{OptimalControl} 
+Prasad L., 
+\emph{Optimal Control of Non linear Inverted Pendulum Dynamical System with Disturbance Input using PID Controller \& LQR}, 
+2011.
 
-\bibitem{PWNSymulacja} \emph{Słownik Języka Polskiego}
+\bibitem{LMIP} 
+Robles R., Shardt Y., 
+\emph{Linear motion inverted pendulum, derivation of the state-space model},
 \\*
-http://sjp.pwn.pl
+http://www.jtjt.pl/www/pages/odwrocone-wahadlo/LMIP.pdf.
 
-\bibitem{WikiSymulacja} \emph{Symulacja komputerowa},
+\bibitem{JTJT} Tyma J., 
+\emph{Odwrócone wahadło},
+2016,
 \\*
-https://pl.wikipedia.org/wiki/Symulacja\_komputerowa
+http://www.jtjt.pl/odwrocone-wahadlo.
 
-\bibitem{RungeKutta} Neumann E., \emph{Runge-Kutta Algorithm}, 2016,
+\bibitem{HelixToolkit} 
+\emph{Helix Toolkit Documentation}, 
+2015,
 \\*
-http://www.myphysicslab.com/explain/runge-kutta-en.html
+http://docs.helix-toolkit.org/.
 
-\bibitem{MeteorologySimulation} Hawkins E., Vidale P. \emph{Two tropical Atlantic hurricanes in a high-resolution atmospheric simulation with the HadGEM3 global climate model at a resolution of N512}, 27.07.2012,
+\bibitem{OxyPlot} 
+\emph{OxyPlot Documentation}, 
+2016,
 \\*
-http://www.nature.com/nclimate/journal/v2/n8/fig\_tab/nclimate1639\_F1.html
+http://docs.oxyplot.org/.
 
-\bibitem{EngineeringSimulation} 3DVision Technologies \emph{The Importance of Material Properties in Analysis with SolidWorks Simulation}, 18.05.2012
+\bibitem{PWNSymulacja} 
+\emph{Słownik Języka Polskiego}, 
+PWN, 2016,
 \\*
-http://blogs.solidworks.com/solidworksblog/2012/05/material-properties-in-\\analysis.html
+http://sjp.pwn.pl.
+
+\bibitem{WPF} 
+\emph{Windows Presentation Foundation Documentation}, 
+Microsoft, 2016,
+\\*
+https://msdn.microsoft.com/en-us/library/ms754130(v=vs.110).aspx.
+
+\bibitem{Strategy}  
+\emph{Diagram klas UML wzorca projektowego Strategia},
+2011,
+\\*
+https://pl.wikipedia.org/wiki/Plik:Strategy\_classes\_pl.svg.
+
+\bibitem{3DimModel}  
+\emph{Gait Pattern Generation: 3D-LIP Model},
+2013,
+\\*
+http://www.wrighteagle.org/en/research/projgait.php.
+
+\bibitem{PID} 
+\emph{Schemat blokowy idealnego regulatora PID}, 
+2010,
+\\*
+https://pl.wikipedia.org/wiki/Plik:Schemat\_blokowy\_regulatora\_pid\_ideal-\\nego.svg.
+
+\bibitem{StateSpace} \emph{State space model integral}, 2011,
+\\*
+https://pl.wikipedia.org/wiki/Plik:State\_space\_model\_integral.png.
+
+\bibitem{EngineeringSimulation} 
+\emph{The Importance of Material Properties in Analysis with SolidWorks Simulation}, 
+2012,
+\\*
+http://blogs.solidworks.com/solidworksblog/2012/05/material-properties-in-an-\\alysis.html.
+
+\bibitem{MeteorologySimulation}
+\emph{Two tropical Atlantic hurricanes in a high-resolution atmospheric simulation with the HadGEM3 global climate model at a resolution of N512}, 
+2012,
+\\*
+http://www.nature.com/nclimate/journal/v2/n8/fig\_tab/nclimate1639\_F1.htm.
 
 \bibitem{SystemModel} \emph{Wireless Inverted Pendulum Cart},
 \\*
-http://www.mne.k-state.edu/static/nlc/tiki-index.php?page=\\S\_H\_WirelessInvertedPendulumCart
-
-\bibitem{3DimModel}  \emph{Project: Gait Pattern Generation},
-\\*
-http://www.wrighteagle.org/en/research/projgait.php
-
-\bibitem{StateSpace} \emph{State space model integral}, 2011
-\\*
-https://pl.wikipedia.org/wiki/Plik:State\_space\_model\_integral.PNG
-
-\bibitem{PID} \emph{Schemat blokowy idealnego regulatora PID}, 2010
-\\*
-https://pl.wikipedia.org/wiki/Plik:Schemat\_blokowy\_regulatora\_pid\_\\idealnego.svg
-
-\bibitem{BipedWalking} Kajita S., \emph{The 3D Linear Inverted Pendulum Mode: A simple modeling for a biped walking pattern generation}, 2001
-
-\bibitem{OptimalControl} Prasad L., \emph{Optimal Control of Non linear Inverted Pendulum Dynamical System with Disturbance Input using PID Controller \& LQR}, 2011
+http://www.mne.k-state.edu/static/nlc/tiki-index.php?page=S\_H\_Wireless-\\InvertedPendulumCart.
 
 \end{thebibliography}
 

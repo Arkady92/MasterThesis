@@ -184,7 +184,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             return trajectoryPoints[0];
         }
 
-        public Point3D GetTargetAccuratePosition(double x, double y, out bool nextCheckPoint)
+        public Point3D GetTargetPosition(double x, double y, out bool nextCheckPoint)
         {
             nextCheckPoint = false;
             if (!TrajectoryEnabled)

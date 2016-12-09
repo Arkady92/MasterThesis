@@ -110,8 +110,8 @@ namespace InvertedPendulumTransporter.Controls
             floor.Children.OfType<RectangleVisual3D>().First().Fill = imageBrush;
             foreach (var wall in walls.Children.OfType<GridLinesVisual3D>())
                 wall.Visible = false;
-            cart.SetupHighGradeTextures();
-            pendulum.SetupHighGradeTextures();
+            cart.SetupHighLevelGraphics();
+            pendulum.SetupHighLevelGraphics();
         }
 
         public void SetupLowGradeTextures()
@@ -119,8 +119,8 @@ namespace InvertedPendulumTransporter.Controls
             floor.Children.OfType<RectangleVisual3D>().First().Fill = Brushes.Tomato;
             foreach (var wall in walls.Children.OfType<GridLinesVisual3D>())
                 wall.Visible = true;
-            cart.SetupLowGradeTextures();
-            pendulum.SetupLowGradeTextures();
+            cart.SetupLowLevelGraphics();
+            pendulum.SetupLowLevelGraphics();
         }
 
         public void UpdateState(SystemState systemState)

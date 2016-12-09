@@ -29,7 +29,7 @@ namespace InvertedPendulumTransporter.Models
             Initialize();
         }
 
-        private void Initialize()
+        public void Initialize()
         {
             wheels = new SphereVisual3D[4];
             lastPoint = new Point3D();
@@ -92,7 +92,7 @@ namespace InvertedPendulumTransporter.Models
             //lastPoint = new Point3D(systemState.StateX.Position, systemState.StateY.Position, 0.0);
         }
 
-        public void SetupHighGradeTextures()
+        public void SetupHighLevelGraphics()
         {
             highGradeTexturesEnabled = true;
             ImageBrush wheelImageBrush = new ImageBrush();
@@ -108,7 +108,7 @@ namespace InvertedPendulumTransporter.Models
             rim.Visible = false;
         }
 
-        public void SetupLowGradeTextures()
+        public void SetupLowLevelGraphics()
         {
             highGradeTexturesEnabled = false;
             foreach (var wheel in wheels)

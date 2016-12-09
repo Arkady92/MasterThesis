@@ -63,35 +63,35 @@
 \contentsline {section}{\numberline {4.5}Wp\IeC {\l }yw zak\IeC {\l }\IeC {\'o}ce\IeC {\'n} pochodz\IeC {\k a}cych od si\IeC {\l }y wiatru}{59}
 \contentsline {chapter}{\numberline {5}Architektura systemu}{62}
 \contentsline {section}{\numberline {5.1}Og\IeC {\'o}lny opis rozwi\IeC {\k a}zania}{62}
-\contentsline {section}{\numberline {5.2}Wykorzystane narz\IeC {\k e}dzia}{62}
-\contentsline {subsection}{\numberline {5.2.1}Windows Presentation Foundation}{62}
-\contentsline {subsection}{\numberline {5.2.2}HelixToolkit}{62}
-\contentsline {subsection}{\numberline {5.2.3}OxyPlot}{62}
-\contentsline {subsection}{\numberline {5.2.4}Pozosta\IeC {\l }e}{62}
-\contentsline {section}{\numberline {5.3}Wzorce projektowe}{62}
-\contentsline {section}{\numberline {5.4}Komponenty aplikacji}{62}
-\contentsline {subsection}{\numberline {5.4.1}Modele}{62}
-\contentsline {subsection}{\numberline {5.4.2}Kontrolery}{62}
-\contentsline {section}{\numberline {5.5}Zarz\IeC {\k a}dzanie aplikacj\IeC {\k a}}{62}
-\contentsline {chapter}{\numberline {6}Instrukcja u\IeC {\.z}ytkownika}{63}
-\contentsline {section}{\numberline {6.1}Panel kontrolny}{63}
-\contentsline {subsection}{\numberline {6.1.1}Modu\IeC {\l }y}{63}
-\contentsline {subsection}{\numberline {6.1.2}Opcje}{63}
-\contentsline {subsection}{\numberline {6.1.3}Sterowanie parametrami}{63}
-\contentsline {section}{\numberline {6.2}Wizualizacja}{63}
-\contentsline {subsection}{\numberline {6.2.1}Scena}{63}
-\contentsline {subsection}{\numberline {6.2.2}Wykresy}{63}
-\contentsline {subsection}{\numberline {6.2.3}Podgl\IeC {\k a}d stanu}{63}
-\contentsline {chapter}{\numberline {7}Podsumowanie pracy}{64}
-\contentsline {section}{\numberline {7.1}Ocena rozwi\IeC {\k a}zania}{64}
-\contentsline {subsection}{\numberline {7.1.1}Stopie\IeC {\'n} realizacji projektu}{64}
-\contentsline {subsection}{\numberline {7.1.2}Poprawno\IeC {\'s}\IeC {\'c} rozwi\IeC {\k a}zania}{64}
-\contentsline {section}{\numberline {7.2}Krytyczna refleksja}{64}
-\contentsline {section}{\numberline {7.3}Mo\IeC {\.z}liwo\IeC {\'s}ci rozszerzania projektu}{64}
-\contentsline {chapter}{Bibliografia}{65}
-\contentsline {chapter}{\numberline {A}Wykresy parametr\IeC {\'o}w sterowania dla ruchu po z\IeC {\l }o\IeC {\.z}onej trajektorii}{67}
-\contentsline {section}{\numberline {A.1}Podw\IeC {\'o}jny regulator kaskadowy}{67}
-\contentsline {section}{\numberline {A.2}Podw\IeC {\'o}jny regulator r\IeC {\'o}wnoleg\IeC {\l }y}{68}
-\contentsline {section}{\numberline {A.3}Zmodyfikowany podw\IeC {\'o}jny regulator r\IeC {\'o}wnoleg\IeC {\l }y}{69}
-\contentsline {chapter}{\numberline {B}Wykresy parametr\IeC {\'o}w sterowania dla uk\IeC {\l }adu z zak\IeC {\l }\IeC {\'o}ceniami}{71}
+\contentsline {section}{\numberline {5.2}Wykorzystane narz\IeC {\k e}dzia}{64}
+\contentsline {subsection}{\numberline {5.2.1}Windows Presentation Foundation}{65}
+\contentsline {subsection}{\numberline {5.2.2}HelixToolkit}{65}
+\contentsline {subsection}{\numberline {5.2.3}OxyPlot}{66}
+\contentsline {subsection}{\numberline {5.2.4}Pozosta\IeC {\l }e}{66}
+\contentsline {section}{\numberline {5.3}Wzorce projektowe}{67}
+\contentsline {section}{\numberline {5.4}Komponenty aplikacji}{68}
+\contentsline {subsection}{\numberline {5.4.1}Modele}{69}
+\contentsline {subsection}{\numberline {5.4.2}Kontrolery}{69}
+\contentsline {chapter}{\numberline {6}Instrukcja u\IeC {\.z}ytkownika}{70}
+\contentsline {section}{\numberline {6.1}Og\IeC {\'o}lny wygl\IeC {\k a}d aplikacji}{70}
+\contentsline {section}{\numberline {6.2}Konfiguracja}{72}
+\contentsline {subsection}{\numberline {6.2.1}Modu\IeC {\l }y}{72}
+\contentsline {subsection}{\numberline {6.2.2}Opcje}{73}
+\contentsline {subsection}{\numberline {6.2.3}Sterowanie parametrami}{74}
+\contentsline {section}{\numberline {6.3}Wizualizacja}{74}
+\contentsline {subsection}{\numberline {6.3.1}Kontrola animacji}{74}
+\contentsline {subsection}{\numberline {6.3.2}Scena}{75}
+\contentsline {subsection}{\numberline {6.3.3}Wykresy}{75}
+\contentsline {chapter}{\numberline {7}Podsumowanie pracy}{76}
+\contentsline {section}{\numberline {7.1}Ocena rozwi\IeC {\k a}zania}{76}
+\contentsline {subsection}{\numberline {7.1.1}Stopie\IeC {\'n} realizacji projektu}{76}
+\contentsline {subsection}{\numberline {7.1.2}Poprawno\IeC {\'s}\IeC {\'c} rozwi\IeC {\k a}zania}{77}
+\contentsline {section}{\numberline {7.2}Krytyczna refleksja}{77}
+\contentsline {section}{\numberline {7.3}Mo\IeC {\.z}liwo\IeC {\'s}ci rozszerzania projektu}{78}
+\contentsline {chapter}{Bibliografia}{80}
+\contentsline {chapter}{\numberline {A}Wykresy parametr\IeC {\'o}w sterowania dla ruchu po z\IeC {\l }o\IeC {\.z}onej trajektorii}{82}
+\contentsline {section}{\numberline {A.1}Podw\IeC {\'o}jny regulator kaskadowy}{82}
+\contentsline {section}{\numberline {A.2}Podw\IeC {\'o}jny regulator r\IeC {\'o}wnoleg\IeC {\l }y}{83}
+\contentsline {section}{\numberline {A.3}Zmodyfikowany podw\IeC {\'o}jny regulator r\IeC {\'o}wnoleg\IeC {\l }y}{84}
+\contentsline {chapter}{\numberline {B}Wykresy parametr\IeC {\'o}w sterowania dla uk\IeC {\l }adu z zak\IeC {\l }\IeC {\'o}ceniami}{86}
 \select@language {polish}

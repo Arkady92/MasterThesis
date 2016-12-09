@@ -7,5 +7,6 @@
         void SetTime(double time);
         void SetControlError(double angleError, double positionError);
         void Reset(double timeDelta);
+        void SetUserAngle(double userAngle);
     }
 }

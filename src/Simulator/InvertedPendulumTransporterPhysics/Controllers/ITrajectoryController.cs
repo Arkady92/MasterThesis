@@ -15,6 +15,6 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         Point3DCollection LoadTrajectory(string fileName = null);
         string SaveTrajectory(List<Point3D> trajectory);
         Point3D GetTargetStartPosition();
-        Point3D GetTargetAccuratePosition(double x, double y, out bool nextCheckPoint);
+        Point3D GetTargetPosition(double x, double y, out bool nextCheckPoint);
     }
 }
