@@ -1,17 +1,69 @@
 ﻿namespace InvertedPendulumTransporterPhysics.Common
 {
+    /// <summary>
+    /// Container for solver parameters
+    /// </summary>
     public class SolverParameters
     {
-        public double PendulumMass { get; set; }
-        public double CartMass { get; set; }
-        public double PendulumLength { get; set; }
-        public double Voltage { get; set; }
-        public double Gamma1 { get; set; }
-        public double Gamma2 { get; set; }
-        public double HorizontalWindForce { get; set; }
-        public double VerticalWindForce { get; set; }
-        public const double G = 9.83;
+        #region Private Members
 
+        #endregion
+
+        #region Public Members
+        /// <summary>
+        /// Pendulum mass
+        /// </summary>
+        public double PendulumMass { get; set; }
+
+        /// <summary>
+        /// Cart mass
+        /// </summary>
+        public double CartMass { get; set; }
+
+        /// <summary>
+        /// Pendulum Length
+        /// </summary>
+        public double PendulumLength { get; set; }
+
+        /// <summary>
+        /// Motor voltage
+        /// </summary>
+        public double Voltage { get; set; }
+
+        /// <summary>
+        /// Cart friction factor
+        /// </summary>
+        public double Gamma1 { get; set; }
+
+        /// <summary>
+        /// Voltage conversion factor
+        /// </summary>
+        public double Gamma2 { get; set; }
+
+        /// <summary>
+        /// Horizontal wind force
+        /// </summary>
+        public double HorizontalWindForce { get; set; }
+
+        /// <summary>
+        /// Vertical wind force
+        /// </summary>
+        public double VerticalWindForce { get; set; }
+
+        /// <summary>
+        /// Gravity acceleration
+        /// </summary>
+        public const double G = 9.83;
+        #endregion
+
+        #region Private Methods
+
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// Class constructor
+        /// </summary>
         public SolverParameters()
         {
             PendulumMass = 0.231;
@@ -23,5 +75,6 @@
             HorizontalWindForce = 0.0;
             VerticalWindForce = 0.0;
         }
+        #endregion
     }
 }

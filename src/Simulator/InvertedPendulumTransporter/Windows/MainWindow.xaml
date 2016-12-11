@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:InvertedPendulumTransporter"
         xmlns:controls="clr-namespace:InvertedPendulumTransporter.Controls"
         mc:Ignorable="d"
-        Title="Inverted Pendulum Transporter Simulation" Height="630" Width="840" MinWidth="840" WindowState="Maximized" MinHeight="630" WindowStartupLocation="CenterScreen"
-        KeyDown="SimulationScene_KeyDown">
+        Title="Inverted Pendulum Transporter Simulation" Height="630" Width="840" MinWidth="840" WindowState="Maximized" MinHeight="630" 
+        WindowStartupLocation="CenterScreen" KeyDown="SimulationScene_KeyDown">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>

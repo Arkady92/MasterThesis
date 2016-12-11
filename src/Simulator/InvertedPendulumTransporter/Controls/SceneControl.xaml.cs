@@ -5,8 +5,7 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System;
 using InvertedPendulumTransporter.Models;
-using System.Windows.Media.Imaging;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace InvertedPendulumTransporter.Controls
 {
@@ -15,6 +14,7 @@ namespace InvertedPendulumTransporter.Controls
     /// </summary>
     public partial class SceneControl : UserControl
     {
+        #region Private Members
         private Point3DCollection cartTrajectoryPoints;
         private LinesVisual3D cartTrajectoryLines;
         private Point3DCollection pendulumTrajectoryPoints;
@@ -22,29 +22,40 @@ namespace InvertedPendulumTransporter.Controls
         private Point3DCollection targetTrajectoryPoints;
         private PointsVisual3D targetTrajectoryCheckPoints;
         private LinesVisual3D targetTrajectoryLines;
-
-        public IPendulum pendulum;
-        public ICart cart;
-        public const double SimulationAreaSize = 150.0;
-        private int frame;
-        private const int FrameLineCutNumber = 200;
-        public const int FrameLineOptimizeNumber = 3;
-        private const double WindDirectionResizeFactor = 5.0;
-        private const double CartTrajectoryHeight = 0.1;
+        private List<IModel> models;
         private Point3D sceneCenter;
         private bool renderTargetTrajectory;
         private bool renderPendulumTrajectory;
         private bool renderCartTrajectory;
-        private ModelVisual3D floor;
-        private ModelVisual3D walls;
+        private int frame;
+        private const int FrameLineCutNumber = 200;
+        private const double WindDirectionResizeFactor = 5.0;
+        private const double CartTrajectoryHeight = 0.1;
+        private const int FrameLineOptimizeNumber = 3;
+        #endregion
 
-        public SceneControl()
-        {
-            InitializeComponent();
-            InitializeObjects();
-            InitializeScene();
-        }
+        #region Public Members
+        /// <summary>
+        /// Reference to pendulum model
+        /// </summary>
+        public IPendulum pendulum;
 
+        /// <summary>
+        /// Reference to cart model
+        /// </summary>
+        public ICart cart;
+
+        /// <summary>
+        /// Reference to simulation area model
+        /// </summary>
+        public ISimulationArea simulationArea;
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Initialize all objects
+        /// </summary>
         private void InitializeObjects()
         {
             cartTrajectoryPoints = new Point3DCollection();
@@ -54,8 +65,12 @@ namespace InvertedPendulumTransporter.Controls
             renderTargetTrajectory = true;
             renderPendulumTrajectory = true;
             renderCartTrajectory = true;
+            models = new List<IModel>();
         }
 
+        /// <summary>
+        /// Create base scene
+        /// </summary>
         private void InitializeScene()
         {
             WindDirectionScene.Camera = SimulationScene.Camera;
@@ -82,59 +97,74 @@ namespace InvertedPendulumTransporter.Controls
             targetTrajectoryCheckPoints.Size = 5;
             targetTrajectoryCheckPoints.Points = targetTrajectoryPoints;
 
-
-            floor = new ModelVisual3D();
-            floor.Children.Add(new GridLinesVisual3D() { Center = new Point3D(0.0, 0.0, 0.0), Width = SimulationAreaSize, Length = SimulationAreaSize, MinorDistance = 2, MajorDistance = 10, Thickness = 0.03, Fill = Brushes.Green });
-            floor.Children.Add(new RectangleVisual3D() { Origin = new Point3D(0.0, 0.0, -0.01), Normal = new Vector3D(0, 0, 1), Width = SimulationAreaSize, Length = SimulationAreaSize, Fill = Brushes.Tomato });
-            SimulationScene.Children.Add(floor);
-
-            walls = new ModelVisual3D();
-            var wallHeight = SimulationAreaSize / 30.0;
-            walls.Children.Add(new GridLinesVisual3D() { Center = new Point3D(0.0, SimulationAreaSize / 2, wallHeight / 2.0), Normal = new Vector3D(0.0, 1.0, 0), Width = wallHeight, Length = SimulationAreaSize, Fill = Brushes.Green });
-            walls.Children.Add(new GridLinesVisual3D() { Center = new Point3D(0.0, -SimulationAreaSize / 2, wallHeight / 2.0), Normal = new Vector3D(0.0, 1.0, 0), Width = wallHeight, Length = SimulationAreaSize, Fill = Brushes.Green });
-            walls.Children.Add(new GridLinesVisual3D() { Center = new Point3D(SimulationAreaSize / 2, 0.0, wallHeight / 2.0), Normal = new Vector3D(1.0, 0.0, 0), Width = SimulationAreaSize, Length = wallHeight, Fill = Brushes.Green });
-            walls.Children.Add(new GridLinesVisual3D() { Center = new Point3D(-SimulationAreaSize / 2, 0.0, wallHeight / 2.0), Normal = new Vector3D(1.0, 0.0, 0), Width = SimulationAreaSize, Length = wallHeight, Fill = Brushes.Green });
-            SimulationScene.Children.Add(walls);
+            simulationArea = new SimulationArea();
+            SimulationScene.Children.Add(simulationArea.Model);
+            models.Add(simulationArea);
 
             cart = new Cart();
             SimulationScene.Children.Add(cart.Model);
+            models.Add(cart);
 
             pendulum = new Pendulum();
             SimulationScene.Children.Add(pendulum.Model);
+            models.Add(pendulum);
         }
+        #endregion
 
-        public void SetupHighGradeTextures()
+        #region Public Methods
+
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        public SceneControl()
         {
-            ImageBrush imageBrush = new ImageBrush();
-            imageBrush.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/Resources/Floor.jpg"));
-            floor.Children.OfType<RectangleVisual3D>().First().Fill = imageBrush;
-            foreach (var wall in walls.Children.OfType<GridLinesVisual3D>())
-                wall.Visible = false;
-            cart.SetupHighLevelGraphics();
-            pendulum.SetupHighLevelGraphics();
+            InitializeComponent();
+            InitializeObjects();
+            InitializeScene();
         }
 
-        public void SetupLowGradeTextures()
+        /// <summary>
+        /// Setup high level graphics
+        /// </summary>
+        public void SetupHighLevelGraphics()
         {
-            floor.Children.OfType<RectangleVisual3D>().First().Fill = Brushes.Tomato;
-            foreach (var wall in walls.Children.OfType<GridLinesVisual3D>())
-                wall.Visible = true;
-            cart.SetupLowLevelGraphics();
-            pendulum.SetupLowLevelGraphics();
+            foreach (var model in models)
+                model.SetupHighLevelGraphics();
         }
 
+        /// <summary>
+        /// Setup low level graphics
+        /// </summary>
+        public void SetupLowLevelGraphics()
+        {
+            foreach (var model in models)
+                model.SetupLowLevelGraphics();
+        }
+
+        /// <summary>
+        /// Update scene models
+        /// </summary>
+        /// <param name="systemState"></param>
         public void UpdateState(SystemState systemState)
         {
-            cart.UpdateState(systemState);
-            pendulum.UpdateState(systemState);
+            foreach (var model in models)
+                model.UpdateState(systemState);
         }
 
+        /// <summary>
+        /// Update camera object
+        /// </summary>
+        /// <param name="systemState">Actual system state</param>
         public void UpdateCamera(SystemState systemState)
         {
             sceneCenter = new Point3D(systemState.StateX.Position, systemState.StateY.Position, pendulum.RodLength / 2);
             SimulationScene.Camera.LookAt(sceneCenter, 0.0);
         }
 
+        /// <summary>
+        /// Update rendering frame
+        /// </summary>
+        /// <param name="systemState">Actual system staate</param>
         public void UpdateFrame(SystemState systemState)
         {
             frame++;
@@ -179,6 +209,10 @@ namespace InvertedPendulumTransporter.Controls
                 SimulationScene.Children.Add(cartTrajectoryLines);
         }
 
+        /// <summary>
+        /// Reset scene to start configuration
+        /// </summary>
+        /// <param name="systemState">Actual system state</param>
         public void ResetSimulation(SystemState systemState)
         {
             frame = 0;
@@ -191,6 +225,11 @@ namespace InvertedPendulumTransporter.Controls
             WindArrow.Visible = false;
         }
 
+        /// <summary>
+        /// Update wind direction visual
+        /// </summary>
+        /// <param name="windDirection">Wind direction vector</param>
+        /// <param name="windPower">Wind power value</param>
         public void UpdateWindDirection(Vector3D windDirection, double windPower)
         {
             if (Math.Abs(windPower) > double.Epsilon)
@@ -201,6 +240,9 @@ namespace InvertedPendulumTransporter.Controls
             WindArrow.Point2 = (sceneCenter.ToVector3D() + windDirection * WindDirectionResizeFactor).ToPoint3D();
         }
 
+        /// <summary>
+        /// Clear trajectories
+        /// </summary>
         public void ClearTrajectory()
         {
             if (SimulationScene.Children.Contains(targetTrajectoryLines))
@@ -209,6 +251,10 @@ namespace InvertedPendulumTransporter.Controls
                 SimulationScene.Children.Remove(targetTrajectoryCheckPoints);
         }
 
+        /// <summary>
+        /// Update target trajectory
+        /// </summary>
+        /// <param name="trajectory">Trajectory</param>
         public void UpdateTrajectory(Point3DCollection trajectory)
         {
             ClearTrajectory();
@@ -222,6 +268,10 @@ namespace InvertedPendulumTransporter.Controls
             }
         }
 
+        /// <summary>
+        /// Change target trajectory visibility
+        /// </summary>
+        /// <param name="isChecked">Is trajectory visible</param>
         public void ShowTargetTrajectory(bool isChecked)
         {
             if (isChecked && !renderTargetTrajectory)
@@ -238,6 +288,10 @@ namespace InvertedPendulumTransporter.Controls
             }
         }
 
+        /// <summary>
+        /// Change cart trajectory visibility
+        /// </summary>
+        /// <param name="isChecked">Is trajectory visible</param>
         public void ShowCartTrajectory(bool isChecked)
         {
             if (isChecked && !renderCartTrajectory)
@@ -252,6 +306,10 @@ namespace InvertedPendulumTransporter.Controls
             }
         }
 
+        /// <summary>
+        /// Change pendulum trajectory visibility
+        /// </summary>
+        /// <param name="isChecked">Is trajectory visible</param>
         public void ShowPendulumTrajectory(bool isChecked)
         {
             if (isChecked && !renderPendulumTrajectory)
@@ -265,5 +323,6 @@ namespace InvertedPendulumTransporter.Controls
                 SimulationScene.Children.Remove(pendulumTrajectoryLines);
             }
         }
+        #endregion
     }
 }

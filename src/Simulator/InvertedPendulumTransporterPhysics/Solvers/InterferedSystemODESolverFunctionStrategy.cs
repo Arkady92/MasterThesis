@@ -2,8 +2,25 @@
 
 namespace InvertedPendulumTransporterPhysics.Solvers
 {
+    /// <summary>
+    /// Strategy for dynamics system with interferences
+    /// </summary>
     public class InterferedSystemODESolverFunctionStrategy : IODESolverFunctionStrategy
     {
+        #region Private Members
+
+        #endregion
+
+        #region Public Members
+
+        #endregion
+
+        #region Private Methods
+
+        #endregion
+
+        #region Public Methods
+        #region IODESolverFunctionStrategy Interface
         public void ODESolverFunction(double[] y, double x, double[] dy, object obj)
         {
             // y: x, theta, dx, dtheta
@@ -25,5 +42,7 @@ namespace InvertedPendulumTransporterPhysics.Solvers
                 + (-data.Gamma1 / data.CartMass / data.PendulumLength * data.Voltage)
                 + ((Fw_Z * y[1] - Fw_X) * (data.CartMass + data.PendulumMass) / (data.CartMass * data.PendulumMass));
         }
+        #endregion
+        #endregion
     }
 }

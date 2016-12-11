@@ -2,17 +2,36 @@
 
 namespace InvertedPendulumTransporterPhysics.Solvers
 {
+    /// <summary>
+    /// ODE solver class
+    /// </summary>
     public class ODESolver : IODESolver
     {
+        #region Private Members
         private SolverParameters ODESolverData;
         private IODESolverFunctionStrategy solverFunctionStrategy;
+        #endregion
 
+        #region Public Members
+
+        #endregion
+
+        #region Private Methods
+
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        /// <param name="parameters">Solver parameters</param>
         public ODESolver(SolverParameters parameters)
         {
             SetupStrategy(new StandardSystemODESolverFunctionStrategy());
             UpdateSystemParameters(parameters);
         }
 
+        #region IODESolver Interface
         public void SetupStrategy(IODESolverFunctionStrategy strategy)
         {
             solverFunctionStrategy = strategy;
@@ -40,5 +59,7 @@ namespace InvertedPendulumTransporterPhysics.Solvers
 
             return new OneDimensionalSystemState(ytbl[1, 0], ytbl[1, 1], ytbl[1, 2], ytbl[1, 3]);
         }
+        #endregion
+        #endregion
     }
 }

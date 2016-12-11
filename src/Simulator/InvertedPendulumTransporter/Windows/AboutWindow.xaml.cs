@@ -9,22 +9,28 @@ namespace InvertedPendulumTransporter.Windows
     /// </summary>
     public partial class AboutWindow : Window
     {
+        #region Private Members
         private Dictionary<WindowType, string> windowsTitles;
         private Dictionary<WindowType, string> windowsContents;
         private Dictionary<WindowType, TextBlock> windowsTextBlocks;
         private WindowType windowType;
+        #endregion
 
-        public AboutWindow()
-        {
-            InitializeComponent();
-            Initialize();
-        }
+        #region Public Members
 
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Initialize text containers
+        /// </summary>
         private void Initialize()
         {
+            // Setup titles
             windowsTitles = new Dictionary<WindowType, string>();
             windowsTitles.Add(WindowType.Application, "Application");
-            windowsTitles.Add(WindowType.SystemMechanics, "System Mechanics ");
+            windowsTitles.Add(WindowType.SystemMechanics, "System Mechanics");
             windowsTitles.Add(WindowType.Author, "Author");
             windowsTitles.Add(WindowType.HelpAnimationPanel, "Animation Panel");
             windowsTitles.Add(WindowType.HelpMenuMode, "Menu");
@@ -35,6 +41,8 @@ namespace InvertedPendulumTransporter.Windows
             windowsTitles.Add(WindowType.HelpSystemParameters, "System Parameters");
             windowsTitles.Add(WindowType.HelpSystemStateInfo, "System State");
             windowsTitles.Add(WindowType.HelpWindParameters, "Wind Parameters");
+
+            // Setup descriptions
             windowsContents = new Dictionary<WindowType, string>();
             windowsContents.Add(WindowType.Application, "Simulation of the transporter for an inverted pendulum on a cart.\n"
                 + "\nThe system allows user to:\n"
@@ -47,8 +55,8 @@ namespace InvertedPendulumTransporter.Windows
             windowsContents.Add(WindowType.SystemMechanics, "The project is based on well-known problem of two-dimensional system consisting of an inverted pendulum mounted on a movable platform. "
                 + "The main task of the system is to keep the pendulum in an unstable equilibrium and respond to noises from the environment through the special voltage controller of the platform's engine."
                 + "In the project the system is transferred to a three-dimensional world in which two independent systems associated with the horizontal directions of the principal axes are integrated into a unit. "
-                + "As a result, the movement trajectory can be applied to the system and the pendulum should be transported according to given trajectory. " 
-                + "An additional element of the project is adding the wind force. " 
+                + "As a result, the movement trajectory can be applied to the system and the pendulum should be transported according to given trajectory. "
+                + "An additional element of the project is adding the wind force. "
                 + "The transporter have to deal with the noise in such a way as to minimize the risk of losing control of the pendulum.");
             windowsContents.Add(WindowType.Author, "Jakub Abelski (Arkady)\n"
                 + "\nWarsaw University of Technology\n"
@@ -71,6 +79,8 @@ namespace InvertedPendulumTransporter.Windows
                 "All information about current system's state is presented in this panel. \n\nInteresting fact is that the full system's state is calculated in each simulation's frame by solving the state-space equation using Runge-Kutta algorithm.");
             windowsContents.Add(WindowType.HelpWindParameters,
                 "During the animation's progress you are able to modify the wind conditions. You can set the wind power and how fast the wind force direction will be changed.");
+
+            // Setup text visual types
             windowsTextBlocks = new Dictionary<WindowType, TextBlock>();
             windowsTextBlocks.Add(WindowType.Application, ApplicationContentTextBlock);
             windowsTextBlocks.Add(WindowType.SystemMechanics, SystemMechanicsContentTextBlock);
@@ -86,6 +96,32 @@ namespace InvertedPendulumTransporter.Windows
             windowsTextBlocks.Add(WindowType.HelpWindParameters, HelpContentTextBlock);
         }
 
+        /// <summary>
+        /// Handle click on help progress button
+        /// </summary>
+        /// <param name="sender">Event object</param>
+        /// <param name="eventArgs">Event arguments</param>
+        private void HelpProgressButton_Click(object sender, RoutedEventArgs eventArgs)
+        {
+            DialogResult = true;
+            Close();
+        }
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        public AboutWindow()
+        {
+            InitializeComponent();
+            Initialize();
+        }
+
+        /// <summary>
+        /// Setup window type
+        /// </summary>
+        /// <param name="type">Window type</param>
         public void SetupWindowType(WindowType type)
         {
             windowType = type;
@@ -95,19 +131,21 @@ namespace InvertedPendulumTransporter.Windows
             windowsTextBlocks[type].Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Mark that actual window is dedicated to help 
+        /// </summary>
+        /// <param name="finish">Is window the last in help</param>
         public void SetupHelpWindow(bool finish)
         {
             HelpProgressButton.Visibility = Visibility.Visible;
             HelpProgressButton.Content = finish ? "Finish" : "Next";
         }
-
-        private void HelpProgressButton_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = true;
-            Close();
-        }
+        #endregion
     }
 
+    /// <summary>
+    /// Enumeration for window types
+    /// </summary>
     public enum WindowType
     {
         Application,

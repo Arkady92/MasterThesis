@@ -9,54 +9,103 @@ using System.Windows.Input;
 namespace InvertedPendulumTransporter.Windows
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml [Control Panel management]
     /// </summary>
     public partial class MainWindow
     {
-        #region Properties
+        #region Private Members
+        private double xCoordAngle;
+        private double yCoordAngle;
+        #endregion
 
+        #region Public Members
+        /// <summary>
+        /// Max pendulum angle
+        /// </summary>
         public double MaxAngle { get { return systemState.MaxAngle; } }
+
+        /// <summary>
+        /// Min pendulum angle
+        /// </summary>
         public double MinAngle { get { return systemState.MinAngle; } }
 
+        /// <summary>
+        /// Max wind power
+        /// </summary>
         public double MaxWindPower { get { return windController.MaxWindPower; } }
+
+        /// <summary>
+        /// Min wind power
+        /// </summary>
         public double MinWindPower { get { return windController.MinWindPower; } }
 
+        /// <summary>
+        /// Actual cart position in X-coordinate
+        /// </summary>
         public double CartPositionX
         {
             get { return Math.Round(systemState.StateX.Position, 2); }
         }
+
+        /// <summary>
+        /// Actual cart position in Y-coordinate
+        /// </summary>
         public double CartPositionY
         {
             get { return Math.Round(systemState.StateY.Position, 2); }
         }
 
+        /// <summary>
+        /// Actual cart velocity in X-coordinate
+        /// </summary>
         public double CartVelocityX
         {
             get { return Math.Round(systemState.StateX.Velocity, 2); }
         }
+
+        /// <summary>
+        /// Actual cart velocity in Y-coordinate
+        /// </summary>
         public double CartVelocityY
         {
             get { return Math.Round(systemState.StateY.Velocity, 2); }
         }
 
+        /// <summary>
+        /// Actual pendulum angle in X-coordinate
+        /// </summary>
         public double PendulumAngleX
         {
             get { return Math.Round(systemState.StateX.Angle, 2); }
         }
+
+        /// <summary>
+        /// Actual pendulum angle in Y-coordinate
+        /// </summary>
         public double PendulumAngleY
         {
             get { return Math.Round(systemState.StateY.Angle, 2); }
         }
 
+        /// <summary>
+        /// Actual pendulum angual velocity in X-coordinate
+        /// </summary>
         public double PendulumAngularVelocityX
         {
             get { return Math.Round(systemState.StateX.AngularVelocity, 2); }
         }
+
+        /// <summary>
+        /// Actual pendulum angual velocity in Y-coordinate
+        /// </summary>
         public double PendulumAngularVelocityY
         {
             get { return Math.Round(systemState.StateY.AngularVelocity, 2); }
         }
 
+        /// <summary>
+        /// Actual time distance between two frames
+        /// </summary>
         public double TimeDelta
         {
             get { return systemState.TimeDelta; }
@@ -71,7 +120,9 @@ namespace InvertedPendulumTransporter.Windows
             }
         }
 
-        private double xCoordAngle;
+        /// <summary>
+        /// Initial pendulum angle in X-coordinate
+        /// </summary>
         public double XCoordAngle
         {
             get { return xCoordAngle; }
@@ -89,7 +140,9 @@ namespace InvertedPendulumTransporter.Windows
             }
         }
 
-        private double yCoordAngle;
+        /// <summary>
+        /// Initial pendulum angle in X-coordinate
+        /// </summary>
         public double YCoordAngle
         {
             get { return yCoordAngle; }
@@ -107,6 +160,9 @@ namespace InvertedPendulumTransporter.Windows
             }
         }
 
+        /// <summary>
+        /// Actual pendulum rod length
+        /// </summary>
         public double RodLength
         {
             get { return Math.Round(systemState.SolverParameters.PendulumLength, 2); }
@@ -123,6 +179,9 @@ namespace InvertedPendulumTransporter.Windows
             }
         }
 
+        /// <summary>
+        /// Actual pendulum mass
+        /// </summary>
         public double PendulumMass
         {
             get { return Math.Round(systemState.SolverParameters.PendulumMass, 2); }
@@ -139,6 +198,9 @@ namespace InvertedPendulumTransporter.Windows
             }
         }
 
+        /// <summary>
+        /// Actual cart mass
+        /// </summary>
         public double CartMass
         {
             get { return Math.Round(systemState.SolverParameters.CartMass, 2); }
@@ -155,6 +217,9 @@ namespace InvertedPendulumTransporter.Windows
             }
         }
 
+        /// <summary>
+        /// Actual  wind power
+        /// </summary>
         public double WindPower
         {
             get { return windController.WindPower; }
@@ -169,6 +234,9 @@ namespace InvertedPendulumTransporter.Windows
             }
         }
 
+        /// <summary>
+        /// Actual wind change speed
+        /// </summary>
         public double WindChangeSpeed
         {
             get { return windController.WindChangeSpeed; }
@@ -182,26 +250,18 @@ namespace InvertedPendulumTransporter.Windows
                 }
             }
         }
-        #endregion
 
-        #region Properties Event Handlers
         /// <summary>
         /// Event handler for raising property change
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Property change handling method
-        /// </summary>
-        /// <param name="propertyName"></param>
-        private void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
         #endregion
 
-        #region Functions
+        #region Private Methods
+
+        /// <summary>
+        /// Update GUI elements
+        /// </summary>
         private void UpdateGUI()
         {
             OnPropertyChanged("CartPositionX");
@@ -221,8 +281,10 @@ namespace InvertedPendulumTransporter.Windows
         }
 
         /// <summary>
-        /// Start animation
+        /// Handle play animation button click
         /// </summary>
+        /// <param name="sender">Event object</param>
+        /// <param name="e">Event arguments</param>
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             if (!animationPlaying)
@@ -239,8 +301,10 @@ namespace InvertedPendulumTransporter.Windows
         }
 
         /// <summary>
-        /// Pause animation
+        /// Handle reset animation button click
         /// </summary>
+        /// <param name="sender">Event object</param>
+        /// <param name="e">Event arguments</param>
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
             dispatcherTimer.Stop();
@@ -250,8 +314,10 @@ namespace InvertedPendulumTransporter.Windows
         }
 
         /// <summary>
-        /// Reset animation
+        /// Handle reset animation button click
         /// </summary>
+        /// <param name="sender">Event object</param>
+        /// <param name="e">Event arguments</param>
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
             animationPlaying = false;
@@ -270,15 +336,18 @@ namespace InvertedPendulumTransporter.Windows
             else
                 systemState.Reset(XCoordAngle, YCoordAngle);
             SceneControl.ResetSimulation(systemState);
+            foreach (var controller in controllers)
+                controller.Reset();
             xCoordVoltageController.Reset(systemState.TimeDelta);
             yCoordVoltageController.Reset(systemState.TimeDelta);
-            windController.Reset();
-            trajectoryController.Reset();
-            gameController.Reset();
 
             UpdateGUI();
         }
 
+        /// <summary>
+        /// Change system parameters modification enablement
+        /// </summary>
+        /// <param name="value">Are parameters enabled</param>
         private void EnableSystemParameters(bool value)
         {
             foreach (var item in SystemParametersPanel.Children.OfType<Slider>())
@@ -286,11 +355,21 @@ namespace InvertedPendulumTransporter.Windows
             ResetParametersButton.IsEnabled = value;
         }
 
+        /// <summary>
+        /// Handle keyboard input over simulation area
+        /// </summary>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event args</param>
         private void SimulationScene_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             gameController.HandleKey(e.Key);
         }
 
+        /// <summary>
+        /// Handle reset parameters button click
+        /// </summary>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event arguments</param>
         private void ResetParametersButton_Click(object sender, RoutedEventArgs e)
         {
             systemState.ResetSystemParameters();
@@ -303,25 +382,60 @@ namespace InvertedPendulumTransporter.Windows
             UpdateGUI();
         }
 
+        /// <summary>
+        /// Handle virtual keyboard up button click
+        /// </summary>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event arguments</param>
         private void UpKeyboardButton_Click(object sender, RoutedEventArgs e)
         {
             gameController.HandleKey(Key.T);
         }
 
+        /// <summary>
+        /// Handle virtual keyboard down button click
+        /// </summary>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event arguments</param>
         private void DownKeyboardButton_Click(object sender, RoutedEventArgs e)
         {
             gameController.HandleKey(Key.G);
         }
 
+        /// <summary>
+        /// Handle virtual keyboard left button click
+        /// </summary>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event arguments</param>
         private void LeftKeyboardButton_Click(object sender, RoutedEventArgs e)
         {
             gameController.HandleKey(Key.F);
         }
 
+        /// <summary>
+        /// Handle virtual keyboard right button click
+        /// </summary>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">Event arguments</param>
         private void RightKeyboardButton_Click(object sender, RoutedEventArgs e)
         {
             gameController.HandleKey(Key.H);
         }
+
+        /// <summary>
+        /// Property change handling method
+        /// </summary>
+        /// <param name="propertyName"></param>
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
         #endregion
+
+        #region Public Methods
+        #endregion
+
+        
     }
 }

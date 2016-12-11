@@ -1,0 +1,100 @@
+\select@language {polish}
+\select@language {polish}
+\select@language {english}
+\select@language {polish}
+\contentsline {chapter}{\numberline {1}Wst\IeC {\k e}p}{14}
+\contentsline {section}{\numberline {1.1}Podstawowe definicje}{14}
+\contentsline {subsection}{\numberline {1.1.1}Symulacja}{14}
+\contentsline {subsection}{\numberline {1.1.2}Uk\IeC {\l }ad dynamiczny}{16}
+\contentsline {subsubsection}{Wprowadzenie}{16}
+\contentsline {subsubsection}{Wahad\IeC {\l }o odwr\IeC {\'o}cone na w\IeC {\'o}zku}{16}
+\contentsline {subsubsection}{Tr\IeC {\'o}jwymiarowa wersja uk\IeC {\l }adu}{18}
+\contentsline {section}{\numberline {1.2}Opis problemu}{19}
+\contentsline {subsection}{\numberline {1.2.1}Motywacja}{19}
+\contentsline {subsection}{\numberline {1.2.2}G\IeC {\l }\IeC {\'o}wne cele}{20}
+\contentsline {section}{\numberline {1.3}Przegl\IeC {\k a}d istniej\IeC {\k a}cych rozwi\IeC {\k a}za\IeC {\'n}}{21}
+\contentsline {subsection}{\numberline {1.3.1}Symulatory}{21}
+\contentsline {subsection}{\numberline {1.3.2}Dynamika i sterowanie}{22}
+\contentsline {chapter}{\numberline {2}Definicja projektu}{23}
+\contentsline {section}{\numberline {2.1}Zakres projektu}{23}
+\contentsline {section}{\numberline {2.2}Analiza wymaga\IeC {\'n}}{23}
+\contentsline {section}{\numberline {2.3}Ograniczenia}{25}
+\contentsline {chapter}{\numberline {3}Opis rozwi\IeC {\k a}zania}{26}
+\contentsline {section}{\numberline {3.1}Podstawy matematyczno-fizyczne}{26}
+\contentsline {subsection}{\numberline {3.1.1}R\IeC {\'o}wnania stanu}{26}
+\contentsline {subsection}{\numberline {3.1.2}Algorytm Rungego-Kutty}{28}
+\contentsline {subsection}{\numberline {3.1.3}SLERP}{29}
+\contentsline {subsection}{\numberline {3.1.4}Regulator PID}{29}
+\contentsline {subsection}{\numberline {3.1.5}Regulator podw\IeC {\'o}jny PID}{31}
+\contentsline {section}{\numberline {3.2}Mechanika systemu}{32}
+\contentsline {subsection}{\numberline {3.2.1}Model matematyczny ruchu}{32}
+\contentsline {subsubsection}{Schemat}{32}
+\contentsline {subsubsection}{Ruch post\IeC {\k e}powy}{34}
+\contentsline {subsubsection}{Ruch obrotowy}{36}
+\contentsline {subsection}{\numberline {3.2.2}Linearyzacja modelu}{37}
+\contentsline {subsubsection}{Za\IeC {\l }o\IeC {\.z}enia}{37}
+\contentsline {subsubsection}{Konwersja r\IeC {\'o}wna\IeC {\'n}}{38}
+\contentsline {subsubsection}{R\IeC {\'o}wnania stanu}{39}
+\contentsline {subsection}{\numberline {3.2.3}Stabilizacja uk\IeC {\l }adu}{41}
+\contentsline {subsection}{\numberline {3.2.4}Wprowadzenie zak\IeC {\l }\IeC {\'o}ce\IeC {\'n} do modelu}{41}
+\contentsline {subsection}{\numberline {3.2.5}Wprowadzenie trajektorii ruchu}{43}
+\contentsline {subsection}{\numberline {3.2.6}Manualna kontrola nad uk\IeC {\l }adem}{45}
+\contentsline {section}{\numberline {3.3}Algorytm pracy symulatora}{46}
+\contentsline {chapter}{\numberline {4}Testy i por\IeC {\'o}wnanie przyj\IeC {\k e}tych rozwi\IeC {\k a}za\IeC {\'n}}{48}
+\contentsline {section}{\numberline {4.1}Za\IeC {\l }o\IeC {\.z}enia wst\IeC {\k e}pne}{48}
+\contentsline {section}{\numberline {4.2}Stabilizacja uk\IeC {\l }adu}{49}
+\contentsline {subsubsection}{Brak sterowania}{49}
+\contentsline {subsubsection}{Sterowanie niezale\IeC {\.z}ne od uchybu}{50}
+\contentsline {subsubsection}{Sterowanie regulatorem PID}{51}
+\contentsline {section}{\numberline {4.3}Ruch po trajektorii}{53}
+\contentsline {subsection}{\numberline {4.3.1}Za\IeC {\l }o\IeC {\.z}enia}{53}
+\contentsline {subsection}{\numberline {4.3.2}Trajektoria prosta}{54}
+\contentsline {subsubsection}{Podw\IeC {\'o}jny regulator r\IeC {\'o}wnoleg\IeC {\l }y}{54}
+\contentsline {subsubsection}{Zmodyfikowany podw\IeC {\'o}jny regulator r\IeC {\'o}wnoleg\IeC {\l }y}{56}
+\contentsline {subsubsection}{Podw\IeC {\'o}jny regulator kaskadowy}{57}
+\contentsline {subsection}{\numberline {4.3.3}Trajektoria z\IeC {\l }o\IeC {\.z}ona}{59}
+\contentsline {subsubsection}{Fragment trajektorii w\IeC {\k e}z\IeC {\l }a koniczynowego}{59}
+\contentsline {subsubsection}{Trajektoria krzy\IeC {\.z}a}{61}
+\contentsline {section}{\numberline {4.4}Wp\IeC {\l }yw parametr\IeC {\'o}w uk\IeC {\l }adu}{62}
+\contentsline {subsubsection}{Masa w\IeC {\'o}zka}{63}
+\contentsline {subsubsection}{Masa wahad\IeC {\l }a}{64}
+\contentsline {subsubsection}{D\IeC {\l }ugo\IeC {\'s}\IeC {\'c} wahad\IeC {\l }a}{65}
+\contentsline {subsubsection}{Wychylenie pocz\IeC {\k a}tkowe}{66}
+\contentsline {section}{\numberline {4.5}Wp\IeC {\l }yw zak\IeC {\l }\IeC {\'o}ce\IeC {\'n} pochodz\IeC {\k a}cych od si\IeC {\l }y wiatru}{66}
+\contentsline {chapter}{\numberline {5}Architektura systemu}{69}
+\contentsline {section}{\numberline {5.1}Og\IeC {\'o}lny opis rozwi\IeC {\k a}zania}{69}
+\contentsline {subsection}{\numberline {5.1.1}Symulator}{69}
+\contentsline {subsection}{\numberline {5.1.2}Biblioteka fizyki}{71}
+\contentsline {subsection}{\numberline {5.1.3}Komunikacja}{72}
+\contentsline {section}{\numberline {5.2}Wykorzystane narz\IeC {\k e}dzia}{74}
+\contentsline {subsubsection}{Windows Presentation Foundation}{74}
+\contentsline {subsubsection}{HelixToolkit}{75}
+\contentsline {subsubsection}{OxyPlot}{75}
+\contentsline {subsubsection}{Pozosta\IeC {\l }e}{76}
+\contentsline {section}{\numberline {5.3}Wzorce projektowe}{76}
+\contentsline {section}{\numberline {5.4}Komponenty aplikacji}{78}
+\contentsline {subsection}{\numberline {5.4.1}Modele}{78}
+\contentsline {subsection}{\numberline {5.4.2}Kontrolery}{79}
+\contentsline {chapter}{\numberline {6}Instrukcja u\IeC {\.z}ytkownika}{80}
+\contentsline {section}{\numberline {6.1}Og\IeC {\'o}lny wygl\IeC {\k a}d aplikacji}{80}
+\contentsline {section}{\numberline {6.2}Konfiguracja}{82}
+\contentsline {subsection}{\numberline {6.2.1}Modu\IeC {\l }y}{82}
+\contentsline {subsection}{\numberline {6.2.2}Opcje}{83}
+\contentsline {subsection}{\numberline {6.2.3}Sterowanie parametrami}{84}
+\contentsline {section}{\numberline {6.3}Wizualizacja}{84}
+\contentsline {subsection}{\numberline {6.3.1}Kontrola animacji}{84}
+\contentsline {subsection}{\numberline {6.3.2}Scena}{85}
+\contentsline {subsection}{\numberline {6.3.3}Wykresy}{85}
+\contentsline {chapter}{\numberline {7}Podsumowanie pracy}{86}
+\contentsline {section}{\numberline {7.1}Ocena rozwi\IeC {\k a}zania}{86}
+\contentsline {subsection}{\numberline {7.1.1}Stopie\IeC {\'n} realizacji projektu}{86}
+\contentsline {subsection}{\numberline {7.1.2}Poprawno\IeC {\'s}\IeC {\'c} rozwi\IeC {\k a}zania}{87}
+\contentsline {section}{\numberline {7.2}Krytyczna refleksja}{87}
+\contentsline {section}{\numberline {7.3}Mo\IeC {\.z}liwo\IeC {\'s}ci rozszerzania projektu}{88}
+\contentsline {chapter}{Bibliografia}{90}
+\contentsline {chapter}{\numberline {A}Wykresy parametr\IeC {\'o}w sterowania dla ruchu po z\IeC {\l }o\IeC {\.z}onej trajektorii}{92}
+\contentsline {section}{\numberline {A.1}Podw\IeC {\'o}jny regulator kaskadowy}{92}
+\contentsline {section}{\numberline {A.2}Podw\IeC {\'o}jny regulator r\IeC {\'o}wnoleg\IeC {\l }y}{93}
+\contentsline {section}{\numberline {A.3}Zmodyfikowany podw\IeC {\'o}jny regulator r\IeC {\'o}wnoleg\IeC {\l }y}{94}
+\contentsline {chapter}{\numberline {B}Wykresy parametr\IeC {\'o}w sterowania dla uk\IeC {\l }adu z zak\IeC {\l }\IeC {\'o}ceniami}{96}
+\select@language {polish}

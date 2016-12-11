@@ -2,11 +2,12 @@
 
 namespace InvertedPendulumTransporterPhysics.Controllers
 {
+    /// <summary>
+    /// Controller for motor voltage
+    /// </summary>
     public class VoltageController : IVoltageController
     {
-        public ControlType ControlType { get; set; }
-        public const ControlType DefaultControlType = ControlType.PID;
-
+        #region Private Members
         private Random random;
         private double time;
         private PIDCorrector singlePIDCorrector;
@@ -15,7 +16,57 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         private int counter = 0;
         private double randomControlValue;
         private double userAngle;
+        #endregion
 
+        #region Public Members
+        #region IVoltageController Interface
+        public ControlType ControlType { get; set; }
+        public const ControlType DefaultControlType = ControlType.PID;
+        #endregion
+        #endregion
+
+        #region Private Methods
+        /// <summary>
+        /// Calculate correction by modified double parallel controller 
+        /// </summary>
+        /// <returns>Motor voltage</returns>
+        private double CalculateDoublePDParallelCorrection()
+        {
+            return doublePIDCorrector.CalculateParallelPositionAnglePIDCorrection(false);
+        }
+
+        /// <summary>
+        /// Calculate correction by double parallel controller 
+        /// </summary>
+        /// <returns>Motor voltage</returns>
+        private double CalculateDoublePIDParallelCorrection()
+        {
+            return doublePIDCorrector.CalculateParallelPositionAnglePIDCorrection(true);
+        }
+
+        /// <summary>
+        /// Calculate correction by double cascade controller 
+        /// </summary>
+        /// <returns>Motor voltage</returns>
+        private double CalculateDoublePIDCascadeCorrection()
+        {
+            return doublePIDCorrector.CalculateAnglePIDCorrection();
+        }
+
+        /// <summary>
+        /// Calculate correction simple PID controller 
+        /// </summary>
+        /// <returns>Motor voltage</returns>
+        private double CalculateSinglePIDCorrection()
+        {
+            return singlePIDCorrector.CalculateAnglePIDCorrection();
+        }
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// Class constructor
+        /// </summary>
         public VoltageController()
         {
             random = new Random(Guid.NewGuid().GetHashCode());
@@ -24,6 +75,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             ControlType = DefaultControlType;
         }
 
+        #region IVoltageController Interface
         public double GetVoltage()
         {
             switch (ControlType)
@@ -83,32 +135,17 @@ namespace InvertedPendulumTransporterPhysics.Controllers
                 doublePIDCorrector.SetAngleError(angleError);
         }
 
-        private double CalculateDoublePDParallelCorrection()
-        {
-            return doublePIDCorrector.CalculateParallelPositionAnglePIDCorrection(false);
-        }
-
-        private double CalculateDoublePIDParallelCorrection()
-        {
-            return doublePIDCorrector.CalculateParallelPositionAnglePIDCorrection(true);
-        }
-
-        private double CalculateDoublePIDCascadeCorrection()
-        {
-            return doublePIDCorrector.CalculateAnglePIDCorrection();
-        }
-
-        private double CalculateSinglePIDCorrection()
-        {
-            return singlePIDCorrector.CalculateAnglePIDCorrection();
-        }
-
         public void SetUserAngle(double userAngle)
         {
             this.userAngle = userAngle;
         }
+        #endregion
+        #endregion
     }
 
+    /// <summary>
+    /// Enumeration for control types
+    /// </summary>
     public enum ControlType
     {
         Random,

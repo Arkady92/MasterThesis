@@ -39,7 +39,15 @@
 \usepackage[]{appendix}
 \usepackage[nottoc]{tocbibind}
 \onehalfspacing
-\renewcommand*{\arraystretch}{1.5}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
 
 
 \author{Jakub Abelski}
@@ -134,26 +142,28 @@ podpis promotora & \hspace*{100pt} & podpis autora
 \selectlanguage{polish}
 
 \begin{abstract}
-Rozwój nowoczesnych technologii opiera się w głównej mierze na usprawnianiu istniejących zasobów oraz poszukiwaniu innowacyjnych rozwiązań. W celu ograniczenia nakładów finansowych, jak również minimalizacji ryzyka popełnienia błędu, przy wdrażaniu nowych pomysłów warto rozważyć wykorzystanie narzędzi oferowanych przez środowiska symulacyjne. Komputer potrafi wykryć usterki, z niezwykłą precyzją odpowiedzieć na większość pytań postawionych przez użytkownika, a często daje możliwość wykonania optymalizacji procesu tak, by uzyskać zmaksymalizowany efekt końcowy.
+Rozwój nowoczesnych technologii opiera się w głównej mierze na usprawnianiu istniejących narzędzi oraz poszukiwaniu innowacyjnych rozwiązań. W celu minimalizacji ryzyka popełnienia błędu przy wdrażaniu nowych pomysłów, warto rozważyć wykorzystanie technik oferowanych przez środowiska symulacyjne. Komputer potrafi wykryć usterki i z niezwykłą precyzją odpowiedzieć na większość pytań postawionych przez użytkownika. Dodatkowo daje możliwość wykonania optymalizacji procesu w taki sposób, by uzyskać zmaksymalizowany efekt końcowy.
 
-Niniejsza praca wpisuje się w przestawioną retorykę, gdyż poświęcona jest opracowaniu symulatora transportera wahadła odwróconego na wózku. Bazą dla projektu jest dobrze znane zagadnienie dwuwymiarowego układu złożonego z wahadła odwróconego umieszczonego na ruchomej podstawie. Głównym zadaniem systemu jest utrzymanie wahadła w niestabilnym punkcie równowagi i reagowanie na zakłócenia pochodzące z zewnątrz poprzez odpowiedni regulator napięcia na silniku sterującym ruchem podstawy. Prezentowana praca podchodzi do zagadnienia w sposób niestandardowy. Wspomniany układ zostaje przeniesiony do świata trójwymiarowego, w którym dwa niezależne systemy związane z kierunkami poziomych osi głównych zostają połączone w jeden moduł sterowania układem. Zabieg ten umożliwia zadanie trajektorii ruchu transportera i przetestowanie skuteczności różnych modeli sterowania położeniem układu i wychyleniem wahadła. Dodatkowym elementem projektu jest uwzględnienie zakłócenia w postaci zewnętrznej siły wiatru. Zadaniem transportera jest reagowanie na zakłócenie w taki sposób, by zminimalizować ryzyko stracenia kontroli nad wahadłem. 
+Niniejsza praca wpisuje się w przestawioną retorykę, gdyż poświęcona jest opracowaniu symulatora transportera wahadła odwróconego na wózku. Bazą dla projektu jest dobrze znane zagadnienie dwuwymiarowego układu złożonego z punktu masowego przyczepionego sztywno w pewnej odległości od ruchomej podstawy. Dodatkowo układ wyposażony jest w silnik napędowy regulowany napięciem. Głównym zadaniem systemu jest utrzymanie wahadła w niestabilnym punkcie równowagi i reagowanie na zewnętrzne zakłócenia. 
 
-Przygotowane rozwiązanie nie posiada jeszcze odzwierciedlenia w technice, natomiast doskonale odnajduje się w świecie symulacji i pozwala na dogłębną analizę pracy układu, jak również wykorzystanie go w grach komputerowych jako wirtualnego pojazdu z nietrywialnym sterowaniem. 
+Prezentowana praca podchodzi do wspomnianego zagadnienia w sposób niestandardowy. Układ dynamiki zostaje przeniesiony do świata trójwymiarowego, w którym dwa niezależne systemy kontrolne, związane z kierunkami poziomych osi głównych, zostają połączone w jeden moduł sterowania. Zabieg ten pozwala na zadanie trajektorii ruchu dla transportera i przetestowanie skuteczności różnych modeli sterowania położeniem układu i wychyleniem wahadła. Dodatkowym elementem projektu jest uwzględnienie zakłócenia w postaci zewnętrznej siły wiatru. Zadaniem transportera jest reagowanie na zakłócenie w taki sposób, by zminimalizować ryzyko stracenia kontroli nad wahadłem. 
 
-Celem pracy jest zbudowanie uniwersalnego symulatora z konkretną realizacją przedstawionego problemu. Dodatkowym elementem jest możliwość dokonania dogłębnej analizy procesu tworzenia symulacji i wypracowania optymalnego rozwiązania. Ponadto dokument ma na celu ilustrację architektury i ogólnego schematu działania programu, a także przedstawienie wyników przeprowadzonych testów.
+Przygotowane rozwiązanie nie posiada jeszcze odzwierciedlenia w technice, natomiast doskonale odnajduje się w świecie symulacji. Pozwala na dogłębną analizę pracy układu, jak również wykorzystanie go w grach komputerowych jako wirtualnego pojazdu z nietrywialnym sterowaniem. 
+
+Celem pracy jest zbudowanie symulatora realizującego przedstawiony problem. Dodatkowym elementem jest możliwość dokonania przeglądu procesu tworzenia symulacji i wypracowania optymalnego rozwiązania. Niniejszy dokument stanowi podsumowanie wykonanej pracy, ilustruje model układu oraz architekturę systemu. Ponadto prezentuje wyniki przeprowadzonych testów i wypływające z nich wnioski.
 
 %Pierwszy rozdział tekstu stanowi bazę teoretyczną dalszych rozważań. Zawiera on podstawowe definicje, przybliża istotę problemu oraz istniejące rozwiązania. Rozdział drugi opisuje logikę systemu. Rozdział trzeci skupia się na opisie rozwiązania. W czwartym rozdziale omówione zostają testy oraz porównanie użytych metod. Rozdział piąty prezentuje architekturę opracowanego systemu, natomiast rozdział szósty stanowi instrukcję obsługi dla użytkownika. Ostatni rozdział podsumowuje całość pracy, opisuje wnioski oraz przedstawia możliwe kierunki rozwoju systemu.
 \end{abstract}
 
 \selectlanguage{english}
 \begin{abstract}
-Development of new technologies is based mainly on the analysis, improvement of existing resources and finding innovative solutions. Unfortunately, due to financial constraints, as well as the risk of adverse effects it is not recommended to implement the idea without special preparation. In order to significantly reduce the risks using the tools offered by simulation environments should be considered. The computer is able to forgive the mistakes made at the design stage, as well as it can investigate the matter with great precision and answer most of the questions asked by the user. In addition it has the possibility of optimizing processes, so as to obtain the final effect maximized.
+Development of new technologies is based mainly on analysis, improvement of existing tools and finding innovative solutions. Unfortunately, due to financial constraints, as well as the risk of negative effects, it is not recommended to implement the idea without preparation. In order to significantly reduce the risks using tools offered by simulation environments should be considered. The computer forgives mistakes made at the design stage. It can also investigate the matter with a great precision and answer most of questions. In addition it has the possibility of optimizing processes so as to obtain the final effect maximized.
 
-The thesis is devoted to the development of the simulator for the transporter of an inverted pendulum on a cart. The project is based on well-known problem of two-dimensional system consisting of an inverted pendulum mounted on a movable platform. The main task of the system is to keep the pendulum in an unstable equilibrium and respond to interferences from the environment through the special voltage controller of the platform's engine. In this project the system is transferred to a three-dimensional world in which two independent systems associated with the horizontal directions of the principal axes are integrated into a unit. As a result, the movement trajectory can be applied to the system and the pendulum should be transported according to a given trajectory. An additional element of the project is dealing with the wind force. The transporter have to respond on the interference so as to minimize the risk of losing control of the pendulum. 
+The thesis is dedicated to the development of the inverted pendulum transporter. The project is based on a well-known problem of a two-dimensional system consisting of an inverted pendulum mounted on a movable platform. In addition, the transporter is equipped with a drive motor controlled by voltage. The main task of the system is to keep the pendulum in an unstable equilibrium and respond to interferences from the environment. In this project the system is transferred into a three-dimensional world in which two independent systems, associated with the horizontal directions of the principal axes, are integrated into a unit. As a result, the movement trajectory can be applied to the system and the pendulum should be transported according to the given trajectory. An additional element of the project is dealing with the wind force. The transporter have to respond on the interference so as to minimize the risk of losing control of the pendulum. 
 
-The prepared solution has not yet reflected in the technique however it perfectly finds itself in the world of simulation. The project allows for in-depth analysis of system's dynamics, as well as it can be used in computer games as a virtual vehicle with a non-trivial control.
+The prepared solution has not reflected in the technique yet, however it perfectly finds itself in the world of simulation. The project allows for in-depth analysis of system's dynamics, as well as it can be used in computer games as a virtual vehicle with a non-trivial control.
 
-The aim of the thesis is to build a universal simulator with a concrete implementation of the presented problem. An additional element is the possibility of in-depth analysis of simulation to develop the optimal solution. Furthermore, the document was prepared to illustrate the architecture and a general scheme of the system, as well as present results of tests.
+The aim of the thesis is to build a simulator for the given problem. Moreover, it gives the possibility of in-depth analysis of a simulation process to develop the optimal solution. This document is a summary of the whole work. It illustrates the system model and the software architecture. In addition, it presents the results of the tests and the conclusions drawn from them.
 
 %The first chapter is a theoretical basis for further discussion. It includes basic definitions, shows the essence of the problem and discusses existing solutions. The second chapter describes the logic of the whole program. The third chapter focuses on the solution description. In the fourth chapter tests results and the comparison of the solutions adopted in the project are preseneted. The fifth and sixth chapters describe the system architecture and the user manual. The last chapter summarizes the whole work. It presents conclusions and future directions of development of the system.
 \end{abstract}
@@ -176,7 +186,7 @@ Trajektoria ruchu\\
 Stabilizacja układu\\
 Regulator PID\\
 Zakłócenia siłą wiatru \\
-Równanie stanu\\
+Równania stanu\\
 Linearyzacja\\
 Algorytm Rungego-Kutty
 \end{center}
@@ -199,7 +209,7 @@ Stabilization\\
 PID controller\\
 Wind force interferences\\
 State-space equations\\
-Linearization\\
+Linearisation\\
 Runge–Kutta methods
 \end{center}
 \vspace{\fill}
@@ -214,14 +224,14 @@ Runge–Kutta methods
 Niniejszą pracę pragnę zadedykować rodzicom: Marcie i Janowi Abelskim, dzięki którym miałem możliwość swobodnego kształcenia się i rozwijania swoich zainteresowań.
 \vspace{10px}
 \\
-Chciałbym wyrazić wdzięczność promotorowi: prof. Krzysztofowi Marciniakomwi za jego wsparcie i dobre rady odnośnie kwestii merytorycznych jak i praktycznej części pracy. Specjalne podziękowania dla całej kadry zakładu CAD/CAM na wydziale Matematyki i Nauk Informacyjnych za przekazanie podstaw umożliwiających osiągnięcie odpowiedniego zaawansowania pracy i ugruntowanie wiedzy niezbędnej w przyszłej karierze zawodowej.
+Chciałbym wyrazić wdzięczność promotorowi: prof. Krzysztofowi Marciniakomwi za jego wsparcie i dobre rady odnośnie kwestii merytorycznych, jak i praktycznej części pracy. Specjalne podziękowania dla całej kadry zakładu CAD/CAM na wydziale Matematyki i Nauk Informacyjnych za przekazanie podstaw umożliwiających osiągnięcie odpowiedniego zaawansowania pracy i ugruntowanie wiedzy niezbędnej w przyszłej karierze zawodowej.
 
 \vspace{\fill}
 
 %% -------- table of contents --------
 \newpage
 \pagestyle{plain}
-\setcounter{page}{5}
+\setcounter{page}{6}
 \tableofcontents
 
 %% -------- chapter I --------
@@ -230,18 +240,20 @@ Chciałbym wyrazić wdzięczność promotorowi: prof. Krzysztofowi Marciniakomwi
 \hyphenation{Syl-ves-tra}
 \hyphenation{Syl-ves-ter-a}
 
+\renewcommand*{\arraystretch}{1.5}
+
 \chapter{Wstęp}
 \section{Podstawowe definicje}
 \subsection{Symulacja}
-Według Słownika Języka Polskiego \cite{PWNSymulacja} symulacja to sztuczne odtwarzanie właściwości danego obiektu lub zjawiska za pomocą jego modelu, natomiast bardzie szczegółowo w zakresie symulacji komputerowej jest to badanie zachowania się obiektów rzeczywistych na podstawie obserwacji działania programów komputerowych symulujących to zachowanie.
+Według słownika języka polskiego \cite{PWNSymulacja} symulacja to sztuczne odtwarzanie właściwości danego obiektu lub zjawiska za pomocą jego modelu, natomiast bardziej szczegółowo w zakresie symulacji komputerowej jest to badanie zachowania się obiektów rzeczywistych na podstawie obserwacji działania programów komputerowych symulujących to zachowanie.
 
 
-Symulację komputerową wykonuje się wtedy, gdy trudno jest wyznaczyć analityczne rozwiązanie problemu lub gdy złożoność systemu uniemożliwia jakąkolwiek ręczną analizę problemu. Symulacja komputerowa wykorzystuje pewien zadany model matematyczny pod postacią kodu programu komputerowego, który jest przetwarzany, a następnie prezentowane są rezultaty.
+Symulację komputerową wykonuje się wtedy, gdy trudno jest wyznaczyć analityczne rozwiązanie problemu lub gdy złożoność systemu uniemożliwia jakąkolwiek ręczną analizę problemu. Symulacja komputerowa wykorzystuje pewien zadany model matematyczny pod postacią kodu programu komputerowego, który jest przetwarzany w celu uzyskania konkretnych rezultatów.
 
 Symulacja znajduje zastosowania w wielu dziedzinach takich jak:
 \begin{itemize}
 \item Inżynieria - np. w budownictwie do badania wytrzymałości konstrukcji.
-\item Systemy treningowe, gry komputerowe - np. symulatory samolotów, czołgów, statków, itp.
+\item Automaty treningowe, gry komputerowe - np. symulatory samolotów, czołgów, statków, itp.
 \item Ekonomia i biznes - np. do wyceny instrumentów pochodnych na giełdzie. 
 \item Nauki społeczne - np. w badaniu dynamiki populacji.
 \item Nauki przyrodnicze - np. w meteorologii do wyznaczania prognozy pogody.
@@ -276,32 +288,32 @@ Przygotowywana praca realizuje symulator z deterministyczną przewidywalnością
 
 \subsection{Układ dynamiczny}
 \subsubsection{Wprowadzenie}
-Układ dynamiczny jest to matematyczny model zjawiska występującego w przyrodzie, określany poprzez funkcję zachowania układu w danym czasie. Model ten jest zwykle opisany poprzez układ równań różniczkowych, zwanych równaniem stanu. W danej jednostce czasowej system posiada stan wyrażony jako wektor liczb utożsamiany z punktem w przestrzeni stanu. Ewolucja układu polega na wyznaczaniu kolejnych stanów na podstawie poprzednich poprzez użycie funkcji przejścia. Funkcja ta może być deterministyczna lub stochastyczna. W pierwszym przypadku dla zadanego czasu stan wyznaczany jest jednoznacznie, w drugim przypadku na ewolucję układu wpływają dodatkowe zdarzenia losowe (przytoczone zagadnienie zostało szerzej omówione w \cite{MarciniakDynamicSystems}).
+Układ dynamiczny jest to matematyczny model zjawiska występującego w przyrodzie, określany poprzez funkcję zachowania układu w danym czasie. Model ten jest zwykle opisany poprzez układ równań różniczkowych, zwanych równaniem stanu. W danej jednostce czasowej system posiada stan wyrażony jako wektor liczb utożsamiany z punktem w przestrzeni stanu. Ewolucja układu polega na wyznaczaniu kolejnych stanów na podstawie poprzednich poprzez użycie funkcji przejścia. Funkcja ta może być deterministyczna lub stochastyczna. W pierwszym przypadku dla zadanego czasu stan wyznaczany jest jednoznacznie, w drugim na ewolucję układu wpływają dodatkowe zdarzenia losowe. Przytoczone zagadnienie zostało szeroko omówione w \cite{MarciniakDynamicSystems}.
 
 \subsubsection{Wahadło odwrócone na wózku}
 \label{SubsectionPendulumIntro}
-Niniejsza praca skupia się na modelu dynamiki układu złożonego z wahadła odwróconego umieszczonego na ruchomej platformie. Wahadło odwrócone jest rodzajem wahadła, w którym środek masy znajduje się powyżej punktu zaczepienia. Wahadło połączone jest z wózkiem, który porusza się w płaszczyźnie poziomej za pomocą silnia napędowego. Przykładowy układ pokazany został na ilustracji \ref{SystemModelImage}.
+Niniejsza praca skupia się na modelu dynamiki układu złożonego z wahadła odwróconego umieszczonego na ruchomej platformie. Wahadło odwrócone to takie, w którym środek masy znajduje się powyżej punktu zaczepienia. Obiekt połączony jest z wózkiem, który porusza się w płaszczyźnie poziomej za pomocą silnika napędowego. Przykładowy układ pokazany został na ilustracji \ref{SystemModelImage}.
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 100pt]{SystemModel} 
+		\includegraphics[width = 125pt]{SystemModel} 
 		\caption{\textit{Model bezprzewodowego układu mechanicznego dla odwróconego wahadła na wózku \cite{SystemModel}}}
 		\label{SystemModelImage}
 \end{figure}
 
-Przedstawione ustawienie wahadła powoduje, że znajduje się ono w niestabilnym punkcie równowagi. Punkt równowagi jest miejscem przy którym element pozostaje w bezruchu (prędkość zmiany stanu jest zerowa). Wyróżniamy stabilnie i niestabilne punkty równowagi. Wahadło posiada dwa punkty równowagi: stabilne znajdujące się poniżej punktu zaczepienia i niestabilnie powyżej punktu równowagi. W przypadku drugiego z nich nawet niewielkie zaburzenie stanu układu wywołuje ruch wahadłowy, który ustaje dopiero po zatrzymaniu się w stabilnym punkcie równowagi. 
+Przedstawione ustawienie wahadła powoduje, że znajduje się ono w niestabilnym punkcie równowagi. Punkt równowagi jest miejscem przy którym element pozostaje w bezruchu (prędkość zmiany stanu jest zerowa). Wahadło posiada dwa takie miejsca: stabilne znajdujące się poniżej punktu zaczepienia i niestabilnie powyżej tego punktu. W przypadku drugiego z nich nawet niewielkie zaburzenie stanu układu wywołuje ruch wahadłowy, który ustaje dopiero po zatrzymaniu się w stabilnym punkcie równowagi. 
 
 
 Układ będący przedmiotem zainteresowania pokazany został na schemacie \ref{SytemSchemeImage}.
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 300pt]{SystemScheme} 
+		\includegraphics[width = 375pt]{SystemScheme} 
 		\caption{\textit{Uproszczony schemat fizyki układu wahadła odwróconego na wózku \cite{LMIP} }}
 		\label{SytemSchemeImage}
 \end{figure}
 
-Najważniejsze elementy schematu:
+Najważniejsze elementy fizyczne modelu:
 \begin{itemize}
 \item \(F_v\) - siła napędowa wózka \([N]\).
 \item \(F_f\) - siła tarcia \([N]\).
@@ -313,13 +325,13 @@ Najważniejsze elementy schematu:
 
 Stan układu określany jest poprzez cztery parametry:
 \begin{itemize}
-\item Położenie środka wózka w osi X.
+\item Położenie środka wózka w osi O(X).
 \item Prędkość liniowa wózka.
 \item Kąt odchylenia wahadła od osi pionowej.
 \item Prędkość kątowa wahadła.
 \end{itemize}
 
-Parametry fizyczne układu (wraz z nominalnymi wartościami opracowanymi na podstawie literatury \cite{LMIP}) pokazane zostały w poniższej tabeli \ref{table:NominalParameters}.
+Parametry fizyczne układu (wraz z nominalnymi wartościami opracowanymi w oparciu o \cite{LMIP}) pokazane zostały w tabeli \ref{table:NominalParameters}.
 \begin{table}[H]
 \begin{center}
 \begin{tabular}{|c|c|}
@@ -345,7 +357,7 @@ Parametry fizyczne układu (wraz z nominalnymi wartościami opracowanymi na pods
 Podstawowym zagadnieniem związanym z omawianym układem jest kontrola wychylenia wahadła. Urządzenie sterujące poprzez przyłożenie odpowiedniego napięcia na silniku wywołuje siłę napędową, która porusza platformą. Odpowiedni ruch podstawy pozwala na utrzymanie wahadła w punkcie równowagi.
 
 \subsubsection{Trójwymiarowa wersja układu}
-Dwuwymiarowy układ wahadła odwróconego na wózku można wykorzystać do zbudowania trójwymiarowego odpowiednika. Nowy model składa się z dwóch podukładów odpowiedzialnych za płaszczyzny związane z osiami głównymi układu, odpowiednio: O(XZ) i O(YZ). Przybliżony model znajduje się na rysunku \ref{3DimModel}
+Dwuwymiarowy układ wahadła odwróconego na wózku można wykorzystać do zbudowania trójwymiarowego odpowiednika. Nowy model składa się z dwóch podukładów odpowiedzialnych za płaszczyzny związane z osiami głównymi układu, odpowiednio: O(XZ) i O(YZ). Przybliżony model znajduje się na rysunku \ref{3DimModel}.
 
 \begin{figure}[H]
 	\centering
@@ -354,33 +366,33 @@ Dwuwymiarowy układ wahadła odwróconego na wózku można wykorzystać do zbudo
 		\label{3DimModel}
 \end{figure}
 
-Wynikowy stan całego układu jest sumą stanów poszczególnych komponentów. Ruch trójwymiarowego modelu wyznaczany jest jako złożenie (superpozycja) ruchów podukładów. Kierunek wychylenia wahadła można wyznaczyć za pomocą elementarnych własności geometrycznych. 
+Wynikowy stan całego układu określają stany poszczególnych komponentów. Ruch trójwymiarowego modelu wyznaczany jest jako złożenie (superpozycja) ruchów podukładów. Kierunek wychylenia wahadła można wyznaczyć za pomocą elementarnych własności geometrycznych. 
 
 Opracowany w ten sposób model pozwala na poruszanie układem po płaszczyźnie O(XY). Wykorzystując odpowiednie narzędzie sterujące można dokonać stabilizacji układu nie tylko dla kąta odchylenia wahadła, ale również pozycji wózka na płaszczyźnie.
 
 \section{Opis problemu}
 \subsection{Motywacja}
-Opracowywane zagadnienie jest nietrywialną modyfikacją dobrze znanego zagadnienia sterowania wahadłem odwróconym na wózku. Wybrana tematyka pracy magisterskiej jest ściśle związana z zainteresowaniami autora oraz materiałem realizowanym w ramach studiów. Przygotowanie pracy daje możliwość pogłębienia wiedzy z zakresu układów dynamiki i teorii sterowania. Dodatkowo pozwala na zmierzenie się z problemem wykonania symulacji, która w profesjonalny sposób zrealizuje zadane zagadnienie, a dodatkowo będzie atrakcyjna dla użytkownika końcowego. Ponadto wypracowana koncepcja systemu nie posiada jeszcze odzwierciedlenia we współczesnej technice. Toteż ze względu na elementy innowacyjności rozwiązania, pomysł ten jest okazją do analizy niestandardowego systemu, który może mieć zastosowanie w przyszłości, przynajmniej w środowisku wirtualnym.
+Poruszone zagadnienie jest nietrywialną modyfikacją dobrze znanego zagadnienia sterowania wahadłem odwróconym na wózku. Wybrana tematyka pracy magisterskiej jest ściśle związana z zainteresowaniami autora pracy oraz materiałem realizowanym w ramach studiów. Przygotowanie pracy daje możliwość pogłębienia wiedzy z zakresu układów dynamiki i teorii sterowania. Dodatkowo pozwala na zmierzenie się z problemem wykonania symulacji, która w profesjonalny sposób zrealizuje postawione zadanie, a dodatkowo będzie atrakcyjna dla użytkownika końcowego. Ponadto wypracowana koncepcja systemu nie posiada jeszcze odzwierciedlenia we współczesnej technice. Toteż ze względu na elementy innowacyjności rozwiązania, pomysł ten jest okazją do analizy niestandardowego systemu, który może mieć zastosowanie w przyszłości, przynajmniej w środowisku wirtualnym.
 
 \subsection{Główne cele}
 Podstawowym celem pracy jest opracowanie symulatora transportera wahadła odwróconego na wózku. Zagadnienie to można w naturalny sposób podzielić na kilka podproblemów, co pozwala na szczegółowy przegląd poszczególnych elementów:
 \begin{itemize}
-\item Układ wahadła odwróconego na wózku. Projekt opiera się na analizie prostego modelu fizycznego wraz z implementacją jego zachowania. Dodatkowo rozszerza podstawową, dwuwymiarową wersję, na układ trójwymiarowy, by zwiększyć poziom skomplikowania, ocenić użyteczność zaproponowanego pomysłu i wzbogacić efekt końcowy. Dodatkowym elementem jest wprowadzenie zakłóceń do układu w postaci podmuchów powietrza. Istotny jest również przegląd przypadków szczególnych i wypracowanie odpowiedniej reakcji na ich zaistnienie. Projekt powinien w pełni przedstawić zadane zagadnienie, wraz z możliwością wprowadzania modyfikacji układu i pełnym podglądem na jego stan. Dysponując w pełni zaimplementowanym modelem bazowym można badać zachowanie układu wobec zadanych parametrów wejściowych i dynamicznych.
-\item Stabilizacja układu. Naturalnym zagadnieniem wiążącym się z układem wahadła odwróconego na wózku jest próba stabilizacji wychylenia wahadła w obrębie pionowej osi układu tak, by komponent pozostawał w niestabilnym punkcie równowagi. Celem projektu jest zrealizowanie wspomnianej stabilizacji za pomocą regulacji napięcia podawanego na wejście do silników sterujących wózkiem. Zadanie to wymaga wykorzystania wiedzy z zakresu teorii sterowania, w szczególności pojęcia regulatora. Praca powinna oprzeć się na implementacji odpowiedniego regulatora i przetestowaniu jego działania względem poszczególnych parametrów systemu. 
+\item Układ wahadła odwróconego na wózku. Projekt opiera się na analizie prostego modelu fizycznego wraz z implementacją jego zachowania. Dodatkowo rozszerza podstawową, dwuwymiarową wersję, na układ trójwymiarowy, by zwiększyć poziom skomplikowania, ocenić użyteczność zaproponowanego pomysłu i wzbogacić efekt końcowy. Kolejnym elementem jest wprowadzenie zakłóceń do układu w postaci podmuchów powietrza. Ważną rolę pełni również przegląd przypadków szczególnych i wypracowanie odpowiedniej reakcji na ich zaistnienie. Projekt powinien w pełni przedstawić zadane zagadnienie, umożliwić wprowadzanie modyfikacji układu i zapewnić pełny podgląd na stan układu. Dysponując w pełni zaimplementowanym modelem bazowym można przejść do badania zachowania układu wobec zadanych parametrów.
+\item Stabilizacja układu. Naturalnym zagadnieniem wiążącym się z układem wahadła odwróconego na wózku jest próba stabilizacji wychylenia wahadła w obrębie pionowej osi układu. Komponent powinien pozostawać w niestabilnym punkcie równowagi. Celem projektu jest zrealizowanie wspomnianej stabilizacji za pomocą regulacji napięcia podawanego na wejście do silników sterujących wózkiem. Zadanie to wymaga wykorzystania wiedzy z zakresu teorii sterowania, w szczególności pojęcia regulatora. Praca powinna oprzeć się na implementacji odpowiednich narzędzi i przetestowaniu ich działania względem poszczególnych parametrów systemu. 
 \item Transport układu. Osiągnięcie kontroli nad wychyleniem wahadła pozwala na dalsze rozszerzanie funkcjonalności systemu. Kolejnym etapem projektu jest stworzenie modułu sterującego ruchem całego układu. System powinien umożliwić stworzenie dowolnej trajektorii ruchu lub wczytanie przygotowanego przykładu, a następnie zmuszenie układu fizycznego do odwzorowania zadanej ścieżki ruchu.
-\item Opracowanie symulatora. System nie będzie użyteczny, jeśli nie zostanie zaprezentowany użytkownikowi końcowemu w wygodnej i atrakcyjnej wizualnie formie. Ostatnim istotnym celem projektu jest stworzenie aplikacji na komputer, której zadaniem będzie wizualizacja zachowania całego układu fizyki. Ponadto program powinien posiadać intuicyjny panel sterowania oraz dostarczać na bieżąco pełnej informacji na temat stanu sytemu. Dodatkowym walorem aplikacji może być tryb interakcyjny, który pozwoli użytkownikowi nie tylko na przegląd mechaniki układu, lecz również na zabawę w sterowanie pojazdem.
+\item Opracowanie symulatora. System nie będzie użyteczny, jeśli nie zostanie zaprezentowany użytkownikowi końcowemu w wygodnej i atrakcyjnej wizualnie formie. Ostatnim istotnym celem projektu jest stworzenie aplikacji okienkowej, której zadaniem będzie wizualizacja zachowania całego układu fizyki. Ponadto program powinien posiadać intuicyjny panel sterowania oraz dostarczać na bieżąco pełnej informacji na temat stanu sytemu. Dodatkowym walorem aplikacji może być tryb interaktywny, który pozwoli użytkownikowi nie tylko na przegląd mechaniki układu, lecz również na zabawę w sterowanie pojazdem.
 \end{itemize}
 
 \section{Przegląd istniejących rozwiązań}
 \subsection{Symulatory}
-W obecnych czasach oprogramowanie symulacyjne jest podstawą funkcjonowania wielu gałęzi przemysłu. Przed przystąpieniem do realizacji projektu autor skupił się na przeglądzie najbardziej popularnych narzędzi symulacyjnych w celu znalezienia kluczowych cech, jakie powinien spełniać dobry symulator. Na szczególną uwagę zasługują trzy rozwiązania:
+W obecnych czasach oprogramowanie symulacyjne jest podstawą funkcjonowania wielu gałęzi przemysłu. Przed przystąpieniem do realizacji projektu autor pracy skupił się na przeglądzie najbardziej popularnych narzędzi symulacyjnych w celu znalezienia kluczowych cech, jakie powinien spełniać dobry symulator. Na szczególną uwagę zasługują trzy rozwiązania:
 \begin{itemize}
 \item Simulink - pakiet numeryczny MATLAB firmy The MathWorks służący do przeprowadzania symulacji komputerowych. Narzędzie pozwala na tworzenie modeli poprzez wybór komponentów z interfejsu graficznego. Zapewnia symulację z czasem dyskretnym i ciągłym. Simulink wykorzystywany jest głównie do cyfrowego przetwarzania sygnałów, teorii sterowania i analizy obwodów elektrycznych.
 \item LabVIEW - środowisko programistyczne firmy National Instruments skupiające się głównie na pomiarach i analizie danych. Pozwala na tworzenie modeli poprzez specjalny graficzny język programowania. LabVIEW znajduje zastosowanie w ośrodkach badawczych i testach przemysłowych.
-\item SolidWorks Simulation - pakiet symulacyjny będący częścią programu komputerowego typu CAD firmy Dassault Systèmes. Umożliwia analizę modeli pod wieloma kątami technicznym, symulację ruchu układu w obecności różnych czynników zewnętrznych. Narzędzie wykorzystywane przez wiodące firmy zajmujące się przemysłem.  
+\item SolidWorks Simulation - pakiet symulacyjny będący częścią programu komputerowego typu CAD firmy Dassault Systèmes. Umożliwia analizę modeli pod wieloma kątami technicznym oraz symulację ruchu układu w obecności różnych czynników zewnętrznych. Narzędzie wykorzystywane jest przez wiodące firmy z wielu gałęzi przemysłu.  
 \end{itemize}
 
-Przytoczone przykłady zostały zanalizowane pod kątem budowy, możliwości technicznych, sposobu prezentacji danych i interakcji z użytkownikiem. Wypracowane wnioski dały gruntowną podstawę do stworzenia własnego rozwiązania opartego na kilku najważniejszych cechach dobrej symulacji:
+Przytoczone przykłady zostały przeanalizowane pod kątem budowy, możliwości technicznych, sposobu prezentacji danych i interakcji z użytkownikiem. Wypracowane wnioski dały gruntowną podstawę do stworzenia własnego rozwiązania opartego na kilku najważniejszych cechach:
 \begin{itemize}
 \item Modularna budowa - program powinien być zbudowany z respektowaniem standardów inżynierii oprogramowania. Poszczególne funkcjonalności powinny być wyodrębnione i tworzyć pojedyncze pakiety, które będzie można wykorzystywać jako samodzielne elementy.
 \item Prostota - konkretne narzędzie powinno spełniać wszystkie wymagania techniczne i ukazywać rezultaty w jak najbardziej przejrzysty sposób. Dodatkowe elementy powodują jedynie przesłonięcie kluczowych funkcjonalności.
@@ -390,20 +402,18 @@ Przytoczone przykłady zostały zanalizowane pod kątem budowy, możliwości tec
 \subsection{Dynamika i sterowanie}
 Zagadnienie stabilizacji dwuwymiarowego układu wahadła odwróconego na wózku zostało szeroko omówione w wielu pracach naukowych. Ze względu na prostotę podstawowego modelu temat ten często pojawia się jako materiał na laboratorium na studiach poświęconych automatyce i robotyce (przykładem jest instrukcja \cite{LMIP}).
 
-Dokładna analiza problemu opiera się na wyborze jednego z dwóch modeli: nieliniowego lub zlinearyzowanego. W pierwszym przypadku model wiernie odwzorowuje zachowanie wahadła niezależnie od jego wychylenia, w drugim pojawia się ograniczenie na nieznaczne wychylenia wahadła. Większość przeanalizowanych prac realizuje drugie założenie ze względu na znaczne uproszczenia obliczeń. Kolejnym wyróżnikiem jest sposób stabilizacji układu. Istnieje wiele narzędzi z zakresu teorii sterowania, które pozwalają na kontrolowanie układu. Najbardziej popularnymi są regulatory: PID i LQR. Szczegółowy przegląd i porównanie narzędzi zostało omówione w artykule \cite{OptimalControl}. Autor pracy skupił się wyłącznie na sterowaniu regulatorem PID, jednakże pozostawił możliwość zamiany kontrolera na dowolny inny.
+Dokładna analiza problemu opiera się na wyborze jednego z modeli: nieliniowego lub uproszczonego, po linearyzacji. W pierwszym przypadku model wiernie odwzorowuje zachowanie wahadła niezależnie od jego wychylenia, w drugim pojawia się ograniczenie na nieznaczne wychylenia wahadła. Większość przeanalizowanych prac realizuje drugie założenie ze względu na znaczne uproszczenia obliczeń przy niewielkiej utracie dokładności. Kolejnym wyróżnikiem jest sposób stabilizacji układu. Istnieje wiele narzędzi z zakresu teorii sterowania, które pozwalają na kontrolowanie układu. Najbardziej popularnymi są regulatory: PID i LQR. Szczegółowy przegląd i porównanie narzędzi zostało omówione w artykule \cite{OptimalControl}. Autor pracy skupił się wyłącznie na sterowaniu regulatorem PID, jednakże pozostawił możliwość zamiany kontrolera na dowolny inny.
 
-Zagadnienie trójwymiarowe znajduje swoje odniesienie jedynie w modelowaniu poruszania dwunożnego robota, w którym skomplikowany model zostaje zastąpiony wahadłem. Stabilizacja uproszczonego modelu pozwala na poruszanie robotem przy zachowaniu stabilności jego postawy. Temat został gruntownie przedstawiony w artykule \cite{BipedWalking}.
+Zagadnienie trójwymiarowego układu znajduje odniesienie w modelowaniu ruchu dwunożnego robota, w którym skomplikowany model zostaje zastąpiony odpowiednimi wahadłami odwróconymi. Stabilizacja uproszczonego modelu pozwala na poruszanie robotem przy zachowaniu stabilności jego postawy. Temat został gruntownie przedstawiony w artykule \cite{BipedWalking}.
 
-Symulacja transportera układu nie jest zagadnieniem szeroko omówionym, toteż autor oparł rozwiązanie na ogólnej wiedzy z zakresu dynamiki układów i sterowania. 
+Symulacja transportu układu nie jest zagadnieniem szeroko omówionym, toteż autor pracy oparł rozwiązanie na ogólnej wiedzy z zakresu dynamiki układów i sterowania. 
 
 
 %% -------- chapter II --------
 \newpage
 \chapter{Definicja projektu}
 \section{Zakres projektu}
-Projekt obejmuje opracowanie biblioteki fizyki dla transportera wahadła odwróconego na wózku oraz symulatora wizualizującego działanie biblioteki. Aplikacja przeznaczona jest na platformę Windows.
-
-Projekt podzielony jest na kilka głównych elementów:
+Projekt obejmuje opracowanie biblioteki fizyki dla transportera wahadła odwróconego na wózku oraz symulatora wizualizującego działanie biblioteki. Aplikacja przeznaczona jest na platformę Windows. Projekt podzielony jest na kilka głównych elementów:
 \begin{itemize}
 \item Budowa dynamiki układu w oparciu o podstawy matematyczno-fizyczne.
 \item Opracowanie modułu kontroli układem w celu zapewnienia stabilności.
@@ -419,19 +429,19 @@ Wymagania względem projektu można podzielić na funkcjonalne i niefunkcjonalne
 
 Podstawowe wymagania niefunkcjonalne:
 \begin{itemize}
-\item Użyteczność - program powinien w pełni realizować postawione zadania, a dodatkowo zachęcać użytkownika do zrozumienia tematyki.
+\item Użyteczność - program powinien w pełni realizować postawione zadania, a dodatkowo zachęcać użytkownika do zapoznania się z tematyką.
 \item Stabilność - aplikacja powinna działać poprawnie bez względu na interakcję użytkownika.
 \item Łatwość użytkowania - korzystanie z funkcjonalności powinno być intuicyjne, ponadto wszystkie najważniejsze informacje powinny zostać zebrane w charakterze pomocy.
 \item Łatwość modyfikowania - program powinien umożliwiać dostosowywanie ustawień w zależności od potrzeb użytkownika. 
 \item Modularność - każdy element systemu powinien być skonstruowany jako oddzielny moduł udostępniający szereg funkcji.
-\item Rozszerzalność - kod źródłowy aplikacji powinien być przejrzysty, łatwy do zarządzania i rozszerzalny.
+\item Rozszerzalność - kod źródłowy aplikacji powinien być przejrzysty i łatwy do zarządzania.
 \end{itemize}
 
 Najważniejsze wymagania funkcjonalne:
 \begin{itemize}
 \item Zarządzanie aplikacją
 \begin{itemize}
-\item Wybór jednego z trybów działania aplikacji (podstawowy, śledzenie trajektorii, tryb gry).
+\item Wybór jednego z trybów działania aplikacji (stabilizacja układu, śledzenie trajektorii, tryb gry).
 \item Modyfikacja parametrów startowych układu.
 \item Możliwość ustawienia aktualnego regulatora i generatora wiatru.
 \item Modyfikacja dokładności śledzenia trajektorii.
@@ -444,17 +454,18 @@ Najważniejsze wymagania funkcjonalne:
 \item Trójwymiarowa scena z możliwością swobodnej manipulacji kamerą.
 \item Umieszczenie modelu transportera w postaci platformy na kołach z przyczepionym odwróconym wahadłem.
 \item Wyświetlanie płaszczyzny, po której porusza się model, wraz z podziałką metryczną. 
-\item W zależności od ustawień wyświetlania pokazywanie trajektorii ruchu wahadła i wózka.
+\item W zależności od ustawień wyświetlania, pokazywanie trajektorii ruchu wahadła i wózka.
 \item Kontrolowanie postępu animacji poprzez odpowiedni panel.
-\item Możliwość przełączania wyświetlania między trybami: prostych kolorów i tekstur.
+\item Możliwość przełączania wyświetlania między trybami graficznymi.
 \item Możliwość ręcznego sterowania układem za pomocą myszy i klawiatury.
 \end{itemize}
 \item Prezentacja danych
 \begin{itemize}
-\item Dynamiczne wykresy dla kluczowych danych, tj. błąd regulacji czy podawane napięcie na silniku.
-\item Możliwość zapisywania aktualnie wygenerowanych wykresów.
+\item Dynamiczne wykresy dla kluczowych danych, tj. uchyb regulacji czy podawane napięcie na silniku.
+\item Możliwość zapisywania wygenerowanych wykresów.
 \item Wyświetlanie aktualnego stanu układu.
-\item Prezentacja informacji ogólnych na temat aplikacji i dynamiki układu oraz interaktywnej pomocy.
+\item Prezentacja informacji ogólnych na temat aplikacji i dynamiki układu
+\item Okno pomocy opisujące podstawowe funkcjonalności programu.
 \end{itemize}
 \end{itemize}
 
@@ -463,7 +474,7 @@ W trakcie wstępnej analizy projektu przyjęto zestaw ograniczeń w celu zachowa
 \begin{itemize}
 \item Konieczność spełnienia wszystkich podstawowych wymagań wymienionych w poprzedniej sekcji.
 \item Możliwość uproszczenia modelu w celu zmniejszenia złożoności obliczeń.
-\item Ograniczenie realizacji stabilizacji układu do użycia różnych odmian regulatora PID.
+\item Ograniczenie realizacji stabilizacji układu do wykorzystania kilku odmian regulatora PID.
 \item Ograniczenie jakości wizualizacji do wyświetlania prostego modelu układu na trójwymiarowej scenie.
 \end{itemize}
 
@@ -471,9 +482,9 @@ W trakcie wstępnej analizy projektu przyjęto zestaw ograniczeń w celu zachowa
 \newpage
 \chapter{Opis rozwiązania}
 \section{Podstawy matematyczno-fizyczne}
-Dokładne omówienie rozwiązań przyjętych w pracy wymaga rozwinięcia kilku zasadniczych pojęć. Przytoczone zagadnienia zostały opracowane w oparciu o materiały z wykładów poświęconych projektowaniu środowiska wirtualnego: \cite{MarciniakControlSystems} oraz \cite{MarciniakClosedLoop}, a także tekst: \cite{RungeKutta}.
+Dokładne omówienie rozwiązań przyjętych w pracy wymaga rozwinięcia kilku zasadniczych pojęć. Przytoczone zagadnienia zostały opracowane w oparciu o materiały z wykładów poświęconych projektowaniu środowiska wirtualnego: \cite{MarciniakControlSystems} oraz \cite{MarciniakClosedLoop}, a także pozycję \cite{RungeKutta}.
 
-\subsection{Równanie stanu}
+\subsection{Równania stanu}
 \label{StateSpaceSubsection}
 Stan układu jest to informacja umożliwiająca określenie zachowania układu w danej jednostce czasu. Zawiera w sobie zakumulowane dane z całego przebiegu ruchu od chwili początkowej do obecnej. Jest to tzw. własność pamięci układu. Istotnym zagadnieniem związanym ze stanem układu jest charakterystyka związków między jego zmiennymi. Związki te określane są mianem równania stanu. Równanie to przyjmuje postać równania różniczkowego pierwszego rzędu i stanowi matematyczny model układu fizycznego.
 
@@ -490,27 +501,27 @@ W sytuacji gdy prawa strona równania \ref{eq_1} nie zależy od czasu przyjmuje 
 \mathbf{0} = \mathbf{v}(\mathbf{x})
 \end{equation}
 
-Przedstawiony model jest jednoznacznie zdefiniowany przez warunek początkowy. Jednakże w rozwiązaniach praktycznych dużo korzystniejszym rozwiązaniem jest stworzenie rozwiązania, które oprócz obserwacji umożliwia również kontrolę. Aby to osiągnąć uzupełnia się model o dodatkowy wektor \(\mathbf{u}\) zawierający parametry modyfikujące trajektorie układu. Odpowiednie równanie trajektorii przybiera wówczas następującą postać:
+Przedstawiony model jest jednoznacznie zdefiniowany przez warunek początkowy. Jednakże w rozwiązaniach praktycznych dużo korzystniejszym podejściem jest stworzenie rozwiązania, które oprócz obserwacji umożliwia również kontrolę. Aby to osiągnąć uzupełnia się model o dodatkowy wektor \(\mathbf{u}\) zawierający parametry modyfikujące trajektorie układu. Odpowiednie równanie trajektorii przybiera wówczas następującą postać:
 \begin{equation}
 \dot{\mathbf{x}} = \mathbf{v}(\mathbf{x},\mathbf{u})
 \end{equation}
 
-W większości przypadków aplikacje symulacyjne nie wymagają rozwiązywania skomplikowanego nieliniowego równania. Toteż często stosowaną praktyką jest upraszczanie poprzez linearyzację układu. W przypadku układu autonomicznego zmienność zostaje zastąpiona stałymi elementami: macierzą \(A\) związaną ze stanem układu oraz \(B\) związaną ze sterowaniem. Dodatkowo należy przyjąć, że w niektórych systemach zmienne stanu mogą być niedostępne w sposób bezpośredni, dlatego należy zdefiniować dodatkowe równanie pozwalające wyprowadzić zmienne wyjściowe układu.
+W większości przypadków aplikacje symulacyjne nie wymagają rozwiązywania skomplikowanego nieliniowego równania. Toteż często stosowaną praktyką jest upraszczanie poprzez linearyzację układu. W przypadku układu autonomicznego zmienność zostaje zastąpiona stałymi elementami: macierzą \(A\) związaną ze stanem układu oraz macierzą \(B\) związaną ze sterowaniem. Dodatkowo należy przyjąć, że w niektórych systemach zmienne stanu mogą być niedostępne w sposób bezpośredni, dlatego należy zdefiniować dodatkowe równanie pozwalające wyprowadzić zmienne wyjściowe układu.
 
-Ostatecznie równanie stanu dla systemu liniowego niezmienniczego w czasie (ang. Linear Time Invariant) wygląda w sposób następujący:
+Ostatecznie równania stanu dla systemu liniowego niezmienniczego w czasie (ang. Linear Time Invariant) wygląda w sposób następujący:
 \begin{gather}
 \dot{x}(t) = Ax(t) + Bu(t) \\
 y(t) = Cx(t) + Du(t)
 \end{gather}
 gdzie:
 \begin{itemize}
-\item \(x(t)\) - wektor stanu
-\item \(u(t)\) - wektor sterowania
-\item \(u(t)\) - wektor wyjściowy
-\item \(A^{q \times n}\) - macierz stanu
-\item \(B^{q \times m}\) - macierz sterowania
-\item \(C^{p \times n}\) - macierz wyjścia
-\item \(D^{p \times m}\) - macierz sterowania bezpośredniego
+\item \(x(t)\) - wektor stanu,
+\item \(u(t)\) - wektor sterowania,
+\item \(u(t)\) - wektor wyjściowy,
+\item \(A^{q \times n}\) - macierz stanu,
+\item \(B^{q \times m}\) - macierz sterowania,
+\item \(C^{p \times n}\) - macierz wyjścia,
+\item \(D^{p \times m}\) - macierz sterowania bezpośredniego.
 \end{itemize}
 
 Parametry \(q\) i \(p\) są zwykle równe \(n\), toteż macierz stanu jest najczęściej macierzą kwadratową. Macierz \(D\) pojawia się tylko w przypadku układów właściwych, czyli takich które posiadają transmitancję właściwą.
@@ -547,7 +558,7 @@ k_4 &= hf(x_n + h, y_n + k_3)
 
 Rezultatem działania metody jest zestaw kolejnych punków przybliżających rozwiązanie. W przypadku układu równań różniczkowych postępowanie jest analogiczne. 
 
-Rozwiązanie opracowane przez autora korzysta z modyfikacji bazowego algorytmu zwanej metodą Casha-Karpa, która pozwala na adaptacyjny dobór parametru kroku całkowania \(h\).
+Rozwiązanie opracowane przez autora pracy korzysta z modyfikacji bazowego algorytmu zwanej metodą Casha-Karpa, która pozwala na adaptacyjny dobór parametru kroku całkowania \(h\).
 
 \subsection{SLERP}
 \label{SLERP}
@@ -571,11 +582,11 @@ Regulator PID (ang. proportional-integral-derivative controller) jest to element
 \item człon różniczkujący \textbf{D}, który przewiduje następne wartości uchybu.
 \end{itemize}
 
-Schemat poglądowy regulatora PID zawarty został na ilustracji \ref{PID}
+Schemat poglądowy regulatora PID zawarty został na ilustracji \ref{PID}.
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 200pt]{PID} 
+		\includegraphics[width = 250pt]{PID} 
 		\caption{\textit{Schemat blokowy idelnego regulatora PID \cite{PID}}}
 		\label{PID}
 \end{figure}
@@ -586,11 +597,11 @@ u(t) = K_p[e(t) + \frac{1}{T_i}\int_{0}^{t} e(\tau) d\tau + T_d \frac{de(t)}{dt}
 \end{equation}
 gdzie:
 \begin{itemize}
-\item $u(t)$ - sygnał sterujący z regulatora
-\item $e(t)$ - uchyb regulacji
-\item $K_p$ - wzmocnienie członu proporcjonalnego
-\item $T_i$ - czas zdwojenia członu całkującego
-\item $T_d$ - czas wyprzedzenia członu różniczkującego
+\item $u(t)$ - sygnał sterujący z regulatora,
+\item $e(t)$ - uchyb regulacji,
+\item $K_p$ - wzmocnienie członu proporcjonalnego,
+\item $T_i$ - czas zdwojenia członu całkującego,
+\item $T_d$ - czas wyprzedzenia członu różniczkującego.
 \end{itemize}
 
 Algorytm \ref{PIDAlg} można poddać dyskretyzacji z krokiem całkowania $h$. Poszczególne iteracje będą wówczas wyznaczane w następujący sposób:
@@ -604,14 +615,17 @@ Uzyskanie poprawnego działania regulatora PID wymaga dobrania odpowiednich wart
 \label{DoublePID}
 Utrzymanie układu wahadła odwróconego na wózku w niestabilnym punkcie równowagi wymaga uzupełnienia systemu o mechanizm kontroli. Regulator PID może pełnić funkcję narzędzia utrzymującego zerowe odchylenie wahadła względem osi pionowej. Niestety, w sytuacji, gdy celem układu jest dodatkowo stabilizacja położenia, nie wystarczy pojedynczy regulator PID. Rozwiązaniem tego problemu jest rozbudowa struktury na dwa komponenty odpowiedzialne za poszczególne wielkości regulowane. W literaturze pojawia się kilka zagadnień, z których najbardziej popularne to:
 \begin{itemize}
-\item układ regulacji kaskadowej przedstawiony na rysunku \ref{DoublePIDCascade}. Jest to klasyczne podejście zbudowane na podstawie "szybkiej" pętli wewnętrznej i "wolnej" pętli zewnętrznej. Regulator nadrzędny odpowiada za sterowanie położeniem wózka. Wartość wyjściowa z regulatora staje się wartością zadaną dla wewnętrznego układu, który zajmuje się regulacją kąta odchylenia wahadła od pionu. Wyjście z regulatora wewnętrznego podawane jest ostatecznie do sterowanego układu. Koncepcja ta pozwala na utrzymanie stabilności wahadła z dodatkowym uwzględnieniem dostosowywania pozycji wózka.
+\item Układ regulacji kaskadowej pokazany na rysunku \ref{DoublePIDCascade}. Jest to klasyczne podejście zbudowane na podstawie ''szybkiej'' pętli wewnętrznej i ''wolnej'' pętli zewnętrznej. Regulator nadrzędny odpowiada za sterowanie położeniem wózka. Wartość wyjściowa z regulatora staje się wartością zadaną dla wewnętrznego układu, który zajmuje się regulacją kąta odchylenia wahadła od pionu. Wyjście z regulatora wewnętrznego podawane jest ostatecznie do sterowanego układu. Koncepcja ta pozwala na utrzymanie stabilności wahadła z dodatkowym uwzględnieniem dostosowywania pozycji wózka.
+
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 300pt]{DoublePIDCascade} 
+		\includegraphics[width = 350pt]{DoublePIDCascade} 
 		\caption{\textit{Schemat blokowy kaskadowego układu sterowania regulatorami PID\cite{JTJT}}}
 		\label{DoublePIDCascade}
 \end{figure}
-\item Układ regulacji równoległej pokazany na ilustracji \ref{DoublePIDParallel}. Działanie tego układu jest zbliżone do wariantu kaskadowego. Cechą odrębną jest fakt, że sterowanie podawane na układ wyznaczane jest jako różnica sterowań poszczególnych podukładów sterujących. Rozwiązanie to generuje problem wzajemnego zakłócania regulatorów, toteż należy uwzględnić w modelu, że regulator odchylenia wahadła musi być "szybszy" od regulatora położenia. Zabieg ten spowoduje, że tylko sterownik położenia potraktuje dodatkowe sterowanie jako zakłócenie.
+
+\item Układ regulacji równoległej pokazany na ilustracji \ref{DoublePIDParallel}. Działanie tego układu jest zbliżone do wariantu kaskadowego. Cechą odrębną jest fakt, że sterowanie podawane na układ wyznaczane jest jako różnica sterowań poszczególnych podukładów sterujących. Rozwiązanie to generuje problem wzajemnego zakłócania regulatorów, toteż należy uwzględnić w modelu, że regulator odchylenia wahadła musi być ''szybszy'' od regulatora położenia. Zabieg ten spowoduje, że tylko sterownik położenia potraktuje dodatkowe sterowanie jako zakłócenie.
+
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 300pt]{DoublePIDParallel} 
@@ -622,10 +636,10 @@ Utrzymanie układu wahadła odwróconego na wózku w niestabilnym punkcie równo
 
 Definicja oznaczeń na schematach \ref{DoublePIDCascade} i \ref{DoublePIDParallel}:
 \begin{itemize}
-\item S1, S2 - wartości zadanie
-\item E1, E2 - uchyby regulacji
-\item U1, U2 - wyjścia z regulatorów
-\item Y1, Y2 - wyjścia z układu sterowanego
+\item S1, S2 - wartości zadanie,
+\item E1, E2 - uchyby regulacji,
+\item U1, U2 - wyjścia z regulatorów,
+\item Y1, Y2 - wyjścia z układu sterowanego.
 \end{itemize}  
 
 \section{Mechanika systemu}
@@ -639,7 +653,7 @@ W przyjętym rozwiązaniu skupiono się na podstawowych siłach rządzących św
 W inercjalnym układzie odniesienia siły wzajemnego oddziaływania dwóch ciał mają takie same wartości, taki sam kierunek, przeciwne zwroty i różne punkty przyłożenia.
 \end{quote}
 
-Pełny rozkład sił, wraz z wyznaczeniem odległości, przedstawiony został na schemacie \ref{SystemForces}.
+Pełny rozkład sił, wraz z zaznaczeniem użytecznych odległości, przedstawiony został na schemacie \ref{SystemForces}.
 
 \begin{figure}[H]
 	\centering
@@ -662,6 +676,7 @@ F_v = \gamma_v V
 \end{equation}
 gdzie $\gamma_f$ jest stałym współczynnikiem konwersji napięcia na siłę.
 
+\newpage
 Siła tarcia związana jest z oddziaływaniem między wózkiem a podłożem. W analizowanym modelu wykorzystano zjawisko tarcia kinetycznego zależnego od prędkości ruchu, które można wyznaczyć jako:
 \begin{equation} \label{Friction}
 F_f = \gamma_f \frac{dx}{dt}
@@ -683,7 +698,8 @@ Korzystając z przytoczonego twierdzenia \ref{Newton} zależność dla wózka w 
 \begin{equation}
 F_v - F_x - F_f = M \frac{d^2x}{dt^2}
 \end{equation}
-Po uwzględnieniu charakterystyki siły tarcia i napędu \ref{Friction}:
+
+Po uwzględnieniu charakterystyki siły napędu silnika \ref{Voltage} i siły tarcia \ref{Friction}:
 \begin{equation} \label{CartX}
 \gamma_v V - F_x - \gamma_f \frac{dx}{dt} = M \frac{d^2x}{dt^2}
 \end{equation}
@@ -740,9 +756,10 @@ Druga pochodna:
 \end{aligned}
 \end{equation}
 
+\newpage
 Łącząc wyznaczone pochodne z równaniem \ref{PendulumY} można wyprowadzić wzór na pionową siłę reakcji między wózkiem a wahadłem:
 \begin{equation} \label{ReactionY}
-F_y = mg + -mlcos(\theta) (\frac{d\theta}{dt})^2 - mlsin(\theta) \frac{d^2\theta}{dt^2}
+F_y = mg - mlcos(\theta) (\frac{d\theta}{dt})^2 - mlsin(\theta) \frac{d^2\theta}{dt^2}
 \end{equation}
 
 Wzór ten będzie niezbędny do dalszych rozważań poświęconych ruchowi obrotowemu.
@@ -799,7 +816,7 @@ Podsumowując powyższe rozważania, równania ruchu układu wahadła odwrócone
 
 \subsection{Linearyzacja modelu}
 \subsubsection{Założenia}
-Opracowany w poprzedniej sekcji model ruchu jest modelem nieliniowym. W celu uzyskania rozwiązania wygodniejszego obliczeniowo, bez istotnych strat na dokładności, i pozwalającego na zastosowanie rozwiązań z zakresu teorii sterowania przeprowadzona została linearyzacja modelu. 
+Opracowany w poprzedniej sekcji model ruchu jest modelem nieliniowym. W celu uzyskania rozwiązania wygodniejszego obliczeniowo, bez istotnych strat na dokładności, a ponadto pozwalającego na zastosowanie rozwiązań z zakresu teorii sterowania przeprowadzona została linearyzacja modelu. 
 
 Charakterystyka realizowanego problemu pozwoliła na przyjęcie założenia, że kąt odchylenia wahadła od osi pionowej jest stosunkowo niewielki. Uzasadnieniem tego stwierdzenia jest fakt, iż docelowy system będzie wyposażony w narzędzie stabilizujące wychylenie, wobec czego w stanie ustalonym kąt ten będzie bliski zeru. Powyższe założenie umożliwia dokonania kilku istotnych uproszczeń w modelu:
 \begin{equation}
@@ -810,7 +827,7 @@ cos(\theta) &\approx 1 \\
 \end{aligned}
 \end{equation}
 
-Jeśli dodatkowo przyjmiemy środek masy wahadła za środek ciężkości, wtedy moment bezwładności $I = 0$.
+Jeśli dodatkowo przyjmiemy, że środek masy wahadła jest zgodny z jego środkiem grawitacji, wtedy moment bezwładności wahadła $I = 0$.
 
 \subsubsection{Konwersja równań}
 Uwzględniając powyższe rozważania, równania ruchu \ref{Equations} można zapisać na nowo:
@@ -829,7 +846,7 @@ l \frac{d^2\theta}{dt^2} + \frac{d^2x}{dt^2} &= g\theta
 \end{aligned}
 \end{equation}
 
-Aby móc przeprowadzić dalsze rozważania niezbędne będzie wykonanie rozdzielenia równań w taki sposób, aby każde z nich zawierało relację między drugą pochodną po odpowiedniej zmiennej a pierwszymi pochodnymi i samymi zmiennymi. Dokonać tego można poprzez podstawienie jednego równania do drugiego i wyznaczenie odpowiednich zależności.
+Aby móc przeprowadzić dalsze rozważania niezbędne będzie wykonanie rozdzielenia równań w taki sposób, aby każde z nich zawierało relację między drugą pochodną po odpowiedniej zmiennej a pierwszymi pochodnymi i samymi zmiennymi. Dokonać tego można poprzez podstawienie wzajemne równań i wyznaczenie odpowiednich zależności.
 
 \begin{equation} \label{2DerX}
 \begin{aligned}
@@ -858,8 +875,8 @@ Ostatecznie równania ruchu w postaci rozdzielonej prezentują się następując
 
 Wyprowadzone w ten sposób równania pozwolą w łatwy sposób uzyskać zapis w formie równań stanu.
 
-\subsubsection{Równanie stanu}
-Wprowadzenie zagadnienia równań stanu zostało przedstawione w sekcji \ref{StateSpaceSubsection}. Dla problemu liniowego równanie stanu można zapisać w postaci:
+\subsubsection{Równania stanu}
+Wprowadzenie zagadnienia równań stanu zostało przedstawione w sekcji \ref{StateSpaceSubsection}. Dla problemu liniowego równania stanu można zapisać w postaci:
 \begin{equation}
 \begin{aligned}
 \frac{d\mathbf{x}}{dt} = A\mathbf{x} + B\mathbf{u} \\
@@ -912,7 +929,7 @@ B =
 \end{bmatrix}
 \end{equation}
 
-Zbierając razem wszystkie wyznaczone elementy, finalna postać równania stanu określona jest w następujący sposób:
+Zbierając razem wszystkie wyznaczone elementy, finalna postać równań stanu określona jest w następujący sposób:
 \begin{equation}
 \begin{bmatrix}
 dx \\ 
@@ -958,6 +975,7 @@ X|Y := [X, XY, X^2Y, ..., X^{n-1}Y]
 \end{equation}
 Sprawdzenie warunku obserwowalności dla rozwiązywanego zadania pokazuje, iż układ dynamiczny spełnia kryterium obserwowalności.
 
+\newpage
 Kontrolowalność służy określeniu możliwości sterowania układem. Model jest kontrolowalny wtedy i tylko wtedy, gdy dowolny stan końcowy jest osiągalny z dowolnego stanu początkowego w skończonym czasie. Warunek pozwalający na sprawdzenie cechy dla układu o $n$ parametrach stanu wygląda następująco:
 \begin{equation}
 Rank(A|B) = n
@@ -976,7 +994,7 @@ Docelową strategią kontroli nad układem było wprowadzenie regulatora PID. Op
 Wynikiem zastosowania odpowiedniej regulacji powinna być stabilizacja układu w obrębie zerowego odchylenia wahadła od osi pionowej układu. Dodatkowo warto zauważyć, że omawiany problem wymaga zastosowania podwójnego kompletu sterowników, ze względu na trójwymiarowy charakter finalnego modelu. Jednakże podobne jak w przypadku samego układu, oba kontrolery będą działały niezależnie.
 
 \subsection{Wprowadzenie zakłóceń do modelu}
-Przygotowana praca obejmuje dodatkowe zagadnienie jakim są zakłócenia pochodzące od siły wiatru. Wiatr zdefiniowany został jako trójwymiarowy wektor kierunkowy oraz wartość określająca jego moc. W projekcie przyjęto, że siła wiatru oddziałuje jedynie na wahadło. Założenie to bierze swoją genezę z chęci wprowadzenia zaburzenia kąta odchylenia wahadła od osi pionowej i przeprowadzenia testów stabilizacji powstałych zakłóceń. Kierunek siły wiatru zrzutowany został na dwie płaszczyzny związane z wzajemnie prostopadłymi układami dwuwymiarowymi.  Wyznaczone w ten sposób siły przyłożone zostały w obydwu układach do środka masy wahadła, a następnie rozłożone na dwie składowe związane z osiami głównymi poszczególnych układów. 
+Przygotowana praca obejmuje dodatkowe zagadnienie jakim są zakłócenia pochodzące od siły wiatru. Wiatr zdefiniowany został jako trójwymiarowy wektor kierunkowy oraz wartość określająca jego moc. W projekcie przyjęto, że siła wiatru oddziałuje jedynie na wahadło. Założenie to bierze swoją genezę z chęci wprowadzenia zaburzenia dla kąta odchylenia wahadła od osi pionowej i przeprowadzenia testów stabilizacji powstałych zakłóceń. Kierunek siły wiatru zrzutowany został na dwie płaszczyzny związane z wzajemnie prostopadłymi układami dwuwymiarowymi.  Wyznaczone w ten sposób siły przyłożone zostały w obydwu układach do środka masy wahadła, a następnie rozłożone na dwie składowe związane z osiami głównymi poszczególnych układów. 
 
 Powstały w ten sposób dwuwymiarowy rozkład sił przedstawiony został na schemacie \ref{WindForce}.
 
@@ -1017,7 +1035,9 @@ Omówiony model zakłóceń dotyczy pojedynczej pętli obliczeń, w której kier
 \end{itemize}
 
 \subsection{Wprowadzenie trajektorii ruchu}
-Zbudowany w dotychczasowy sposób system umożliwia stabilizację wahadła z uwzględnieniem zewnętrznych zakłóceń. Jednakże istotą projektu było przeniesienie układu do świata trójwymiarowego i swobodne poruszanie modelem po płaszczyźnie. Aby zapewnić ten warunek niezbędne jest rozszerzenie zagadnienia stabilizacji o zarządzanie pozycją wózka. Podobnie jak w przypadku regulacji kąta, zagadnienie można rozpatrywać w sytuacji dwuwymiarowej, ze względu na niezależne działanie podukładów. Ustalając pewne położenie $x$ jako punkt docelowy oraz $x_0$ jako miejsce startu problem można określić jako stabilizację układu w punkcie $x$ przy równoczesnym zadbaniu o utrzymanie wahadła w bezpiecznym wychyleniu. Ze względu na konieczność przebycia drogi $x - x_0$ przez pewien czas wahadło musi opuścić niestabilny punkt równowagi tak, by pokierować wózek do celu za pomocą wygenerowanej siły. Ponadto należy zwrócić uwagę na fakt, że wychylenie wahadła w kierunku docelowego punktu nie zapewni bezpośredniego ruchu podstawy w pożądaną stronę. Układ wykona kompensację wychylenia poprzez przesunięcie wózka w stronę przeciwną do zamierzonej i dopiero po pewnym czasie zacznie poruszać się z powrotem w pożądanym kierunku. Postawione komplikacje zmuszają do zastosowania specjalistycznego narzędzia umożliwiającego równoczesną kontrolę zachowania wahadła i wózka. W realizowanym projekcie skorzystano z podwójnego regulatora PID, którego charakterystykę przedstawiono w sekcji \ref{DoublePID}. Wybrany regulator możne być zaimplementowany na wiele sposobów. Autor pracy wybrał trzy metody, które zostały poddane gruntownym badaniom:
+Zbudowany w dotychczasowy sposób system umożliwia stabilizację wahadła z uwzględnieniem zewnętrznych zakłóceń. Jednakże istotą projektu było przeniesienie układu do świata trójwymiarowego i swobodne poruszanie modelem po płaszczyźnie. Aby zapewnić ten warunek niezbędne jest rozszerzenie zagadnienia stabilizacji o zarządzanie pozycją wózka. Podobnie jak w przypadku regulacji kąta, zagadnienie można rozpatrywać w sytuacji dwuwymiarowej, ze względu na niezależne działanie podukładów. Ustalając pewne położenie $x$ jako punkt docelowy oraz $x_0$ jako miejsce startu problem można określić jako stabilizację układu w punkcie $x$ przy równoczesnym zadbaniu o utrzymanie wahadła w bezpiecznym wychyleniu. Ze względu na konieczność przebycia drogi $x - x_0$ przez pewien czas wahadło musi opuścić niestabilny punkt równowagi tak, by pokierować wózek do celu za pomocą wygenerowanej siły. Ponadto należy zwrócić uwagę na fakt, że wychylenie wahadła w kierunku docelowego punktu nie zapewni bezpośredniego ruchu podstawy w pożądaną stronę. Układ wykona kompensację wychylenia poprzez przesunięcie wózka w stronę przeciwną do zamierzonej i dopiero po pewnym czasie zacznie poruszać się z powrotem w pożądanym kierunku. 
+
+Postawione komplikacje zmuszają do zastosowania odpowiedniego narzędzia umożliwiającego równoczesną kontrolę zachowania wahadła i wózka. W realizowanym projekcie skorzystano z podwójnego regulatora PID, którego charakterystykę przedstawiono w sekcji \ref{DoublePID}. Wybrany regulator możne być zaimplementowany na wiele sposobów. Autor pracy wybrał trzy metody, które zostały poddane gruntownym badaniom:
 \begin{itemize}
 \item Podwójny regulator równoległy (dla kąta: PID, dla pozycji: PD).
 \item Zmodyfikowany podwójny regulator równoległy (dla kąta i pozycji: PD).
@@ -1054,7 +1074,7 @@ W przypadku braku kolejnych punktów, zakończenie śledzenia ruchu.
 Ostatnim elementem związanym z omawianym problemem jest tworzenie trajektorii ruchu. Autor pracy przygotował kilka reprezentatywnych przykładów, które umożliwiają precyzyjne zbadanie różnych technik regulacji. Dodatkowo wykonana aplikacja pozwala na tworzenie dowolnych trajektorii ruchu poprzez podanie parametryzacji krzywej wraz z warunkami brzegowymi i pożądanej ilości punktów kontrolnych.
 
 \subsection{Manualna kontrola nad układem}
-W trakcie realizacji projektu autor pracy spostrzegł, że poruszanie układem jest zadaniem nietrywialnym i wymaga głębszego zrozumienia charakterystyki modelu. Użytkownik końcowy programu powinien móc przekonać się jak poszczególne zmiany stanu układu wpływają na ogólną dynamikę systemu i komplikację w jego sterowaniu. Aby spełnić to założenie przygotowano dodatkowy tryb pracy symulatora określony jako tryb gry. Moduł ten umożliwia modyfikowanie wychylenia wahadła poprzez modyfikację wartości zadanej uchybu kąta odchylenia wahadła od pionu. W rezultacie użytkownik zyskuje narzędzie do manualnego poruszania układem. Wprowadzając dodatkowo trajektorię ruchu, użytkownik ma możliwość podjęcia próby przeprowadzenia wózka wzdłuż zadanej ścieżki. Po włączeniu modułu zakłóceń pochodzących od siły wiatru pojawia się problem manualnego utrzymania stałej pozycji wózka, na przekór działającemu zakłóceniu. Wszystkie wymienione elementy pozwalają doświadczalnie zbadać charakterystykę układu, stanowiąc przy okazji przyjemną zabawę.
+W trakcie realizacji projektu autor pracy spostrzegł, że poruszanie układem jest zadaniem nietrywialnym i wymaga głębszego zrozumienia charakterystyki modelu. Użytkownik końcowy programu powinien móc przekonać się jak poszczególne zmiany stanu układu wpływają na ogólną dynamikę systemu i komplikację w jego sterowaniu. Aby spełnić to założenie przygotowano dodatkowy tryb pracy symulatora określony jako tryb gry. Moduł ten umożliwia zmianę wychylenia wahadła poprzez modyfikację wartości zadanej uchybu kąta odchylenia wahadła od pionu. W rezultacie użytkownik zyskuje narzędzie do manualnego poruszania układem. Wprowadzając dodatkowo trajektorię ruchu, użytkownik ma możliwość podjęcia próby przeprowadzenia wózka wzdłuż zadanej ścieżki. Po włączeniu modułu zakłóceń pochodzących od siły wiatru pojawia się problem manualnego utrzymania stałej pozycji wózka, na przekór działającemu zakłóceniu. Wszystkie wymienione elementy pozwalają doświadczalnie zbadać charakterystykę układu, stanowiąc przy okazji przyjemną zabawę.
 
 \section{Algorytm pracy symulatora}
 Głównym zadaniem symulatora jest wizualizacja mechaniki układu wahadła odwróconego na wózku w obecności różnych założeń zaprezentowanych w poprzednich sekcjach. Dodatkowo narzędzie pozwala na pełną konfigurację wszystkich kluczowych parametrów, zarówno samego układu, jak i całej symulacji. Ogólny przebieg pracy symulatora prezentuje poniższy algorytm:
@@ -1063,11 +1083,11 @@ Głównym zadaniem symulatora jest wizualizacja mechaniki układu wahadła odwr�
 \item Konfiguracja opcji symulacji takich jak: typ regulatora, rodzaj zakłóceń, tryb wyświetlania.
 \item Ustalenie parametrów początkowych systemu:
 \begin{itemize}
-\item Krok czasowy obliczeń
-\item Początkowe wychylenie wahadła w osiach OX i OY.
-\item Długość wahadła
-\item Masa wahadła
-\item Masa wózka
+\item Krok czasowy obliczeń.
+\item Początkowe wychylenie wahadła w osiach O(X) i O(Y).
+\item Długość wahadła.
+\item Masa wahadła.
+\item Masa wózka.
 \end{itemize}
 \item Określenie mocy i szybkości zmiany kierunku siły wiatru (modyfikowalne w trakcie trwania animacji).
 \item Przygotowanie kontrolerów i uruchomienie symulacji dla zadanego środowiska.
@@ -1086,7 +1106,7 @@ Głównym zadaniem symulatora jest wizualizacja mechaniki układu wahadła odwr�
 
 %% -------- chapter IV --------
 \chapter{Testy i porównanie przyjętych rozwiązań}
-\section{Założenia}
+\section{Założenia wstępne}
 Testowanie poprawności działania jest niezbędnym elementem w procesie tworzenia oprogramowania symulacyjnego. Jedynie gruntowna seria prób sprawdzających wszystkie istotne funkcjonalności pozwala na stwierdzenie czy opracowane rozwiązanie daje akceptowalne wyniki i w rezultacie jest użyteczne dla użytkownika końcowego. Dodatkowo testy pozwalają na porównanie różnych strategi opracowanych w trakcie projektowania modelu systemu i wybór najlepszego zestawu rozwiązań. 
 
 Autor pracy skupił się na zbadaniu ogólnej pracy symulatora w zależności od zadanej interakcji użytkownika, jak również wykorzystał fazę testów do analizy porównawczej kilku aspektów projektu, w szczególności:
@@ -1097,21 +1117,20 @@ Autor pracy skupił się na zbadaniu ogólnej pracy symulatora w zależności od
 \item Wpływ zakłóceń pochodzących od siły wiatru na zachowanie układu.
 \end{itemize}
 
-Każde z zagadnień zostało dokładnie omówione w poszczególnych sekcjach wraz z prezentacją wykresów i wypracowanych wniosków. 
-
-W celach porównawczych wybrano kilka rodzajów wykresów:
+Każde z zagadnień zostało dokładnie omówione w poszczególnych sekcjach wraz z prezentacją wykresów i wypracowanych wniosków. W celach porównawczych przygotowano zestawy wykresów obejmujące:
 \begin{itemize}
 \item Wykres zależności uchybu (kąta bądź pozycji) od czasu.
 \item Wykres zależności napięcia na silniku od czasu.
 \item Wykres trajektorii ruchu (dla trybu śledzenia trajektorii).
 \end{itemize}
-Pojedynczy wykres zawiera informacje dostarczane przez poszczególne układy dwuwymiarowe. W celu uniknięcia nieczytelności, każdy zestaw danych zaznaczony został innym kolorem.
 
-Konfiguracja parametrów początkowych została przeprowadzona zgodnie z przyjętymi wartościami nominalnymi przedstawionymi w tabeli \ref{table:NominalParameters}. Pozostałe nieokreślone parametry ustawiono na następujące wartości:
+Pojedynczy wykres zawiera dane dostarczane przez poszczególne układy dwuwymiarowe. W celu uniknięcia nieczytelności, każdy zestaw danych zaznaczony został innym kolorem.
+
+Konfiguracja parametrów początkowych przeprowadzona została zgodnie z przyjętymi wartościami nominalnymi przedstawionymi w tabeli \ref{table:NominalParameters}. Pozostałe nieokreślone parametry ustawiono na następujące wartości:
 \begin{itemize}
 \item Odstęp czasu: 0.01 s.
-\item Wychylenie w osi OX: 0.8 rad.
-\item Wychylenie w osi OY: -0.4 rad.
+\item Wychylenie początkowe w osi O(X): 0.8 rad.
+\item Wychylenie początkowe w osi O(Y): -0.4 rad.
 \end{itemize}
 
 \section{Stabilizacja układu}
@@ -1131,28 +1150,28 @@ Przeprowadzono sprawdzenie zachowania układu w obecności regulatora napięcia 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{RandomEV} 
-		\caption{\textit{Sterowanie losowym napięciem: wykres napięcia na silniku}}
+		\caption{\textit{Sterowanie losowym napięciem: wykres zależności napięcia na silniku od czasu}}
 		\label{plot:RandomEV}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{RandomCE} 
-		\caption{\textit{Sterowanie losowym napięciem: wykres uchybu kąta}}
+		\caption{\textit{Sterowanie losowym napięciem: wykres zależności uchybu kąta od czasu}}
 		\label{plot:RandomCE}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{SinusoidalEV} 
-		\caption{\textit{Sterowanie sinusoidalnym napięciem: wykres napięcia na silniku}}
+		\caption{\textit{Sterowanie sinusoidalnym napięciem: wykres zależności napięcia na silniku od czasu}}
 		\label{plot:SinusoidalEV}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{SinusoidalCE} 
-		\caption{\textit{Sterowanie sinusoidalnym napięciem: wykres uchybu kąta}}
+		\caption{\textit{Sterowanie sinusoidalnym napięciem: wykres zależności uchybu kąta od czasu}}
 		\label{plot:SinusoidalCE}
 \end{figure}
 
@@ -1173,14 +1192,14 @@ Dla tak przygotowanego środowiska przeprowadzono test stabilizacji analogiczny 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{PIDEV} 
-		\caption{\textit{Sterowanie poprzez regulator PID: wykres napięcia na silniku}}
+		\caption{\textit{Sterowanie poprzez regulator PID: wykres zależności napięcia na silniku od czasu}}
 		\label{plot:PIDEV}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{PIDCE} 
-		\caption{\textit{Sterowanie poprzez regulator PID: wykres uchybu kąta}}
+		\caption{\textit{Sterowanie poprzez regulator PID: wykres zależności uchybu kąta od czasu}}
 		\label{plot:PIDCE}
 \end{figure}
 
@@ -1189,19 +1208,19 @@ Charakterystyka wykresów jednoznacznie wskazuje na stopniowe wygaszanie wychyle
 \section{Ruch po trajektorii}
 \subsection{Założenia}
 \label{Reqs}
-Kolejnym zagadnieniem wymagającym gruntownych testów była ocena jakości realizowania trajektorii ruchu układu przez poszczególne układy sterujące. W celu uzyskania efektu ruchu wykorzystano układ podwójnego regulatora PID. W oparciu o literaturę opracowano współczynniki nastaw poszczególnych kontrolerów. W przypadku regulatora kąta pozostawiono wartości opracowane w poprzedniej sekcji. Dla regulatora pozycji po zbadaniu transmitancji układu i stwierdzeniu jego całkującego charakteru zdecydowano się na skorzystanie z regulatora w wersji PD. Aby to osiągnąć przyjęto następujące nastawy:
+Kolejnym zagadnieniem wymagającym gruntownych testów była ocena jakości realizowania trajektorii ruchu przez poszczególne układy sterujące. W celu uzyskania efektu poruszania wykorzystano układ podwójnego regulatora PID. W oparciu o literaturę opracowano współczynniki nastaw poszczególnych kontrolerów. W przypadku regulatora kąta pozostawiono wartości opracowane w poprzedniej sekcji. Dla regulatora pozycji po zbadaniu transmitancji układu i stwierdzeniu jego całkującego charakteru, zdecydowano się na skorzystanie z regulatora w wersji PD. Aby to osiągnąć przyjęto następujące nastawy:
 \begin{itemize}
 \item Dla regulatora kaskadowego:
 \begin{itemize}
-\item $K_p = 0.05$
-\item $T_i = \infty$
-\item $T_d = 0.7$
+\item $K_p = 0.05$,
+\item $T_i = \infty$,
+\item $T_d = 0.7$.
 \end{itemize}
 \item Dla regulatora równoległego:
 \begin{itemize}
-\item $K_p = 6$
-\item $T_i = \infty$
-\item $T_d = 1.5$
+\item $K_p = 6$,
+\item $T_i = \infty$,
+\item $T_d = 1.5$.
 \end{itemize}
 \end{itemize}
 
@@ -1211,8 +1230,8 @@ W trakcie przeprowadzania pierwszych testów symulacji autor pracy zwrócił uwa
 W celu uzyskania wiarygodnych wyników testy przeprowadzono dla trzech reprezentatywnych przypadków trajektorii:
 \begin{itemize}
 \item Trajektoria odcinka - możliwość sprawdzenia stabilizacji układu w pojedynczym punkcie kontrolnym.
-\item Trajektoria węzła koniczynowego (pokazanego na rysunku \ref{TrajectoryTrefoilKnot}) - zbadanie jakości ruchu w przypadku nietrywialnej złożonej trajektorii.
-\item Trajektoria krzyża - ocena zachowania układu wobec przypadku szczególnego, w którym kolejne punkty kontrolne są od siebie odległe i tworzą kąty proste.
+\item Trajektoria węzła koniczynowego (pokazanego na rysunku \ref{TrajectoryTrefoilKnot}) - chęć zbadania jakości ruchu w przypadku nietrywialnej, złożonej trajektorii.
+\item Trajektoria krzyża - ocena zachowania układu wobec przypadku szczególnego, w którym kolejne punkty kontrolne są od siebie odległe i tworzą wzajemnie kąty proste.
 \end{itemize}
 
 Głównymi kryteriami porównawczymi były: 
@@ -1232,21 +1251,21 @@ Wykresy napięcia na silniku oraz uchybów pozycji i kąta dla podwójnego regul
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{LinePIDEV} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora równoległego: wykres napięcia na silniku}}
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora równoległego: wykres zależności napięcia na silniku od czasu}}
 		\label{plot:LinePIDEV}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{LinePIDCEP} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora równoległego: wykres uchybu pozycji}}
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora równoległego: wykres zależności uchybu pozycji od czasu}}
 		\label{plot:LinePIDCEP}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{LinePIDCEA} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora równoległego: wykres uchybu kąta}}
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora równoległego: wykres zależności uchybu kąta od czasu}}
 		\label{plot:LinePIDCEA}
 \end{figure}
 
@@ -1258,47 +1277,47 @@ Wykresy napięcia na silniku oraz uchybów pozycji i kąta dla zmodyfikowanego p
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{LinePDEV} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą zmodyfikowanego podwójnego regulatora równoległego: wykres napięcia na silniku}}
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą zmodyfikowanego podwójnego regulatora równoległego: wykres zależności napięcia na silniku od czasu}}
 		\label{plot:LinePDEV}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{LinePDCEP} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą zmodyfikowanego podwójnego regulatora równoległego PD: wykres uchybu pozycji}}
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą zmodyfikowanego podwójnego regulatora równoległego: wykres zależności uchybu pozycji od czasu}}
 		\label{plot:LinePDCEP}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{LinePDCEA} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą zmodyfikowanego podwójnego regulatora równoległego PD: wykres uchybu kąta}}
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą zmodyfikowanego podwójnego regulatora równoległego: wykres zależności uchybu kąta od czasu}}
 		\label{plot:LinePDCEA}
 \end{figure}
 
 W przypadku układu sterowania z wyłączonym modułem całkującym dla regulacji kąta stabilizacja realizowana jest na podobnym poziomie jak w niezmodyfikowanym modelu. System cechują dużo większe wychylenia wahadła, jednakże zauważalna jest poprawa czasu wykonywania ruchu (redukcja do 5 sekund). Układ przy osiąganiu punktu docelowego wymaga wykonania drobnej poprawki pozycji. Charakterystyka napięcia wskazuje na większy udział napędu silnika w dynamikę układu. 
 
 \subsubsection{Podwójny regulator kaskadowy}
-Wykresy napięcia na silniku oraz uchybów pozycji i kąta dla podwójnego regulatora równoległego przedstawiono na wykresach \ref{plot:LineCasPIDEV}, \ref{plot:LineCasPIDCEP} i \ref{plot:LineCasPIDCEA}.
+Wykresy napięcia na silniku oraz uchybów pozycji i kąta dla podwójnego regulatora kaskadowego przedstawiono na wykresach \ref{plot:LineCasPIDEV}, \ref{plot:LineCasPIDCEP} i \ref{plot:LineCasPIDCEA}.
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{LineCasPIDEV} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora kaskadowego: wykres napięcia na silniku}}
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora kaskadowego: wykres zależności napięcia na silniku od czasu}}
 		\label{plot:LineCasPIDEV}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{LineCasPIDCEP} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora kaskadowego PID: wykres uchybu pozycji}}
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora kaskadowego: wykres zależności uchybu pozycji od czasu}}
 		\label{plot:LineCasPIDCEP}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{LineCasPIDCEA} 
-		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora kaskadowego PID: wykres uchybu kąta}}
+		\caption{\textit{Stabilizacja w punkcie kontrolnym za pomocą podwójnego regulatora kaskadowego: wykres zależności uchybu kąta od czasu}}
 		\label{plot:LineCasPIDCEA}
 \end{figure}
 
@@ -1310,7 +1329,7 @@ Celem finalnym symulatora było śledzenie trajektorii złożonej z wielu punkt�
 Przetestowanie funkcjonalności oparto na dwóch przykładach. Jeden z nich obejmował transport układu po gładkim łuku węzła koniczynowego. Jest to typowy odcinek trajektorii, który system powinien wykonać bez większych trudności. Drugim przykładem była trajektoria krzyża. Symulator w założeniu nie obejmował tego typu trajektorii, jednakże wykorzystanie go pozwala na porównanie cech poszczególnych kontrolerów. 
 
 \subsubsection{Fragment trajektorii węzła koniczynowego}
-Podobnie jak w przypadku prostej trajektorii układ został umieszczony na miejscu startowym, po czym symulator powinien przystąpić do przesuwania układu wzdłuż zadanej trajektorii. Podczas trwania symulacji na płaszczyźnie ruchu zaznaczano kolejne pozycje wózka, śledząc równocześnie zachowanie wahadła. Trajektoria wyrysowana przez obydwie wersje podwójnego regulatora równoległego pokazano na rysunku: \ref{TrajectoryTrefoilKnotGood}. Trajektorię pochodzącą od podwójnego regulatora kaskadowego przedstawia ilustracja \ref{TrajectoryTrefoilKnotWrong}.
+Podobnie jak w przypadku prostej trajektorii układ został umieszczony na miejscu startowym, po czym symulator powinien przystąpić do przesuwania układu wzdłuż zadanej trajektorii. Podczas trwania symulacji na płaszczyźnie ruchu zaznaczano kolejne pozycje wózka, śledząc równocześnie zachowanie wahadła. Trajektorię wyrysowaną przez obydwie wersje podwójnego regulatora równoległego pokazano na rysunku \ref{TrajectoryTrefoilKnotGood}. Trajektorię pochodzącą od podwójnego regulatora kaskadowego przedstawia ilustracja \ref{TrajectoryTrefoilKnotWrong}.
 
 \begin{figure}[H]
 	\centering
@@ -1326,14 +1345,14 @@ Podobnie jak w przypadku prostej trajektorii układ został umieszczony na miejs
 		\label{TrajectoryTrefoilKnotWrong}
 \end{figure}
 
-Zarówno podwójny regulator równoległy jak i jego zmodyfikowana wersja poradziły sobie z zadanym ruchem bez większych problemów. Dodatkowym atutem drugiego z nich był znacznie mniejszy czas potrzebny do wykonania przesunięcia do celu. Niestety w przypadku regulatora kaskadowego przyjęta technika pokonywania drogi okazała się barierą do wykonania poprawnego ruchu. Regulator ten ze względu na długi czas stabilizacji pozycji często gubił odpowiednią trajektorię i był zmuszony wracać do punktu kontrolnego.
+Zarówno podwójny regulator równoległy, jak i jego zmodyfikowana wersja poradziły sobie z zadanym ruchem bez większych problemów. Dodatkowym atutem drugiego z nich był znacznie mniejszy czas potrzebny do wykonania przesunięcia do celu. Niestety w przypadku regulatora kaskadowego przyjęta technika pokonywania drogi okazała się barierą do wykonania poprawnego ruchu. Regulator ten ze względu na długi czas stabilizacji pozycji często gubił odpowiednią trajektorię i był zmuszony wracać do punktu kontrolnego.
 
-Przeprowadzono dodatkowo ocenę wykresów parametrów sterowania umieszczonych w dodatku \ref{appenix:A}. Zgodnie z zachowaniem układu obserwowanym w wizualizacji wykresy: napięcia na silniku oraz uchybu kąta dla regulatora kaskadowego przedstawiają problemy w ustabilizowaniu układu i dynamiczne zmiany napięcia, które negatywnie wpływają na pracę systemu. Dla podwójnego regulatora równoległego można dostrzec drobne wychylenia inicjujące ruch, gaszone powoli poprzez sterowanie silnikiem. W przypadku zmodyfikowanego regulatora wykresy prezentują się najbardziej obiecująco. Przejścia między kolejnymi fazami są dość gładkie, a poziomy wychylenia wahadła akceptowalne.
+Przeprowadzono dodatkowo ocenę wykresów parametrów sterowania umieszczonych w dodatku \ref{appenix:A}. Zgodnie z zachowaniem układu obserwowanym w wizualizacji wykresy napięcia na silniku oraz uchybu kąta dla regulatora kaskadowego przedstawiają problemy w ustabilizowaniu układu i dynamiczne zmiany napięcia, które negatywnie wpływają na pracę systemu. Dla podwójnego regulatora równoległego można dostrzec drobne wychylenia inicjujące ruch, gaszone powoli poprzez sterowanie silnikiem. W przypadku zmodyfikowanego regulatora równoległego wykresy prezentują się najbardziej obiecująco. Przejścia między kolejnymi fazami są dość gładkie, a poziomy wychylenia wahadła akceptowalne.
 
 Badaniu poddano również trajektorie: okręgu, Lemniskaty Bernoulliego oraz krzywej sinusoidalnej. Uzyskane rezultaty w pełni odzwierciedlają wyprowadzone wnioski. Wobec powyższego należy przyjąć, że dla zadania ruchu po gładkiej trajektorii należy wykorzystać zmodyfikowany podwójny regulator równoległy.
 
 \subsubsection{Trajektoria krzyża}
-W opozycji do przykładów z poprzedniej sekcji przygotowano jeszcze jeden przykład testowy, w którym trajektoria składa się z odległych od siebie punktów kontrolnych tworzących kolejno kąty proste. Zadanie to zostało wybrane w celu zbadania, jak układ poradzi sobie w sytuacji, gdy użytkownik wymaga gwałtownego skrętu transportera (np. w sytuacji dojechania do przeszkody). Wyniki testów przedstawiono w formie wykresów trajektorii realizowanej przez wózek: \ref{TrajectoryCrossParallel}, \ref{TrajectoryCrossPD}, \ref{TrajectoryCrossCascade}.
+W opozycji do przykładów z poprzedniej sekcji przygotowano jeszcze jeden przykład testowy, w którym trajektoria składa się z odległych od siebie punktów kontrolnych tworzących kolejno kąty proste. Zadanie to zostało wybrane w celu zbadania, jak układ poradzi sobie w sytuacji, gdy użytkownik wymaga gwałtownego skrętu transportera (np. w przypadku dojechania do przeszkody). Wyniki testów przedstawiono w formie wykresów trajektorii realizowanej przez wózek: \ref{TrajectoryCrossParallel}, \ref{TrajectoryCrossPD}, \ref{TrajectoryCrossCascade}.
 
 \begin{figure}[H]
 	\centering
@@ -1356,12 +1375,13 @@ W opozycji do przykładów z poprzedniej sekcji przygotowano jeszcze jeden przyk
 		\label{TrajectoryCrossCascade}
 \end{figure}
 
-Zgodnie z początkowymi przypuszczeniami, jedynie podwójny regulator równoległy był w stanie w pełni odtworzyć zadaną trajektorię. Rezultat ten bierze się z faktu, że wspomniany kontroler jako jedyny zbiega dokładnie do docelowego punktu, bez konieczności wykonywania poprawki wstecznej. W przypadku pozostałych regulatorów trudność zadania sprawiła, że w pewnych miejscach regulator nie był w stanie w pełni ustabilizować układu, a był zmuszony do dalszego ruchu. Gdyby przyjęta została inna koncepcja ruchu, prawdopodobnie uzyskane przemieszczenia byłyby dokładniejsze, jednakże w zrealizowanym rozwiązaniu postawiono na ciągłość ruchu.
+Zgodnie z początkowymi przypuszczeniami, jedynie podwójny regulator równoległy był w stanie w pełni odtworzyć zadaną trajektorię. Rezultat ten bierze się z faktu, że wspomniany kontroler jako jedyny zbiega dokładnie do docelowego punktu, bez konieczności wykonywania poprawki wstecznej. W przypadku pozostałych regulatorów trudność zadania sprawiła, że w pewnych miejscach regulator nie był w stanie w pełni ustabilizować układu, a był zmuszony do realizowania dalszego ruchu. Gdyby przyjęta została inna koncepcja ruchu, prawdopodobnie uzyskane przemieszczenia byłyby dokładniejsze, jednakże w wybranym rozwiązaniu postawiono na ciągłość ruchu.
 
 
 \section{Wpływ parametrów układu}
-W celu określenia wpływu parametrów początkowych układu na szybkość stabilizacji za pomocą regulatora PID ustawiono konfigurację systemu w sposób opisany w sekcji \ref{Reqs}. Następnie modyfikowano wartości poszczególnych parametrów i sprawdzano po jakim czasie wychylenie wahadła i jego prędkość kątowa będą odpowiednio małe. Test ten zapewni jednoznaczne określenie czy układ ustabilizował się w punkcie równowagi. 
+W celu określenia wpływu parametrów początkowych układu na szybkość stabilizacji za pomocą regulatora PID przeprowadzono serię testów porównawczych. Najpierw ustawiono konfigurację systemu w sposób opisany w sekcji \ref{Reqs}. Następnie modyfikowano wartości poszczególnych parametrów i sprawdzano po jakim czasie wychylenie wahadła i jego prędkość kątowa będą odpowiednio małe. Test ten zapewnił jednoznaczne określenie czy układ ustabilizował się w punkcie równowagi. 
 
+\newpage
 \subsubsection{Masa wózka}
 Charakterystykę wpływu masy wózka na czas trwania stabilizacji przedstawiono na wykresie \ref{plot:CartMassQuality}.
 
@@ -1372,10 +1392,11 @@ Charakterystykę wpływu masy wózka na czas trwania stabilizacji przedstawiono 
 		\label{plot:CartMassQuality}
 \end{figure}
 
-Wraz ze zwiększaniem masy podstawy czas regulacji ulegał znacznemu wydłużeniu. Dla masy 1 kg stabilizacja trwała około 5 sekund, a dla zdwojonej masy, czas ten był niemalże potrojony. Wykres jednoznacznie sugeruje, że masa wózka jest bardzo istotnym czynnikiem wpływającym na stabilizację. Dodatkowe testy przeprowadzone dla mas powyżej 3 kg pokazały, że regulator nie jest już w stanie poradzić sobie ze stabilizacją. Uzyskane wyniki są zgodne z oczekiwaniami, gdyż sterowanie cięższym wózkiem wymaga coraz więcej mocy od silnika napędowego, a wykonanie jakiegokolwiek ruchu platformą staje się coraz trudniejsze. Ponadto masa wózka jest istotnym parametrem przy wyznaczaniu sterowania układem w równaniu ruchu. 
+Wraz ze zwiększaniem masy podstawy czas regulacji ulegał znacznemu wydłużeniu. Dla masy 1 kg stabilizacja trwała około 5 sekund, a dla zdwojonej masy, czas ten był niemalże potrojony. Wykres jednoznacznie sugeruje, że masa wózka jest bardzo istotnym czynnikiem wpływającym na stabilizację. Dodatkowe testy przeprowadzone dla mas powyżej 3 kg pokazały, że regulator nie jest już w stanie poradzić sobie ze stabilizacją. Uzyskane wyniki są zgodne z oczekiwaniami, gdyż sterowanie cięższym wózkiem wymaga coraz więcej mocy od silnika napędowego, a wykonanie jakiegokolwiek ruchu platformą staje się coraz trudniejsze. Ponadto masa wózka jest istotnym parametrem przy wyznaczaniu sterowania układem w równaniach ruchu. 
 
+\newpage
 \subsubsection{Masa wahadła}
-Charakterystykę wpływu masy wózka na czas trwania stabilizacji przedstawiono na wykresie \ref{plot:PendulumMassQuality}.
+Charakterystykę wpływu masy wahadła na czas trwania stabilizacji przedstawiono na wykresie \ref{plot:PendulumMassQuality}.
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{PendulumMassQuality} 
@@ -1385,8 +1406,9 @@ Charakterystykę wpływu masy wózka na czas trwania stabilizacji przedstawiono 
 
 W przeciwieństwie do masy wózka, masa wahadła nie wpływa w aż tak znaczącym stopniu na jakość stabilizacji układu. Wykres wskazuje na przyrost czasu wraz ze wzrostem masy, jednakże regulator jest w stanie kompensować wychylenia nawet w przypadku znacznej masy wahadła. Charakterystykę tę można powiązać z zależnością wartości momentu siły przyłożonego do wahadła od jego masy, co przekłada się na większe przyspieszenie kątowe i większe wychylenia wahadła.
 
+\newpage
 \subsubsection{Długość wahadła}
-Charakterystykę wpływu masy wózka na czas trwania stabilizacji przedstawiono na wykresie \ref{plot:PendulumLengthQuality}.
+Charakterystykę wpływu długości wahadła na czas trwania stabilizacji przedstawiono na wykresie \ref{plot:PendulumLengthQuality}.
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{PendulumLengthQuality} 
@@ -1394,13 +1416,14 @@ Charakterystykę wpływu masy wózka na czas trwania stabilizacji przedstawiono 
 		\label{plot:PendulumLengthQuality}
 \end{figure}
 
-Podobnie jak dla masy wahadła jego długość wpływa na stabilizację w sposób liniowo rosnący. Współczynnik kierunkowy prostej przybliżającej wykres jest większy niż dla poprzedniego wykresu, toteż można wnioskować, że długość wahadła ma większy wpływ na jakość regulacji układu. Obserwacja ta jest zgodna z intuicją, gdyż trudniej jest utrzymać poprawne wychylenie obiektu, który jest dłuższy. Ponadto długość wahadła jest istotnym parametrem przy wyznaczaniu sterowania układem w równaniu ruchu. 
+Podobnie jak dla masy wahadła jego długość wpływa na stabilizację w sposób liniowo rosnący. Współczynnik kierunkowy prostej przybliżającej wykres jest większy niż dla poprzedniego wykresu, toteż można wnioskować, że długość wahadła ma większy wpływ na jakość regulacji układu. Obserwacja ta jest zgodna z intuicją, gdyż trudniej jest utrzymać poprawne wychylenie obiektu, który jest dłuższy. Ponadto długość wahadła jest istotnym parametrem przy wyznaczaniu sterowania układem w równaniach ruchu. 
 
+\newpage
 \subsubsection{Wychylenie początkowe}
-Charakterystykę wpływu masy wózka na czas trwania stabilizacji przedstawiono na wykresie \ref{plot:PendulumAngleQuality}.
+Charakterystykę wpływu początkowego wychylenia wahadła na czas trwania stabilizacji przedstawiono na wykresie \ref{plot:PendulumAngleQuality}.
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{PendulumAngleQuality} 
+		\includegraphics[width = 350pt]{PendulumAngleQuality} 
 		\caption{\textit{Wykres wpływu początkowego wychylenia wahadła na czas trwania stabilizacji układu}}
 		\label{plot:PendulumAngleQuality}
 \end{figure}
@@ -1408,37 +1431,43 @@ Charakterystykę wpływu masy wózka na czas trwania stabilizacji przedstawiono 
 Zgodnie z oczekiwaniami większe wychylenie początkowe wymaga dłuższego czasu stabilizacji. Ciekawym spostrzeżeniem jest fakt, iż wraz ze wzrostem wychylenia jego wpływ na jakość stabilizacji jest coraz mniejszy. Dla kątów powyżej 0.7 rad różnica ta jest minimalna.
 
 \section{Wpływ zakłóceń pochodzących od siły wiatru}
-Ostatnim zagadnieniem poddanym testom był wpływ zakłóceń na pracę układu. Ze względu na losowy charakter siły wiatru nie skupiano się na dokładnej charakterystyce pracy układu, a jedynie na zmianach zachodzących podczas modyfikacji mocy i kierunku zakłócenia. Badania przeprowadzono dla stabilizacji regulatorem podwójnym równoległym z pozycją docelową w początku układu współrzędnych (wyniki umieszczone na wykresach \ref{plot:WindPDEV}, \ref{plot:WindPDCEP}, ref{plot:WindPDCEA}) oraz prostym regulatorem PID (wykresy zaprezentowane w dodatku \ref{appendix:B}).
+Ostatnim zagadnieniem poddanym testom był wpływ zakłóceń na pracę układu. Ze względu na losowy charakter siły wiatru nie skupiano się na dokładnej charakterystyce zachowania układu, a jedynie na zmianach zachodzących podczas modyfikacji mocy i kierunku zakłócenia. Badania przeprowadzono dla stabilizacji zmodyfikowanym regulatorem podwójnym równoległym z pozycją docelową w początku układu współrzędnych (wyniki umieszczone na wykresach \ref{plot:WindPDEV}, \ref{plot:WindPDCEP}, \ref{plot:WindPDCEA}) oraz prostym regulatorem PID (wykresy zaprezentowane w dodatku \ref{appendix:B}).
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{WindPDEV} 
-		\caption{\textit{Wpływ siły wiatru na układ sterowany podwójny regulator równoległy PD: wykres napięcia na silniku}}
+		\includegraphics[width = 350pt]{WindPDEV} 
+		\caption{\textit{Wpływ siły wiatru na układ sterowany zmodyfikowanym podwójnym regulatorem równoległym: wykres zależności napięcia na silniku od czasu}}
 		\label{plot:WindPDEV}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{WindPDCEP} 
-		\caption{\textit{Wpływ siły wiatru na układ sterowany podwójny regulator równoległy: wykres uchybu pozycji}}
+		\includegraphics[width = 350pt]{WindPDCEP} 
+		\caption{\textit{Wpływ siły wiatru na układ sterowany zmodyfikowanym podwójnym regulatorem równoległym: wykres zależności uchybu pozycji od czasu}}
 		\label{plot:WindPDCEP}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-		\includegraphics[width = 320pt]{WindPDCEA} 
-		\caption{\textit{Wpływ siły wiatru na układ sterowany podwójny regulator równoległy: wykres uchybu kąta}}
+		\includegraphics[width = 350pt]{WindPDCEA} 
+		\caption{\textit{Wpływ siły wiatru na układ sterowany zmodyfikowanym podwójnym regulatorem równoległym: wykres zależności uchybu kąta od czasu}}
 		\label{plot:WindPDCEA}
 \end{figure}
 
 W przypadku regulatora podwójnego konieczność utrzymania stałej pozycji powoduje znaczne wychylenia wahadła. Wraz ze wzrostem mocy wiatru układ wymaga coraz większej ingerencji ze strony kontrolera. W celu przeciwstawienia się zakłóceniu regulator nakazuje układowi utrzymywanie wychylenia w kierunku przeciwnym do kierunku siły wiatru. Usunięcie zakłócenia pozwala układowi na powrót do stabilnej pozycji początkowej. 
 
-Dla symulacji z prostym regulator PID sytuacja wygląda zupełnie inaczej. Układ nie potrzebuje utrzymania stałej pozycji, wobec czego poddaje się sile wiatru poruszając się w zadanym przez nią kierunku. Regulator pozwala na utrzymanie bezpiecznego wychylenia niezależnie od mocy zakłócenia. Po zakończeniu oddziaływania zewnętrznego układ nie wraca do punktu startowego, stabilizowane jest jedynie odchylenie wahadła od osi pionowej.
+Dla symulacji z prostym regulatorem PID sytuacja wygląda zupełnie inaczej. Układ nie potrzebuje utrzymania stałej pozycji, wobec czego poddaje się sile wiatru poruszając się w zadanym przez nią kierunku. Regulator pozwala na utrzymanie bezpiecznego wychylenia niezależnie od mocy zakłócenia. Po zakończeniu oddziaływania zewnętrznego układ nie wraca do punktu startowego, stabilizowane jest jedynie odchylenie wahadła od osi pionowej.
 
 
 %% -------- chapter V --------
 \chapter{Architektura systemu}
 \section{Ogólny opis rozwiązania}
+Opracowany symulator jest aplikacją okienkową przeznaczoną na komputery z systemem Windows, wykonaną w technologii .NET 4.5 za pomocą pakietu Microsoft Visual Studio 2015. Program zbudowany został na bazie platformy Windows Presentation Foundation, z wykorzystaniem bibliotek HelixToolkit, OxyPlot oraz narzędzi do obliczeń numerycznych i symbolicznych (szczegóły omówione w sekcji \ref{Tools}). Koncepcja symulacji została podzielona na dwa zasadnicze zagadnienia: uniwersalna biblioteka fizyki oraz graficzna aplikacja wizualizacji. Istotną częścią pracy jest również zagadnienie komunikacji między modułami oraz charakterystyka pracy symulatora.
+
+\subsection{Symulator}
+Wiele programów symulacyjnych posiada zaawansowane możliwości techniczne, jednakże bez odpowiedniej oprawy graficznej i interakcji stają się narzędziami mało użytecznymi. Autor pracy dołożył wszelkich starań, by stworzyć rozwiązanie proste, pozwalające na intuicyjne wykorzystywanie wszystkich funkcjonalności. Ponadto za główny cel aplikacji przyjęto maksymalizację możliwości modyfikowania poszczególnych parametrów i wizualizację wszystkich kluczowych cech badanego układu. 
+
+Podział symulatora na elementy składowe przestawiony został na schemacie \ref{SystemVisual}.
 
 \begin{figure}[H]
 	\centering
@@ -1447,6 +1476,26 @@ Dla symulacji z prostym regulator PID sytuacja wygląda zupełnie inaczej. Ukła
 		\label{SystemVisual}
 \end{figure}
 
+Główne okno symulacji (\texttt{MainWindow}) składa się z trzech współpracujących ze sobą elementów. Są to:
+\begin{itemize}
+\item Okno wizualizacji - zarządzane przez moduł \texttt{SceneControl}, odpowiedzialne za tworzenie, modyfikację i aktualizację stanu wizualizacji.
+\item Okno wykresów - nadzorowane przez moduł \texttt{PlotsControl}, zajmuje się konfiguracją i wyświetlaniem dynamicznych wykresów dla danych symulacji. 
+\item Panel kontrolny - integralna część okna głównego aplikacji, odpowiedzialna za interakcję z użytkownikiem. Moduł obejmuje zarządzanie ustawieniami oraz przekazywanie informacji o modyfikacjach parametrów.
+\end{itemize}
+
+Dodatkowymi elementami są okna wyświetlane na żądanie:
+\begin{itemize}
+\item Okno tworzenia trajektorii - ekran pozwalający zdefiniować parametry nowej trajektorii, otwierany opcjonalnie poprzez element panelu kontrolnego.
+\item Okno pomocy - dynamiczny widok interakcyjny prezentujący funkcjonalności poszczególnych elementów symulatora, podobnie jak poprzednie okno, włączane opcjonalnie z panelu kontrolnego.
+\end{itemize}
+
+\newpage
+Wszystkie elementy graficzne symulatora zostały wykonane przy pomocy dedykowanego dla technologi WPF języka XAML, ze szczególną dbałością o adaptację do różnych rozdzielczości ekranu. Logika systemu została zaimplementowana w języku C\#. Główna pętla symulacji została oparta o narzędzie \texttt{DispatcherTimer}, które pozwala na cykliczne wykonywanie określonych działań. Czas przebiegu symulacji został uzależniony od modyfikowalnego parametru, dzięki czemu użytkownik ma możliwość sterowania tempem animacji. Aplikacja graficzna zajmuje się wyłącznie prezentowaniem rezultatów obliczeń wykonywanych przez bibliotekę fizyki. Fakt ten umożliwia dowolną modyfikację kształtu symulatora bez obaw o utratę stabilności wykonywanych obliczeń. 
+
+\subsection{Biblioteka fizyki}
+Jednym z głównych celów, które autor pracy przyjął za obowiązkowe do zrealizowania było stworzenie jednego komponentu gromadzącego wszystkie zagadnienia związane z fizyką układu. Użyta technologia pozwoliła na zbudowanie w pełni funkcjonalnej biblioteki, która może zostać wykorzystana nie tylko przez aplikację symulatora, lecz również dowolny inny projekt wspierający technologię .NET. Założenie to umożliwia rozbudowę projektu o nową aplikację graficzną stworzoną w dowolnym  środowisku, np. Unity. 
+
+Podział komponentów biblioteki pokazany został na schemacie \ref{Library}.
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 350pt]{Library} 
@@ -1454,6 +1503,23 @@ Dla symulacji z prostym regulator PID sytuacja wygląda zupełnie inaczej. Ukła
 		\label{Library}
 \end{figure}
 
+Biblioteka fizyki obejmuje trzy podstawowe grupy obiektów:
+\begin{itemize}
+\item Kontrolery - narzędzia sterujące wszystkimi rozszerzeniami podstawowego modelu układu, tj:
+\begin{itemize}
+\item Kontroler Napięcia Na Silniku (\texttt{VoltageController}) - stabilizator układu. Pozwala na wybór jednego z wielu regulatorów. Gromadzi informacje o uchybie układu oraz wyznacza wynikowe napięcie na silniku.
+\item Kontroler Trajektorii Ruchu (\texttt{TrajectoryController}) - umożliwia odczyt i zapis dowolnych trajektorii ruchu. Wyznacza kierunek poruszania dla zadanej pozycji układu.
+\item Kontroler Zakłócenia Siłą Wiatru (\texttt{WindController}) - generator losowego zakłócenia identyfikowanego jako siła wiatru. Pozwala na konfigurację typu siły oraz przekazuje aktualny kierunek i moc wiatru.
+\item Kontroler Gry i Manualnego Sterowania (\texttt{GameController}) - obsługuje interakcję użytkownika z układem dynamiki. Umożliwia manualne sterowanie wychyleniem układu.
+\end{itemize}
+\item Moduł Obliczeniowy - zawiera kalkulator rozwiązujący układy równań różniczkowych zwyczajnych metodami Rungego-Kutty. Pozwala na ustalanie różnych strategii obliczeń w zależności od typu układu.
+\item Pozostałe Komponenty - elementy wspólne dla całej biblioteki. Są to kontenery danych dotyczących aktualnego stanu całego systemu dynamiki oraz parametrów startowych obliczeń numerycznych. 
+\end{itemize}
+
+Każdy z opisanych obiektów udostępnia interfejs podstawowych funkcjonalności. Ponadto przygotowane rozwiązania umożliwiają szeroką gamę rozszerzeń, zarówno w kwestii kontroli, jak i samego kształtu układu dynamiki.
+
+\subsection{Komunikacja}
+Podział systemu na moduły wymaga dodatkowego opracowania schematu wzajemnej interakcji między poszczególnymi elementami. Brak jednoznacznie zdefiniowanych reguł przyczyniłby się do ryzyka utraty kontroli nad pracą symulatora, a także możliwością błędnego działania całego systemu. Aby uniknąć przedstawionych problemów stworzony został model komunikacji między najważniejszymi komponentami programu, przedstawiony na diagramie \ref{Interaction}.
 
 \begin{figure}[H]
 	\centering
@@ -1462,40 +1528,45 @@ Dla symulacji z prostym regulator PID sytuacja wygląda zupełnie inaczej. Ukła
 		\label{Interaction}
 \end{figure}
 
+Model zakłada, że system zbudowany jest z czterech podstawowych elementów obejmujących bibliotekę fizyki oraz wizualizację opartą na trzech komponentach reprezentowanych przez menadżerów: aplikacji, wizualizacji i wykresów. Dodatkowo diagram uzupełniony jest poprzez aktora będącego użytkownikiem systemu. 
+
+Komunikacja użytkownika z symulatorem odbywa się wyłącznie poprzez menadżera aplikacji. Użytkownik ma możliwość modyfikacji parametrów systemu i sterowania przebiegiem symulacji. W sytuacji dowolnej zmiany menadżer aplikacji ma obowiązek poinformować o zdarzeniu odpowiednie moduły powiązane z danym parametrem. W przypadku gdy użytkownik przystępuje do rozpoczęcia symulacji, menadżer aplikacji wysyła ustalone parametry układu do biblioteki fizyki, równocześnie blokując użytkownikowi ich modyfikację w trakcie trwania symulacji. Następnie w pętli menadżer aplikacji na bieżąco powiadamia bibliotekę fizyki o aktualnym stanie wszystkich elementów dynamicznych systemu. Biblioteka dokonuje wstępnych obliczeń poprzez narzędzia kontrolerów i przesyła wyniki do głównego menadżera, które trafiają później do modułu obliczeniowego. Biblioteka fizyki wyznacza ruch układu i przekazuje rezultaty do menadżera aplikacji. W kolejnym kroku odpowiednie dane zostają wysyłane do menadżerów wizualizacji i wykresów. Komponenty dokonują aktualizacji danych i modyfikacji stanu odpowiednich elementów. Po wykonaniu wszystkich czynności wyniki pracy prezentowane są użytkownikowi. W przypadku, gdy użytkownik zechce zakończyć symulacje, menadżer aplikacji rozsyła wszystkim pozostałym komponentom informację o zakończeniu obliczeń i konieczności powrotu do stanu początkowego. Wynik akcji prezentowany jest użytkownikowi. Ponadto menadżer aplikacji odblokowuje użytkownikowi możliwość modyfikacji parametrów.
+
 \section{Wykorzystane narzędzia}
-Niniejsza sekcja poświęcona jest opisowi narzędzi wykorzystanych do realizacji projektu. Autor dołożył starań, by wybrane technologie umożliwiły sprawną implementację systemu, gwarantując uniwersalność i łatwą przenośność rozwiązania. Istotnym  celem było stworzenie biblioteki fizyki, której użycie nie wymagałoby instalacji dodatkowego oprogramowania matematycznego. Głównym celem wobec wizualizacji było wybranie narzędzi pozwalających na wykonanie rozwiązania prostego w obsłudze, przejrzystego oraz możliwego do uruchomienia przez wielu użytkowników.
+\label{Tools}
+Niniejsza sekcja poświęcona jest opisowi narzędzi wykorzystanych do realizacji projektu. Autor pracy dołożył starań, by wybrane technologie umożliwiły sprawną implementację systemu, gwarantując uniwersalność i łatwą przenośność rozwiązania. Istotnym  celem było stworzenie biblioteki fizyki, której użycie nie wymagałoby instalacji dodatkowego oprogramowania matematycznego. Głównym wymaganiem wobec wizualizacji było wybranie narzędzi pozwalających na wykonanie rozwiązania prostego w obsłudze, przejrzystego oraz możliwego do uruchomienia przez wielu użytkowników.
 
-\subsection{Windows Presentation Foundation}
+\subsubsection{Windows Presentation Foundation}
 
-Windows Presentation Foundation (WPF) jest to platforma służąca do wytwarzania aplikacji przeznaczonych na systemy okienkowe. Technologia wchodzi w skład pakietu oprogramowania .NET Framework dostarczanego przez firmę Microsoft. Narzędzie pozwala na budowanie zaawansowanych programów wykorzystujących interfejs użytkownika, multimedia oraz grafikę trójwymiarową. WPF korzysta z języka XAML, będącego implementacją języka XML. Język ten umożliwia realizację deklaratywnego modelu programowania. Technologia wykorzystuje zaawansowany sprzęt graficzny poprzez odpowiedni silnik wyświetlania, który cechuje się niezależnością od rozdzielczości ekranu oraz wykorzystaniu techniki wektorowej i akceleracji grafiki 3D. Dodatkowe informacje oraz poradniki użytkowania można znaleźć pod adresem: \cite{WPF}.
+Windows Presentation Foundation (WPF) jest to platforma służąca do wytwarzania aplikacji przeznaczonych na systemy okienkowe. Technologia wchodzi w skład pakietu oprogramowania .NET Framework dostarczanego przez firmę Microsoft. Narzędzie pozwala na budowanie zaawansowanych programów wykorzystujących interfejs użytkownika, multimedia oraz grafikę trójwymiarową. WPF korzysta z języka XAML, będącego implementacją języka XML. Język ten umożliwia realizację deklaratywnego modelu programowania. Technologia wykorzystuje zaawansowany sprzęt graficzny poprzez odpowiedni silnik wyświetlania, który cechuje się niezależnością od rozdzielczości ekranu oraz wykorzystaniem techniki wektorowej i akceleracji grafiki 3D. Dodatkowe informacje oraz poradniki użytkowania można znaleźć pod adresem \cite{WPF}.
 
 Technologia umożliwia łatwą separację graficznego interfejsu użytkownika od logiki biznesowej poprzez implementację wzorca architektonicznego MVVM. Powala to na definiowanie modelu danych za pomocą kodu w języku C\# oraz wyświetlanie graficznej reprezentacji danych przy użyciu języka znaczników. Niezbędny w tym procesie jest konwerter danych zwany widokiem dla danego modelu. WPF upraszcza wykonanie wzorca poprzez wbudowane narzędzie dowiązań.
 
 Autor pracy chcąc uzyskać separację modelu układu od jego graficznego wyglądu wykorzystał przedstawione wyżej funkcjonalności. Ponadto użycie technologii WPF pozwoliło na stworzenie symulatora prostego w obsłudze, intuicyjnego i wyposażonego w zaawansowany moduł wizualizacji.
 
-\subsection{HelixToolkit}
-Helix Toolkit to otwarta biblioteka grafiki 3D przeznaczona na platformę Windows Presentation Foundation. Narzędzie pozwala na zaawansowaną pracę z grafiką trójwymiarową, w tym: generowanie i wyświetlanie podstawowych modeli, intuicyjna manipulacja kamerą, dynamiczne wyświetlanie animacji. Dokładny opis technologii wraz z dokumentacją techniczną dostępne są na stronie: \cite{HelixToolkit}.
+\subsubsection{HelixToolkit}
+Helix Toolkit to otwarta biblioteka grafiki 3D przeznaczona na platformę Windows Presentation Foundation. Narzędzie pozwala na zaawansowaną pracę z grafiką trójwymiarową, w tym: generowanie i wyświetlanie podstawowych modeli, intuicyjna manipulacja kamerą, dynamiczne wyświetlanie animacji. Dokładny opis technologii wraz z dokumentacją techniczną dostępne są na stronie \cite{HelixToolkit}.
 
 Decyzja o wyborze wspomnianego narzędzia została oparta o doświadczenie w pracy z biblioteką oraz wykorzystanie jej w projekcie obejmującym zbliżoną tematykę.
 
-\subsection{OxyPlot}
-OxyPlot jest to otwarta biblioteka przeznaczona na platformę .NET służąca do generowania wykresów. Technologia umożliwia dynamiczne tworzenie zaawansowanych wykresów, modyfikację sposobu wyświetlania danych oraz eksport rezultatów do pliku. OxyPlot współpracuje z platformą WPF i umożliwia tworzenie dowiązań danych do konkretnego graficznego okna wykresu. Wszystkie niezbędne informację na temat biblioteki dostępne są pod adresem: \cite{OxyPlot}.
+\subsubsection{OxyPlot}
+OxyPlot jest to otwarta biblioteka przeznaczona na platformę .NET służąca do generowania wykresów. Technologia umożliwia dynamiczne tworzenie zaawansowanych wykresów, modyfikację sposobu wyświetlania danych oraz eksport rezultatów do pliku. OxyPlot współpracuje z platformą WPF i umożliwia tworzenie dowiązań danych do konkretnego graficznego okna wykresu. Wszystkie niezbędne informację na temat biblioteki dostępne są pod adresem \cite{OxyPlot}.
 
-Podobnie jak w przypadku poprzedniej technologii wybór rozwiązania podyktowany był dobrą znajomością oraz użyciem w wielu projektach poświęconych symulacji. 
+Podobnie jak w przypadku poprzedniej technologii wybór rozwiązania podyktowany był dobrą znajomością narzędzia oraz użyciem go w wielu projektach poświęconych symulacji. 
 
 
-\subsection{Pozostałe}
-W projekcie wykorzystano dodatkowe narzędzia realizujące pojedyncze funkcjonalności. Część rozwiązań mogłaby być zrealizowana samodzielnie przez autora, jednakże na etapie analizy wstępnej przyjęto, że zadania te nie są głównym celem pracy i do zrealizowania ich należy użyć gotowych narzędzi. Są to:
+\subsubsection{Pozostałe}
+W projekcie wykorzystano dodatkowe narzędzia realizujące pojedyncze funkcjonalności. Część rozwiązań mogłaby być zrealizowana samodzielnie przez autora pracy, jednakże na etapie analizy wstępnej przyjęto, że zadania te nie są głównym celem pracy i do zrealizowania ich należy użyć gotowych narzędzi. Są to:
 \begin{itemize}
-\item ALGLIB - wieloplatformowa, otwarta biblioteka obliczeń numerycznych. Narzędzie pozwala na analizę danych, optymalizację oraz rozwiązywanie problemów z zakresu algebry liniowej. Autor skorzystał z pakietu obliczeń układów równań różniczkowych metodami Rungego-Kutty z adaptacyjnym krokiem całkowania (algorytm opisany w sekcji \ref{Runge}). 
+\item ALGLIB - wieloplatformowa, otwarta biblioteka obliczeń numerycznych. Narzędzie pozwala na analizę danych, optymalizację oraz rozwiązywanie problemów z zakresu algebry liniowej. Autor pracy skorzystał z pakietu obliczeń układów równań różniczkowych metodami Rungego-Kutty z adaptacyjnym krokiem całkowania (algorytm opisany w sekcji \ref{Runge}). 
 \item FParsec - otwarta biblioteka przeznaczona na platformę .NET, służąca do analizy tekstów pod kątem konkretnych gramatyk formalnych. Pakiet umożliwia rozpoznawanie matematycznych wyrażeń symbolicznych. Narzędzie to było pomocne przy analizie parametryzacji krzywej w module tworzenia nowych trajektorii.
-\item Math.NET Symbolics - otwarta biblioteka obliczeń symbolicznych dedykowana dla platformy .NET. Narzędzie pozwala na rozwiązywanie równań symbolicznych. Autor użył pakietu do wyznaczania punktów kontrolnych krzywych nowo generowanych trajektorii.
+\item Math.NET Symbolics - otwarta biblioteka obliczeń symbolicznych dedykowana dla platformy .NET. Narzędzie pozwala na rozwiązywanie równań symbolicznych. Autor pracy użył pakietu do wyznaczania punktów kontrolnych krzywych nowo generowanych trajektorii.
 \end{itemize}
 
 \section{Wzorce projektowe}
 Implementacja systemu realizowana była w zgodzie ze standardami inżynierii oprogramowania. Jednym z kluczowym elementów analizy konstrukcji programu jest zapewnienie łatwej rozszerzalności poszczególnych komponentów. Aby osiągnąć postawiony cel należy dokładnie odseparować poszczególne funkcjonalności oraz zbudować narzędzie zarządzające pracą całej aplikacji. Podział programu na moduły upraszcza kontrolę działania systemu oraz pozwala na dowolne modyfikacje konkretnych elementów bez utraty ogólnej funkcjonalności. Użytecznym rozwiązaniem pomagającym uschematyzować budowę systemu są wzorce projektowe czyli uniwersalne i sprawdzone techniki rozwiązywania określonych problemów projektowych. 
 
-Ze względu na ograniczoną objętość systemu jak również zgromadzenie całej funkcjonalności układu dynamiki w jednej bibliotece, autor nie był zmuszony do rozwiązywania skomplikowanych problemów projektowych wymagających użycia rozbudowanych wzorców. Budowa aplikacji okienkowej realizowana była w zgodzie ze standardami wzorca architektonicznego MVVM. Projekt systemu zakładał łatwy dostęp do wszystkich modeli i ich kontroli, wobec czego nie było potrzeby wprowadzania dodatkowych schematów. W przypadku samej biblioteki fizyki skupiono się na stworzeniu modelu z możliwością modyfikacji dynamiki układu. W celu zapewnienia wymienności definicji równania stanu i jego wyznaczania poprzez matematyczne algorytmy skorzystano z czynnościowego wzorca projektowego strategii.
+Ze względu na ograniczoną objętość systemu jak również zgromadzenie całej funkcjonalności układu dynamiki w jednej bibliotece, autor pracy nie był zmuszony do rozwiązywania skomplikowanych problemów projektowych wymagających użycia rozbudowanych wzorców. Budowa aplikacji okienkowej realizowana była w zgodzie ze standardami wzorca architektonicznego MVVM. Projekt systemu zakładał łatwy dostęp do wszystkich modeli i ich kontroli, wobec czego nie było potrzeby wprowadzania dodatkowych schematów. W przypadku samej biblioteki fizyki skupiono się na stworzeniu modelu z możliwością modyfikacji dynamiki układu. W celu zapewnienia wymienności definicji i sposobu rozwiązywania równania stanu skorzystano z czynnościowego wzorca projektowego strategii.
 
 Strategia jest to wzorzec definiujący grupę wymiennych algorytmów zebranych w postaci klas. Technika pozwala na łatwą zamianę realizacji problemu w zależności od zaistniałych potrzeb. Diagram opisujący strukturę wzorca przedstawia schemat \ref{StrategyPattern}.
 
@@ -1510,11 +1581,13 @@ Strategia deklaruje interfejs wspólny dla wszystkich sposobów rozwiązania pro
 
 Wzorzec pozwala na definiowanie dowolnej grupy algorytmów i swobodną wymianę ich, w zależności od potrzeb. Ponadto technika ta pozwala na ograniczenie ilości instrukcji warunkowych i łatwe porównanie wyników poszczególnych metod. Wadą rozwiązania jest zwiększenie narzutu na komunikację i zwiększenie ilości obiektów w systemie.
 
-W stworzony projekcie rolę klienta pełni moduł obliczeniowy, który ustala strategię kształtu i sposobu rozwiązywania równań stanu układu. Konkretnymi strategiami są: układ dynamiki w wersji podstawowej oraz zmodyfikowanej o wpływ zakłóceń. 
+W stworzonym projekcie rolę klienta pełni moduł obliczeniowy, który ustala strategię kształtu i sposobu rozwiązywania równań stanu układu. Konkretnymi strategiami są: układ dynamiki w wersji podstawowej oraz zmodyfikowanej o wpływ zakłóceń. 
 
 \section{Komponenty aplikacji}
-W celu uporządkowania struktury systemu oraz zapewnienia stabilnego zarządzania komponentami opracowano uniwersalne własności zrealizowane w postaci interfejsów. Rozszerzenie systemu o kolejne elementy osiągalne jest poprzez realizację poszczególnych interfejsów oraz stworzenie konkretnej implementacji funkcjonalności. Podejście do zapewnia dodatkowo kontrolę nad cyklem wykonywania operacji oraz pomaga ustalić w jakich sytuacjach powinny być wywoływane określone metody.
+W celu uporządkowania struktury systemu oraz zapewnienia stabilnego zarządzania komponentami opracowano uniwersalne własności zrealizowane w postaci interfejsów. Rozszerzenie systemu o kolejne elementy osiągalne jest poprzez realizację poszczególnych interfejsów oraz stworzenie konkretnej implementacji funkcjonalności. Podejście to zapewnia dodatkowo kontrolę nad cyklem wykonywania operacji oraz pomaga ustalić w jakich sytuacjach powinny być wywoływane określone metody.
+
 \subsection{Modele}
+Hierarchia klas dla modeli pokazana została na diagramie \ref{IModel}.  
 
 \begin{figure}[H]
 	\centering
@@ -1523,7 +1596,14 @@ W celu uporządkowania struktury systemu oraz zapewnienia stabilnego zarządzani
 		\label{IModel}
 \end{figure}
 
+Wszystkie elementy wizualizacji spełniają wymagania określone poprzez interfejs \texttt{IModel}. Interfejs ten gromadzi podstawowe funkcjonalności niezależne od specyfiki konkretnego modelu, przede wszystkim referencję do całego modelu oraz ustalanie sposobu wyświetlania i aktualizacji. 
+
+Poszczególne obiekty w scenie zaimplementowane zostały jako klasy udostępniające metody poprzez dedykowane interfejsy. Dodatkowo każdy z interfejsów realizuje bazowy interfejs wspólny. 
+
+Zaproponowany schemat pozwala na równoczesną kontrolę nad wszystkimi elementami w scenie oraz daje możliwość łatwego rozszerzania wizualizacji o kolejne elementy.
+
 \subsection{Kontrolery}
+Hierarchia klas dla kontrolerów pokazana została na diagramie \ref{IController}.  
 
 \begin{figure}[H]
 	\centering
@@ -1532,14 +1612,20 @@ W celu uporządkowania struktury systemu oraz zapewnienia stabilnego zarządzani
 		\label{IController}
 \end{figure}
 
+Kontrolery są integralną częścią biblioteki fizyki odpowiedzialną za rozszerzanie funkcjonalności układu. Każdy z kontrolerów podlega tym samym regułom budowy. Interfejs \texttt{IController} zbiera wspólne funkcjonalności, natomiast poszczególne dedykowane interfejsy rozszerzają bazę metod do grupy adekwatnej danemu kontrolerowi. 
+
+Przyjęte rozwiązanie, podobnie jak w przypadku modeli, wprowadza porządek i ułatwia zarządzanie wszystkimi narzędziami. Dodatkowo struktura jednoznacznie definiuje w jaki sposób należy dodawać kolejne kontrolery.
+
 %% -------- chapter VI --------
 \chapter{Instrukcja użytkownika}
 \section{Ogólny wygląd aplikacji}
-Symulator został wykonany jako aplikacja okienkowa na urządzenia z systemem Windows. Okno podzielone zostało na trzy sekcje:
+Symulator został wykonany jako aplikacja okienkowa na urządzenia z systemem Windows. Warunkiem uruchomienia programu jest posiadanie platformy .NET w wersji 4.5. 
+
+Okno programu podzielone zostało na trzy sekcje:
 \begin{itemize}
 \item Panel kontrolny - służący do konfiguracji ustawień programu i modyfikacji parametrów układu.
 \item Okno wizualizacji - obejmuje trójwymiarową scenę z umieszczonym w niej modelem układu. Wyświetla zachowanie układu w zadanych warunkach.
-\item Panel wykresów i informacja o stanie układu - umożliwia śledzenie aktualny parametrów układu oraz przyłożonego sterowania.
+\item Panel wykresów i informacja o stanie układu - umożliwia śledzenie aktualnych parametrów układu oraz przyłożonego sterowania.
 \end{itemize}
 
 Przykładowe podglądy aplikacji w trakcie wykonywania poszczególnych symulacji zaprezentowano na ilustracjach \ref{Application} i \ref{Simulation}.
@@ -1565,7 +1651,7 @@ Wszystkie najistotniejsze informacje odnośnie systemu, wraz z wygodnym trybem p
 W panelu górnym w zakładce \texttt{Mode} zebrane zostały wszystkie tryby pracy aplikacji:
 \begin{itemize}
 \item Stabilizacja wychylenia wahadła. Jest to tryb domyślny. Umożliwia podgląd pracy układu w warunkach określonego sterowania z możliwością uwzględnienia zakłóceń. W przypadku wyboru innego trybu i chęci powrotu do domyślnego należy wybrać opcję \texttt{Clear Trajectory} lub \texttt{Clear Game} w zależności od wybranego trybu.
-\item Śledzenie trajektorii. Tryb dostępny po wybraniu opcji \texttt{Load Trajectory}. Pozwala na wczytanie dowolnego pliku w formacie \texttt{".trj"} zawierającego kolejne punkty kontrolne docelowej trajektorii. Po uruchomieniu symulacji układ rozpoczyna śledzenie zadanej drogi. Autor pracy przygotował kilka gotowych trajektorii dostępnych w folderze \texttt{Trajectories}. Dodatkowo użytkownik ma możliwość stworzenia nowej trajektorii poprzez wybór opcji \texttt{CreateTrajectory}. W nowo otwartym oknie (pokazanym na ilustracji \ref{CreateTrajectory}) pojawia się możliwość podania parametrycznego opisu krzywej (zależnego od parametru \texttt{"t"}), wartości brzegowych oraz ilości punktów kontrolnych. Po wypełnieniu wszystkich pól, kliknięcie przycisku \texttt{Create Trajectory} stworzy nową trajektorię z możliwością zapisania jej na stałe. Nowo utworzona trajektoria zostanie automatycznie wczytana do programu.
+\item Śledzenie trajektorii. Tryb dostępny po wybraniu opcji \texttt{Load Trajectory}. Pozwala na wczytanie dowolnego pliku w formacie \texttt{".trj"} zawierającego kolejne punkty kontrolne docelowej trajektorii. Po uruchomieniu symulacji układ rozpoczyna śledzenie zadanej drogi. Autor pracy przygotował kilka gotowych trajektorii dostępnych w folderze \texttt{Trajectories}. Dodatkowo użytkownik ma możliwość stworzenia nowej trajektorii poprzez wybór opcji \texttt{Create Trajectory}. W nowo otwartym oknie (pokazanym na ilustracji \ref{CreateTrajectory}) pojawia się możliwość podania parametrycznego opisu krzywej (zależnego od parametru \texttt{"t"}), wartości brzegowych oraz ilości punktów kontrolnych. Po wypełnieniu wszystkich pól, kliknięcie przycisku \texttt{Create Trajectory} stworzy nową trajektorię z możliwością zapisania jej na stałe. Nowo utworzona trajektoria zostanie automatycznie wczytana do programu.
 \item Sterowanie manualne. Tryb dostępny po wybraniu opcji \texttt{Load Game}. Podobnie jak w przypadku trybu trajektorii na początku należy wybrać plik z gotową trajektorią. Po uruchomieniu symulacji użytkownik zyskuje możliwość ręcznego sterowania układem. Kontrola odbywa się poprzez klikanie odpowiednich przycisków umieszczonych w dolnej części ekranu wizualizacji lub bezpośrednio z klawiatury za pomocą klawiszy wskazanych na poszczególnych przyciskach.
 \end{itemize}
 
@@ -1625,7 +1711,7 @@ W trakcie trwania symulacji niektóre istotne dane związane z mechanizmem stero
 \newpage
 \chapter{Podsumowanie pracy}
 \section{Ocena rozwiązania}
-Niniejszy rozdział stanowi podsumowanie całości pracy włożonej w przygotowanie omawianego rozwiązania. Głównym celem projektu było stworzenie symulacji pewnego modelu fizycznego wraz z narzędziem umożliwiającym jego stabilizację i swobodę ruchu. Realizowanie zadania było doskonałą okazją do zapoznania się z metodyką tworzenia oprogramowania symulacyjnego, jak również pozwalało na pogłębienie wiedzy z zakresu rzeczywistości wirtualnej, modelowania układów dynamicznych oraz teorii sterowania. Autor pracy uważa, że czas poświęcony na wykonanie projektu był dobrą inwestycją w rozwój wiedzy i doświadczenia. Istotnym atutem pracy była zbieżność tematyki z zainteresowaniami autora, dzięki czemu ukończenie jej przyniosło dużą satysfakcję. 
+Niniejszy rozdział stanowi podsumowanie całości pracy włożonej w przygotowanie omawianego rozwiązania. Głównym celem projektu było stworzenie symulacji pewnego modelu fizycznego wraz z narzędziem umożliwiającym jego stabilizację i swobodę ruchu. Realizowanie zadania było doskonałą okazją do zapoznania się z metodyką tworzenia oprogramowania symulacyjnego, jak również pozwalało na pogłębienie wiedzy z zakresu rzeczywistości wirtualnej, modelowania układów dynamicznych oraz teorii sterowania. Autor pracy uważa, że czas poświęcony na wykonanie projektu był dobrą inwestycją w rozwój wiedzy i doświadczenia. Istotnym atutem pracy była zbieżność tematyki z zainteresowaniami autora pracy, dzięki czemu ukończenie jej przyniosło dużą satysfakcję. 
 
 Podsumowanie jakościowe pracy rozpatrzono pod kątem stopnia realizacji oraz poprawności wykonania. Każde z kryteriów zostało omówione w poszczególnych sekcjach.
 
@@ -1640,16 +1726,16 @@ Opracowane narzędzia pozwoliły dodatkowo na przeprowadzenie dokładnych testó
 Istotnym sukcesem projektu jest spełnienie przyjętych wymagań niefikcjonalnych. Aplikacja została przetestowana przez grupę użytkowników końcowych. Opinie na temat programu podkreślały jego stabilność, łatwość w obsłudze i interesującą formę prezentacji danych.
 
 \section{Krytyczna refleksja}
-W poniższe sekcji autor pragnie podzielić się spostrzeżeniami na temat ewentualnych zmian koncepcji realizacji projektu w sytuacji, gdyby praca miała zostać wykonana ponownie. Charakterystyka ta pozwoli na określenie jak bardzo zdobyta w trakcie wykonywania projektu wiedza przyczyniłaby się do poprawy finalnego kształtu pracy. 
+W poniższej sekcji autor pracy pragnie podzielić się spostrzeżeniami na temat ewentualnych zmian koncepcji realizacji projektu w sytuacji, gdyby praca miała zostać wykonana ponownie. Charakterystyka ta pozwoli na określenie jak bardzo zdobyta w trakcie wykonywania projektu wiedza przyczyniłaby się do poprawy finalnego kształtu pracy. 
 
-Analiza wstępna projektu skupiła się głównie na pełnej analizie modułu fizyki układu i sterowaniu nim. Pozwoliło to na wypracowanie kompletnej biblioteki fizyki, która może być użyta w dowolnej aplikacji. Niestety, przyjęty rozkład działań pominął przemyślenia na temat samego narzędzia symulatora. Dopiero w trakcie realizacji aplikacji, autor zdał sobie sprawę, iż narzędzie to powinno być uniwersalnym środowiskiem, umożliwiającym prezentacje zachowania dowolnego modelu dynamiki. W dalszej części projektu postarano się o wypracowanie możliwie uniwersalnego rozwiązania, jednakże dużo łatwiej byłoby osiągnąć pełen efekt, gdyby koncepcja została rozpatrzona na początku prac. 
+Analiza wstępna projektu skupiła się głównie na pełnej analizie modułu fizyki układu i sterowaniu nim. Pozwoliło to na wypracowanie kompletnej biblioteki fizyki, która może być użyta w dowolnym projekcie. Niestety, w przypadku aplikacji symulatora, dopiero w trakcie realizacji programu autor pracy zdał sobie sprawę, iż narzędzie to powinno być uniwersalnym środowiskiem, umożliwiającym prezentacje zachowania dowolnego modelu dynamiki. W dalszej części projektu postarano się o wypracowanie możliwie uniwersalnego rozwiązania, jednakże dużo łatwiej byłoby osiągnąć pełen efekt, gdyby koncepcja została rozpatrzona na początku prac. 
 
-Kolejną kwestią jest jakość stabilizacji układu dla problemu śledzenia trajektorii. W początkowej fazie projektu autor nie dysponował wystarczającą wiedzą pozwalającą na trafny dobór rozwiązań. Gdyby była możliwość ponownego stworzenia projektu, w pierwszej kolejności dokonano by porównania różnych technik regulacji układu za pomocą narzędzi oferowanych przez pakiety symulacyjne. Prawdopodobnie przyczyniłoby się to do wyboru dodatkowych kontrolerów, m.in. regulatora LQR. Ponadto postawiono by większy nacisk na optymalizację parametrów użytych metod. Modyfikacja obejmowałaby również samą ideę algorytmu realizowania trajektorii przez układ. Testy wykazały, że niektóre rozwiązania wymagają nieco innego podejścia, by móc uzyskać zmaksymalizowany efekt. 
+Kolejną kwestią jest jakość stabilizacji układu dla problemu śledzenia trajektorii. W początkowej fazie projektu autor pracy nie dysponował wystarczającą wiedzą pozwalającą na trafny dobór rozwiązań. Gdyby była możliwość ponownego stworzenia projektu, w pierwszej kolejności dokonano by porównania różnych technik regulacji układu za pomocą narzędzi oferowanych przez pakiety symulacyjne. Prawdopodobnie przyczyniłoby się to do wyboru dodatkowych kontrolerów, m.in. regulatora LQR. Ponadto zwrócono by większą uwagę na optymalizację parametrów użytych metod. Modyfikacja obejmowałaby również samą ideę algorytmu realizowania trajektorii przez układ. Testy wykazały, że niektóre rozwiązania wymagają nieco innego podejścia, by móc uzyskać zmaksymalizowany efekt. 
 
 Ostatnia sprawa dotyczy jakości zrealizowanej wizualizacji. Autor pracy uznał, że nadmiar efektów graficznych przyczyni się do zakrycia istoty realizowanego problemu. Jednakże w trakcie implementacji programu pojawiła się koncepcja podwójnego trybu wyświetlania. Jeden z nich pozwalałby na wnikliwą obserwację dynamiki układu. Drugi natomiast prezentowałby symulację w sposób atrakcyjny dla oka użytkownika końcowego. Brak rozpatrzenia drugiego pomysłu na etapie analizy projektu spowodował, że funkcjonalność ta została zrealizowana jedynie w niewielkim stopniu.
 
 \section{Możliwości rozszerzania projektu}
-Zrealizowany projekt obejmuje kilka zagadnień z zakresu modelowania dynamiki, sterowania układem oraz tworzenia symulacji. Dodatkowo zawiera niesztandarową koncepcję łączenia prostych dwuwymiarowych układów w jeden duży trójwymiarowy model. Mnogość poruszanych tematów pozwala na szeroką gamę rozszerzeń w zakresie zarówno matematyczno-fizycznym, jak i programistycznym.
+Zrealizowany projekt obejmuje kilka zagadnień z zakresu modelowania dynamiki, sterowania układem oraz tworzenia symulacji. Dodatkowo zawiera niestandardową koncepcję łączenia prostych dwuwymiarowych układów w jeden duży trójwymiarowy model. Mnogość poruszanych tematów pozwala na szeroką gamę rozszerzeń w zakresie zarówno matematyczno-fizycznym, jak i programistycznym.
 
 Najciekawsze pomysły na wzbogacenie symulatora opracowane przez autora pracy przedstawiono poniżej:
 \begin{itemize}
@@ -1679,7 +1765,7 @@ Warszawa, 2003.
 
 \bibitem{MarciniakClosedLoop} 
 Marciniak K., 
-\emph{Design of Closed loop control}, 
+\emph{Design of closed loop control}, 
 w: \emph{Modelling in state space}, 
 Warszawa, 2003.
 
@@ -1699,7 +1785,9 @@ http://www.myphysicslab.com/explain/runge-kutta-en.html.
 \bibitem{OptimalControl} 
 Prasad L., 
 \emph{Optimal Control of Non linear Inverted Pendulum Dynamical System with Disturbance Input using PID Controller \& LQR}, 
-2011.
+IEEE, 2011,
+\\*
+http://ieeexplore.ieee.org/document/6190585/.
 
 \bibitem{LMIP} 
 Robles R., Shardt Y., 
@@ -1786,14 +1874,14 @@ http://www.mne.k-state.edu/static/nlc/tiki-index.php?page=S\_H\_Wireless-\\Inver
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 400pt]{TrefoilKnotCascadeEV} 
-		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator kaskadowy: wykres napięcia na silniku}}
+		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator kaskadowy: wykres zależności napięcia na silniku od czasu}}
 		\label{plot:TrefoilKnotCascadeEV}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 400pt]{TrefoilKnotCascadeCE} 
-		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator kaskadowy: wykres uchybu kąta}}
+		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator kaskadowy: wykres zależności uchybu kąta od czasu}}
 		\label{plot:TrefoilKnotCascadeCE}
 \end{figure}
 
@@ -1801,14 +1889,14 @@ http://www.mne.k-state.edu/static/nlc/tiki-index.php?page=S\_H\_Wireless-\\Inver
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 400pt]{TrefoilKnotParallelEV} 
-		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator równoległy: wykres napięcia na silniku}}
+		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator równoległy: wykres zależności napięcia na silniku od czasu}}
 		\label{plot:TrefoilKnotParallelEV}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 400pt]{TrefoilKnotParallelCE} 
-		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator równoległy: wykres uchybu kąta}}
+		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez podwójny regulator równoległy: wykres zależności uchybu kąta od czasu}}
 		\label{plot:TrefoilKnotParallelCE}
 \end{figure}
 
@@ -1816,14 +1904,14 @@ http://www.mne.k-state.edu/static/nlc/tiki-index.php?page=S\_H\_Wireless-\\Inver
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 400pt]{TrefoilKnotPDEV} 
-		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez zmodyfikowany podwójny regulator równoległy: wykres napięcia na silniku}}
+		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez zmodyfikowany podwójny regulator równoległy: wykres zależności napięcia na silniku od czasu}}
 		\label{plot:TrefoilKnotPDEV}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 400pt]{TrefoilKnotPDCE} 
-		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez zmodyfikowany podwójny regulator równoległy: wykres uchybu kąta}}
+		\caption{\textit{Śledzenie trajektorii węzła koniczynowego poprzez zmodyfikowany podwójny regulator równoległy: wykres zależności uchybu kąta od czasu}}
 		\label{plot:TrefoilKnotPDCE}
 \end{figure}
 
@@ -1832,21 +1920,21 @@ http://www.mne.k-state.edu/static/nlc/tiki-index.php?page=S\_H\_Wireless-\\Inver
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 400pt]{WindPIDEV} 
-		\caption{\textit{Wpływ siły wiatru na układ sterowany regulatorem PID: wykres napięcia na silniku}}
+		\caption{\textit{Wpływ siły wiatru na układ sterowany regulatorem PID: wykres zależności napięcia na silniku od czasu}}
 		\label{plot:WindPIDEV}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 400pt]{WindPIDCEP} 
-		\caption{\textit{Wpływ siły wiatru na układ sterowany regulatorem PID: wykres uchybu pozycji}}
+		\caption{\textit{Wpływ siły wiatru na układ sterowany regulatorem PID: wykres zależności uchybu pozycji od czasu}}
 		\label{plot:WindPIDCEP}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 		\includegraphics[width = 400pt]{WindPIDCEA} 
-		\caption{\textit{Wpływ siły wiatru na układ sterowany regulatorem PID: wykres uchybu kąta}}
+		\caption{\textit{Wpływ siły wiatru na układ sterowany regulatorem PID: wykres zależności uchybu kąta od czasu}}
 		\label{plot:WindPIDCEA}
 \end{figure}
 

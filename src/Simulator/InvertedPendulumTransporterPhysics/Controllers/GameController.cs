@@ -5,16 +5,37 @@ using System.Windows.Input;
 
 namespace InvertedPendulumTransporterPhysics.Controllers
 {
+    /// <summary>
+    /// Controller for game mode
+    /// </summary>
     public class GameController : IGameController
     {
-        private const double WindControlPowerDelta = Math.PI / 120;
+        #region Private Members
+        private Dictionary<Key, Button> keyButtons;
+        private const double UserControlDelta = Math.PI / 120;
+        #endregion
+
+        #region Public Members
+        #region IGameController Interface
         public double UserAngleX { get; private set; }
         public double UserAngleY { get; private set; }
-
         public bool GameEnabled { get; set; }
         public bool GamePlaying { get; set; }
-        private Dictionary<Key, Button> keyButtons;
+        #endregion
+        #endregion
 
+        #region Private Methods
+
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        /// <param name="up">Up key binding</param>
+        /// <param name="down">Down key binding</param>
+        /// <param name="left">Left key binding</param>
+        /// <param name="right">Right key binding</param>
         public GameController(Button up, Button down, Button left, Button right)
         {
             keyButtons = new Dictionary<Key, Button>()
@@ -26,6 +47,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             };
         }
 
+        #region IGameController Interface
         public void Reset()
         {
             UserAngleY = 0.0;
@@ -39,22 +61,24 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             switch (key)
             {
                 case Key.T:
-                    UserAngleY += WindControlPowerDelta;
+                    UserAngleY += UserControlDelta;
                     keyButtons[key].Focus();
                     break;
                 case Key.G:
-                    UserAngleY -= WindControlPowerDelta;
+                    UserAngleY -= UserControlDelta;
                     keyButtons[key].Focus();
                     break;
                 case Key.F:
-                    UserAngleX -= WindControlPowerDelta;
+                    UserAngleX -= UserControlDelta;
                     keyButtons[key].Focus();
                     break;
                 case Key.H:
-                    UserAngleX += WindControlPowerDelta;
+                    UserAngleX += UserControlDelta;
                     keyButtons[key].Focus();
                     break;
             }
         }
+        #endregion
+        #endregion
     }
 }

@@ -1,10 +1,26 @@
 ﻿using InvertedPendulumTransporterPhysics.Common;
-using System;
 
 namespace InvertedPendulumTransporterPhysics.Solvers
 {
+    /// <summary>
+    /// Strategy for base dynamics system
+    /// </summary>
     public class StandardSystemODESolverFunctionStrategy : IODESolverFunctionStrategy
     {
+        #region Private Members
+
+        #endregion
+
+        #region Public Members
+
+        #endregion
+
+        #region Private Methods
+
+        #endregion
+
+        #region Public Methods
+        #region IODESolverFunctionStrategy Interface
         public void ODESolverFunction(double[] y, double x, double[] dy, object obj)
         {
             // y: x, theta, dx, dtheta
@@ -22,5 +38,7 @@ namespace InvertedPendulumTransporterPhysics.Solvers
                 + (data.Gamma2 / data.CartMass / data.PendulumLength) * y[2]
                 + (-data.Gamma1 / data.CartMass / data.PendulumLength * data.Voltage);
         }
+        #endregion
+        #endregion
     }
 }

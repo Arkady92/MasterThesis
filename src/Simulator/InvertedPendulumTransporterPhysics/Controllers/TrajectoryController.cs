@@ -9,26 +9,110 @@ using System.Windows.Media.Media3D;
 
 namespace InvertedPendulumTransporterPhysics.Controllers
 {
+    /// <summary>
+    /// Controller for trajectory tracking
+    /// </summary>
     public class TrajectoryController : ITrajectoryController
     {
+        #region Private Members
         private List<Point3D> trajectoryPoints;
         private int actualPointIndex = 0;
         private const double ZValue = 0.05;
-        public double AverageDistance { get; private set; }
         private const AccuracyType DefaultAccuracyType = AccuracyType.Medium;
         private double distanceEps;
         private const double ApproximateDistanceFactor = 0.75;
+        #endregion
 
+        #region Public Members
+        #region ITrajectoryController Interface
+        public double AverageDistance { get; private set; }
         public bool TrajectoryAchieved { get; private set; }
         public bool TrajectoryEnabled { get; private set; }
-        public bool TrajectoryAccuracy { get; private set; }
+        #endregion
+        #endregion
 
+        #region Private Methods
+        /// <summary>
+        /// Calculate average distace between control points
+        /// </summary>
+        /// <returns>Average distance</returns>
+        private double CalculateAverageDistance()
+        {
+            var sum = 0.0;
+            for (int i = 1; i < trajectoryPoints.Count; i++)
+            {
+                sum += trajectoryPoints[i - 1].DistanceTo(trajectoryPoints[i]);
+            }
+            return sum / (trajectoryPoints.Count - 1);
+        }
+
+        /// <summary>
+        /// Read trajectory from file
+        /// </summary>
+        /// <param name="fileName">File full path</param>
+        /// <returns>Info about reading succes</returns>
+        private bool ReadTrajectoryFromFile(string fileName)
+        {
+            trajectoryPoints.Clear();
+            try
+            {
+                using (StreamReader reader = new StreamReader(fileName))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        var numbers = Regex.Split(line, " ");
+                        var x = double.Parse(numbers[0], CultureInfo.InvariantCulture);
+                        var y = double.Parse(numbers[1], CultureInfo.InvariantCulture);
+                        trajectoryPoints.Add(new Point3D(x, y, ZValue));
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                trajectoryPoints.Clear();
+                TrajectoryEnabled = false;
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Write trajectory to file
+        /// </summary>
+        /// <param name="fileName">File full path</param>
+        /// <returns>Info about writing succes</returns>
+        private bool WriteTrajectoryToFile(string fileName)
+        {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(fileName, false))
+                {
+                    foreach (var point in trajectoryPoints)
+                    {
+                        writer.WriteLine(point.X + " " + point.Y);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// Class constructor
+        /// </summary>
         public TrajectoryController()
         {
             trajectoryPoints = new List<Point3D>();
             actualPointIndex = 1;
         }
 
+        #region ITrajectoryController Interface
         public void Reset()
         {
             actualPointIndex = 1;
@@ -100,15 +184,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             return null;
         }
 
-        private double CalculateAverageDistance()
-        {
-            var sum = 0.0;
-            for (int i = 1; i < trajectoryPoints.Count; i++)
-            {
-                sum += trajectoryPoints[i - 1].DistanceTo(trajectoryPoints[i]);
-            }
-            return sum / (trajectoryPoints.Count - 1);
-        }
+
 
         public string SaveTrajectory(List<Point3D> trajectory)
         {
@@ -134,50 +210,7 @@ namespace InvertedPendulumTransporterPhysics.Controllers
         }
 
 
-        private bool ReadTrajectoryFromFile(string fileName)
-        {
-            trajectoryPoints.Clear();
-            try
-            {
-                using (StreamReader reader = new StreamReader(fileName))
-                {
-                    while (!reader.EndOfStream)
-                    {
-                        var line = reader.ReadLine();
-                        var numbers = Regex.Split(line, " ");
-                        var x = double.Parse(numbers[0], CultureInfo.InvariantCulture);
-                        var y = double.Parse(numbers[1], CultureInfo.InvariantCulture);
-                        trajectoryPoints.Add(new Point3D(x, y, ZValue));
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                trajectoryPoints.Clear();
-                TrajectoryEnabled = false;
-                return false;
-            }
-            return true;
-        }
 
-        private bool WriteTrajectoryToFile(string fileName)
-        {
-            try
-            {
-                using (StreamWriter writer = new StreamWriter(fileName, false))
-                {
-                    foreach (var point in trajectoryPoints)
-                    {
-                        writer.WriteLine(point.X + " " + point.Y);
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            return true;
-        }
 
         public Point3D GetTargetStartPosition()
         {
@@ -207,6 +240,14 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             return trajectoryPoints[actualPointIndex];
         }
 
+        #endregion
+
+        /// <summary>
+        /// Get target position as a smooth combination of control points [the function is deprecated]
+        /// </summary>
+        /// <param name="x">Cart position in X-Coordinate</param>
+        /// <param name="y">Cart position in Y-Coordinate</param>
+        /// <returns>Target position</returns>
         public Point3D GetTargetSmoothPosition(double x, double y)
         {
             if (!TrajectoryEnabled)
@@ -239,6 +280,12 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Get target position as a approximation between control points [the function is deprecated]
+        /// </summary>
+        /// <param name="x">Cart position in X-Coordinate</param>
+        /// <param name="y">Cart position in Y-Coordinate</param>
+        /// <returns>Target position</returns>
         public Point3D GetTargetApproximatePosition(double x, double y)
         {
             if (!TrajectoryEnabled)
@@ -263,9 +310,12 @@ namespace InvertedPendulumTransporterPhysics.Controllers
             }
             return trajectoryPoints[actualPointIndex];
         }
-
+        #endregion
     }
 
+    /// <summary>
+    /// Enumeration for tracking accuracy types
+    /// </summary>
     public enum AccuracyType
     {
         Ultra,

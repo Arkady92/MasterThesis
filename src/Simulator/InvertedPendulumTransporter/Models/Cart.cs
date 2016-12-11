@@ -7,35 +7,57 @@ using System.Windows.Media.Imaging;
 
 namespace InvertedPendulumTransporter.Models
 {
+    /// <summary>
+    /// Cart model class
+    /// </summary>
     public class Cart : ICart
     {
-        public ModelVisual3D Model { get; private set; }
-        public double PlatformSize { get; private set; }
-
-        private const double DefaultPlatformSize = 5.0;
-
-        public double platformHeightFactor = 0.1;
-        public double wheelRadius = 0.5;
+        #region Private Members
         private SphereVisual3D[] wheels;
-        private Point3D lastPoint;
         private Vector3D offsetXRotationAxis;
         private Vector3D offsetYRotationAxis;
-        private bool highGradeTexturesEnabled;
         private CubeVisual3D platform;
         private TubeVisual3D rim;
+        private const double DefaultPlatformSize = 5.0;
+        #endregion
 
+        #region Public Members
+        #region ICart Interface
+        public ModelVisual3D Model { get; private set; }
+        public double PlatformSize { get; private set; }
+        #endregion
+
+        /// <summary>
+        /// Factor between walls height and platform size
+        /// </summary>
+        public double platformHeightFactor = 0.1;
+
+        /// <summary>
+        /// Wheel radius
+        /// </summary>
+        public double wheelRadius = 0.5;
+        #endregion
+
+        #region Private Methods
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Class constructor
+        /// </summary>
         public Cart()
         {
             Initialize();
         }
 
+        #region ICart Interface
         public void Initialize()
         {
             wheels = new SphereVisual3D[4];
-            lastPoint = new Point3D();
             offsetXRotationAxis = new Vector3D(0.0, 1.0, 0.0);
             offsetYRotationAxis = new Vector3D(-1.0, 0.0, 0.0);
-            highGradeTexturesEnabled = false;
 
             PlatformSize = DefaultPlatformSize;
             Model = new ModelVisual3D();
@@ -74,27 +96,10 @@ namespace InvertedPendulumTransporter.Models
             var cartTG = new Transform3DGroup();
             cartTG.Children.Add(new TranslateTransform3D(systemState.StateX.Position, systemState.StateY.Position, 0.0));
             Model.Transform = cartTG;
-
-            //if (highGradeTexturesEnabled)
-            //{
-            //    foreach (var wheel in wheels)
-            //    {
-            //        var wheelTG = new Transform3DGroup();
-            //        var offsetX = (systemState.StateX.Position - lastPoint.X) * 180 / (Math.PI * wheelRadius);
-            //        var offsetY = (systemState.StateY.Position - lastPoint.Y) * 180 / (Math.PI * wheelRadius);
-            //        wheelTG.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(offsetXRotationAxis, offsetX)));
-            //        wheelTG.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(offsetYRotationAxis, offsetY)));
-            //        wheelTG.Children.Add(wheel.Transform);
-            //        wheel.Transform = wheelTG;
-            //    }
-            //}
-
-            //lastPoint = new Point3D(systemState.StateX.Position, systemState.StateY.Position, 0.0);
         }
 
         public void SetupHighLevelGraphics()
         {
-            highGradeTexturesEnabled = true;
             ImageBrush wheelImageBrush = new ImageBrush();
             wheelImageBrush.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/Resources/Tire.jpg"));
             foreach (var wheel in wheels)
@@ -110,7 +115,6 @@ namespace InvertedPendulumTransporter.Models
 
         public void SetupLowLevelGraphics()
         {
-            highGradeTexturesEnabled = false;
             foreach (var wheel in wheels)
             {
                 wheel.Material = Materials.Blue;
@@ -118,5 +122,7 @@ namespace InvertedPendulumTransporter.Models
             platform.Fill = Brushes.Purple;
             rim.Visible = true;
         }
+        #endregion
+        #endregion
     }
 }
